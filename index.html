@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huerto — Bosque de Niebla</title>
+
+  <!-- Chart.js + plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+
+  <style>
+    /* ──────────────────────────────────────────
+       CSS CUSTOM PROPERTIES
+    ────────────────────────────────────────── */
+    :root {
+      --bg:           #0F0F1A;
+      --card-bg:      #1A1A2E;
+      --card-border:  #2A2A4A;
+      --text:         #E8E8F0;
+      --muted:        #8888AA;
+      --accent-green: #00D68F;
+      --accent-yellow:#FFB800;
+      --accent-red:   #FF4757;
+      --accent-blue:  #4ECDC4;
+      --accent-purple:#A855F7;
+      --navy:         #1E1E3F;
+      --bar-track:    #2A2A4A;
+      --radius:       12px;
+      --radius-sm:    8px;
+      --transition:   0.3s ease;
+    }
+
+    /* ──────────────────────────────────────────
+       RESET & BASE
+    ────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 0 0 2rem;
+    }
+
+    /* ──────────────────────────────────────────
+       TYPOGRAPHY
+    ────────────────────────────────────────── */
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    h2 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 1rem; }
+    h3 { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+    /* ──────────────────────────────────────────
+       LAYOUT CONTAINERS
+    ────────────────────────────────────────── */
+    .page-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+    section { margin-bottom: 1.5rem; }
+
+    /* ──────────────────────────────────────────
+       CARD
+    ────────────────────────────────────────── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: border-color var(--transition);
+    }
+    .card:hover { border-color: #3A3A6A; }
+
+    /* ──────────────────────────────────────────
+       HEADER
+    ────────────────────────────────────────── */
+    .site-header {
+      background: var(--navy);
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 0.75rem; }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--muted);
+      flex-shrink: 0;
+      transition: background var(--transition);
+      box-shadow: 0 0 0 3px transparent;
+    }
+    .status-dot.green  { background: var(--accent-green);  box-shadow: 0 0 0 3px rgba(0,214,143,0.2); }
+    .status-dot.yellow { background: var(--accent-yellow); box-shadow: 0 0 0 3px rgba(255,184,0,0.2); }
+    .status-dot.red    { background: var(--accent-red);    box-shadow: 0 0 0 3px rgba(255,71,87,0.2); }
+
+    .header-title h1 { font-size: 1.15rem; }
+    .header-title p  { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .update-info { text-align: right; }
+    .update-info .label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .update-info .value { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+    .refresh-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 1rem;
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+    .refresh-btn:hover { background: var(--card-border); border-color: var(--accent-blue); color: var(--accent-blue); }
+    .refresh-btn.spinning svg { animation: spin 1s linear infinite; }
+
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ──────────────────────────────────────────
+       KPI CARDS
+    ────────────────────────────────────────── */
+    .kpi-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .kpi-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+
+    .kpi-unit {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: 0.2rem;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .kpi-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ──────────────────────────────────────────
+       SOIL MOISTURE SECTION
+    ────────────────────────────────────────── */
+    .soil-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .soil-avg {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .soil-avg-value {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .soil-avg-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .soil-legend {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Progress bar rows */
+    .soil-channels { display: flex; flex-direction: column; gap: 0.85rem; }
+
+    .channel-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 50px;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .channel-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      position: relative;
+      background: var(--bar-track);
+      border-radius: 100px;
+      height: 14px;
+      overflow: visible;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1), background 0.4s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Threshold markers on the bar */
+    .threshold-marker {
+      position: absolute;
+      top: -5px;
+      bottom: -5px;
+      width: 2px;
+      border-radius: 2px;
+      z-index: 2;
+    }
+    .threshold-marker.dry   { background: var(--accent-red);    left: 35%; }
+    .threshold-marker.opt   { background: var(--accent-green);  left: 50%; }
+    .threshold-marker.wet   { background: var(--accent-blue);   left: 80%; }
+
+    .threshold-marker::after {
+      content: attr(data-label);
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .channel-pct {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* ──────────────────────────────────────────
+       ALERT BANNER
+    ────────────────────────────────────────── */
+    .alert-banner {
+      background: rgba(255, 71, 87, 0.12);
+      border: 1px solid var(--accent-red);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      display: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-banner.visible { display: block; }
+
+    .alert-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      margin-bottom: 0.5rem;
+    }
+
+    .alert-items { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .alert-item {
+      font-size: 0.85rem;
+      color: #FF8A95;
+    }
+
+    /* ──────────────────────────────────────────
+       CLIMA GRID
+    ────────────────────────────────────────── */
+    .clima-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .mini-card {
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+
+    .mini-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .mini-value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    /* ──────────────────────────────────────────
+       RAIN SECTION
+    ────────────────────────────────────────── */
+    .rain-layout {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .rain-rate-block { text-align: center; }
+
+    .rain-rate-value {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--accent-blue);
+    }
+
+    .rain-rate-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .rain-accumulations {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+    }
+
+    .rain-acc-item { text-align: center; }
+
+    .rain-acc-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    .rain-acc-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ──────────────────────────────────────────
+       BATTERY TABLE
+    ────────────────────────────────────────── */
+    .battery-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .battery-table th {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-align: left;
+      padding: 0 0 0.6rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .battery-table td {
+      font-size: 0.85rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(42,42,74,0.6);
+      vertical-align: middle;
+    }
+
+    .battery-table tr:last-child td { border-bottom: none; }
+
+    .batt-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    .batt-badge.ok     { background: rgba(0,214,143,0.12); color: var(--accent-green); }
+    .batt-badge.medium { background: rgba(255,184,0,0.12);  color: var(--accent-yellow); }
+    .batt-badge.low    { background: rgba(255,71,87,0.12);  color: var(--accent-red); }
+
+    .batt-icon { font-size: 0.8rem; }
+
+    /* ──────────────────────────────────────────
+       CHART SECTION
+    ────────────────────────────────────────── */
+    .chart-wrapper {
+      position: relative;
+      height: 340px;
+    }
+
+    /* ──────────────────────────────────────────
+       LOADING SKELETON
+    ────────────────────────────────────────── */
+    .skeleton {
+      background: linear-gradient(90deg, var(--card-border) 25%, #3A3A5A 50%, var(--card-border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton-text   { height: 1rem;  margin-bottom: 0.4rem; }
+    .skeleton-big    { height: 2.5rem; margin-bottom: 0.5rem; }
+    .skeleton-bar    { height: 14px; border-radius: 100px; }
+
+    /* ──────────────────────────────────────────
+       ERROR STATE
+    ────────────────────────────────────────── */
+    .error-inline {
+      background: rgba(255,71,87,0.08);
+      border: 1px solid rgba(255,71,87,0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: #FF8A95;
+      margin-top: 0.5rem;
+      display: none;
+    }
+    .error-inline.visible { display: block; }
+
+    /* ──────────────────────────────────────────
+       SECTION TITLE ROW
+    ────────────────────────────────────────── */
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-icon { font-size: 1.1rem; }
+
+    /* ──────────────────────────────────────────
+       DIVIDER
+    ────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--card-border);
+      margin: 1.5rem 0;
+    }
+
+    /* ──────────────────────────────────────────
+       RESPONSIVE
+    ────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .grid-4     { grid-template-columns: repeat(2, 1fr); }
+      .clima-grid { grid-template-columns: repeat(2, 1fr); }
+      .rain-accumulations { grid-template-columns: repeat(3, 1fr); }
+      .rain-layout { grid-template-columns: 1fr; text-align: center; }
+      .rain-rate-block { order: -1; }
+    }
+
+    @media (max-width: 600px) {
+      .grid-4     { grid-template-columns: 1fr 1fr; }
+      .grid-2     { grid-template-columns: 1fr; }
+      .clima-grid { grid-template-columns: 1fr 1fr; }
+      .rain-accumulations { grid-template-columns: repeat(2, 1fr); }
+      .header-inner { gap: 0.5rem; }
+      .kpi-value  { font-size: 1.6rem; }
+      .chart-wrapper { height: 260px; }
+      .soil-avg-value { font-size: 2.2rem; }
+    }
+
+    /* ──────────────────────────────────────────
+       COUNTDOWN PILL
+    ────────────────────────────────────────── */
+    .countdown-pill {
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .countdown-pill span { color: var(--accent-green); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="status-dot" id="statusDot"></div>
+        <div class="header-title">
+          <h1>Huerto — Bosque de Niebla</h1>
+          <p>1,780 msnm &middot; Zipacón, Cundinamarca</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="update-info">
+          <div class="label">Última actualización</div>
+          <div class="value" id="lastUpdated">—</div>
+        </div>
+        <div class="countdown-pill">Próxima: <span id="countdownDisplay">5:00</span></div>
+        <button class="refresh-btn" id="refreshBtn" title="Actualizar ahora" onclick="manualRefresh()">
+          <svg id="refreshIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       PAGE CONTENT
+  ════════════════════════════════════════ -->
+  <div class="page-wrapper">
+
+    <!-- Error banner (global) -->
+    <div class="error-inline" id="globalError"></div>
+
+    <!-- ── 1. KPI CARDS ── -->
+    <section>
+      <div class="grid-4" id="kpiGrid">
+        <!-- Temperatura exterior -->
+        <div class="card kpi-card">
+          <div class="kpi-icon">🌡️</div>
+          <div class="kpi-label">Temperatura Exterior</div>
+          <div class="kpi-value"><span id="kpiTempExt">—</span><span class="kpi-unit">°C</span></div>
+          <div class="kpi-sub" id="kpiFeelsLike">Sensación: —</div>
+        </div>
+
+        <!-- Humedad aire -->
+        <div class="card kpi-card">
+          <div class="kpi-icon">💧</div>
+          <div class="kpi-label">Humedad del Aire</div>
+          <div class="kpi-value"><span id="kpiHumExt">—</span><span class="kpi-unit">%</span></div>
+          <div class="kpi-sub" id="kpiDewPoint">Rocío: —</div>
+        </div>
+
+        <!-- Presión -->
+        <div class="card kpi-card">
+          <div class="kpi-icon">🌀</div>
+          <div class="kpi-label">Presión Relativa</div>
+          <div class="kpi-value"><span id="kpiPressure">—</span><span class="kpi-unit">hPa</span></div>
+          <div class="kpi-sub" id="kpiAbsPressure">Abs: —</div>
+        </div>
+
+        <!-- Lluvia del día -->
+        <div class="card kpi-card">
+          <div class="kpi-icon">🌧️</div>
+          <div class="kpi-label">Lluvia del Día</div>
+          <div class="kpi-value"><span id="kpiRainDay">—</span><span class="kpi-unit">mm</span></div>
+          <div class="kpi-sub" id="kpiRainRate">Tasa: — mm/hr</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. HUMEDAD DEL SUELO ── -->
+    <section>
+      <div class="card">
+        <div class="soil-header">
+          <div>
+            <div class="section-title-row">
+              <span class="section-icon">🌱</span>
+              <h2 style="margin-bottom:0">Humedad del Suelo</h2>
+            </div>
+            <div class="soil-avg">
+              <div class="soil-avg-value" id="soilAvgValue" style="color: var(--accent-green)">—</div>
+              <div class="soil-avg-label">% promedio</div>
+            </div>
+          </div>
+          <div class="soil-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div>Seco &lt;35%</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--accent-yellow)"></div>Bajo 35–50%</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div>Óptimo 50–80%</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--accent-blue)"></div>Húmedo &gt;80%</div>
+          </div>
+        </div>
+
+        <div class="soil-channels" id="soilChannels">
+          <!-- Dynamically generated -->
+          <div class="skeleton skeleton-bar" style="width:100%;height:14px;margin-bottom:0.5rem"></div>
+          <div class="skeleton skeleton-bar" style="width:100%;height:14px;margin-bottom:0.5rem"></div>
+          <div class="skeleton skeleton-bar" style="width:100%;height:14px;margin-bottom:0.5rem"></div>
+          <div class="skeleton skeleton-bar" style="width:100%;height:14px;margin-bottom:0.5rem"></div>
+          <div class="skeleton skeleton-bar" style="width:100%;height:14px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. ALERT BANNER ── -->
+    <div class="alert-banner" id="alertBanner">
+      <div class="alert-title">Alerta de Riego</div>
+      <div class="alert-items" id="alertItems"></div>
+    </div>
+
+    <!-- ── 4. CLIMA COMPLETO ── -->
+    <section>
+      <div class="card">
+        <div class="section-title-row">
+          <span class="section-icon">🌤️</span>
+          <h2 style="margin-bottom:0">Clima Completo</h2>
+        </div>
+        <div class="clima-grid">
+          <div class="mini-card">
+            <div class="mini-label">Temp. Exterior</div>
+            <div class="mini-value" id="climaTempExt">—</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Temp. Interior (GW)</div>
+            <div class="mini-value" id="climaTempInt">—</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Hum. Exterior</div>
+            <div class="mini-value" id="climaHumExt">—</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Hum. Interior (GW)</div>
+            <div class="mini-value" id="climaHumInt">—</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Punto de Rocío</div>
+            <div class="mini-value" id="climaDewPoint">—</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Sensación Térmica</div>
+            <div class="mini-value" id="climaFeelsLike">—</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Temp. CH1 (WN31)</div>
+            <div class="mini-value" id="climaTempCh1">—</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Hum. CH1 (WN31)</div>
+            <div class="mini-value" id="climaHumCh1">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. LLUVIA ── -->
+    <section>
+      <div class="card">
+        <div class="section-title-row">
+          <span class="section-icon">🌧️</span>
+          <h2 style="margin-bottom:0">Lluvia</h2>
+        </div>
+        <div class="rain-layout">
+          <div class="rain-rate-block">
+            <div class="rain-rate-value" id="rainRateValue">0.0</div>
+            <div class="rain-rate-label">mm/hr · tasa actual</div>
+          </div>
+          <div class="rain-accumulations">
+            <div class="rain-acc-item">
+              <div class="rain-acc-value" id="rain1h">—</div>
+              <div class="rain-acc-label">1 hora</div>
+            </div>
+            <div class="rain-acc-item">
+              <div class="rain-acc-value" id="rainDay2">—</div>
+              <div class="rain-acc-label">Hoy</div>
+            </div>
+            <div class="rain-acc-item">
+              <div class="rain-acc-value" id="rainWeek">—</div>
+              <div class="rain-acc-label">Semana</div>
+            </div>
+            <div class="rain-acc-item">
+              <div class="rain-acc-value" id="rainMonth">—</div>
+              <div class="rain-acc-label">Mes</div>
+            </div>
+            <div class="rain-acc-item">
+              <div class="rain-acc-value" id="rainYear">—</div>
+              <div class="rain-acc-label">Año</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. BATERÍA ── -->
+    <section>
+      <div class="card">
+        <div class="section-title-row">
+          <span class="section-icon">🔋</span>
+          <h2 style="margin-bottom:0">Batería de Sensores</h2>
+        </div>
+        <table class="battery-table">
+          <thead>
+            <tr>
+              <th>Sensor</th>
+              <th>Nivel</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="batteryTableBody">
+            <tr><td colspan="3"><div class="skeleton skeleton-text" style="width:60%"></div></td></tr>
+            <tr><td colspan="3"><div class="skeleton skeleton-text" style="width:50%"></div></td></tr>
+            <tr><td colspan="3"><div class="skeleton skeleton-text" style="width:70%"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── 7. HISTORIAL 24H ── -->
+    <section>
+      <div class="card">
+        <div class="section-title-row">
+          <span class="section-icon">📈</span>
+          <h2 style="margin-bottom:0">Historial 24 horas</h2>
+        </div>
+        <div class="error-inline" id="historyError"></div>
+        <div class="chart-wrapper">
+          <canvas id="historyChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- .page-wrapper -->
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+  'use strict';
+
+  /* ──────────────────────────────────────────
+     CONFIG
+  ────────────────────────────────────────── */
+  const CONFIG = {
+    applicationKey:          '2A298127832EF7B5F0495F16B07F7B5E',
+    apiKey:                  '83b66e21-a6cf-445f-b14e-2810189d3e6d',
+    mac:                     '8C:4F:00:4F:C1:E6',
+    apiBase:                 'https://api.ecowitt.net/api/v3',
+    unitParams:              'temp_unitid=1&pressure_unitid=3&rainfall_unitid=12',
+    refreshInterval:         300000,   // 5 min (real-time)
+    historyRefreshInterval:  1800000,  // 30 min (history)
+    soilAlertThreshold:      35,
+    soilOptimalMin:          50,
+    soilOptimalMax:          80,
+  };
+
+  /* Channel labels & chart colours */
+  const SOIL_CHANNELS = [
+    { key: 'soil_ch1', label: 'CH1 — Zona 1', color: '#00D68F' },
+    { key: 'soil_ch2', label: 'CH2 — Zona 2', color: '#4ECDC4' },
+    { key: 'soil_ch3', label: 'CH3 — Zona 3', color: '#A855F7' },
+    { key: 'soil_ch4', label: 'CH4 — Zona 4', color: '#FFB800' },
+    { key: 'soil_ch5', label: 'CH5 — Zona 5', color: '#FF6B6B' },
+  ];
+
+  const BATTERY_SENSOR_NAMES = {
+    outdoor_t_rh_sensor:        'Exterior (WH32)',
+    temp_humidity_sensor_ch1:   'Termo CH1 (WN31)',
+    soilmoisture_sensor_ch1:    'Suelo CH1',
+    soilmoisture_sensor_ch2:    'Suelo CH2',
+    soilmoisture_sensor_ch3:    'Suelo CH3',
+    soilmoisture_sensor_ch4:    'Suelo CH4',
+    soilmoisture_sensor_ch5:    'Suelo CH5',
+  };
+
+  /* ──────────────────────────────────────────
+     STATE
+  ────────────────────────────────────────── */
+  let historyChart       = null;
+  let countdownSeconds   = CONFIG.refreshInterval / 1000;
+  let countdownTimer     = null;
+  let lastDataTimestamp  = null;
+
+  /* ──────────────────────────────────────────
+     UTILS
+  ────────────────────────────────────────── */
+
+  /**
+   * Format a Date to HH:MM (local, Colombia UTC-5).
+   * @param {Date} date
+   * @returns {string}
+   */
+  function formatTime(date) {
+    return date.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', hour12: false });
+  }
+
+  /**
+   * Format a Date to a readable datetime string.
+   * @param {Date} date
+   * @returns {string}
+   */
+  function formatDatetime(date) {
+    return date.toLocaleString('es-CO', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: false,
+    });
+  }
+
+  /**
+   * Get a UTC date string for the Ecowitt history API.
+   * @param {Date} date - Date object (will be interpreted as local; we shift to UTC manually)
+   * @returns {string} "YYYY-MM-DD HH:MM:SS"
+   */
+  function toApiDateString(date) {
+    const pad = n => String(n).padStart(2, '0');
+    return `${date.getUTCFullYear()}-${pad(date.getUTCMonth()+1)}-${pad(date.getUTCDate())} ${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`;
+  }
+
+  /**
+   * Determine soil bar colour from moisture percentage.
+   * @param {number} pct
+   * @returns {string}
+   */
+  function soilColor(pct) {
+    if (pct < CONFIG.soilAlertThreshold)  return '#FF4757'; // red — dry
+    if (pct < CONFIG.soilOptimalMin)       return '#FFB800'; // yellow — getting dry
+    if (pct <= CONFIG.soilOptimalMax)      return '#00D68F'; // green — optimal
+    return '#4ECDC4';                                        // blue — very wet
+  }
+
+  /**
+   * Safely parse a numeric value from the API (string | undefined).
+   * @param {string|undefined} val
+   * @returns {number|null}
+   */
+  function parseVal(val) {
+    const n = parseFloat(val);
+    return isNaN(n) ? null : n;
+  }
+
+  /**
+   * Build the base URL params shared across requests.
+   * @returns {string}
+   */
+  function baseParams() {
+    return `application_key=${CONFIG.applicationKey}&api_key=${CONFIG.apiKey}&mac=${encodeURIComponent(CONFIG.mac)}&${CONFIG.unitParams}`;
+  }
+
+  /* ──────────────────────────────────────────
+     API FETCH: REAL-TIME
+  ────────────────────────────────────────── */
+  async function fetchRealtime() {
+    const url = `${CONFIG.apiBase}/device/real_time?${baseParams()}&call_back=all`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    if (json.code !== 0) throw new Error(`API error: ${json.msg}`);
+    return json.data;
+  }
+
+  /* ──────────────────────────────────────────
+     API FETCH: HISTORY (last 24 h)
+  ────────────────────────────────────────── */
+  async function fetchHistory() {
+    const now   = new Date();
+    const start = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const fields = 'outdoor.temperature,soil_ch1,soil_ch2,soil_ch3,soil_ch4,soil_ch5';
+    const url = `${CONFIG.apiBase}/device/history?${baseParams()}&call_back=${fields}&start_date=${encodeURIComponent(toApiDateString(start))}&end_date=${encodeURIComponent(toApiDateString(now))}&cycle_type=5min`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    if (json.code !== 0) throw new Error(`API error: ${json.msg}`);
+    return json.data;
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: STATUS DOT
+  ────────────────────────────────────────── */
+  function updateStatusDot(unixTimestamp) {
+    const dot = document.getElementById('statusDot');
+    if (!unixTimestamp) { dot.className = 'status-dot'; return; }
+    const ageMs = Date.now() - (unixTimestamp * 1000);
+    const ageMins = ageMs / 60000;
+    if (ageMins < 10)       { dot.className = 'status-dot green'; }
+    else if (ageMins < 30)  { dot.className = 'status-dot yellow'; }
+    else                    { dot.className = 'status-dot red'; }
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: KPI CARDS
+  ────────────────────────────────────────── */
+  function updateKPI(data) {
+    const outdoor  = data.outdoor  || {};
+    const rainfall = data.rainfall || {};
+    const pressure = data.pressure || {};
+
+    const tempExt  = parseVal(outdoor.temperature?.value);
+    const feelsLike= parseVal(outdoor.feels_like?.value);
+    const dewPoint = parseVal(outdoor.dew_point?.value);
+    const humExt   = parseVal(outdoor.humidity?.value);
+    const pressRel = parseVal(pressure.relative?.value);
+    const pressAbs = parseVal(pressure.absolute?.value);
+    const rainDay  = parseVal(rainfall.daily?.value);
+    const rainRate = parseVal(rainfall.rain_rate?.value);
+
+    setText('kpiTempExt',    tempExt   !== null ? tempExt.toFixed(1)   : '—');
+    setText('kpiFeelsLike',  feelsLike !== null ? `Sensación: ${feelsLike.toFixed(1)}°C` : 'Sensación: —');
+    setText('kpiHumExt',     humExt    !== null ? Math.round(humExt)   : '—');
+    setText('kpiDewPoint',   dewPoint  !== null ? `Rocío: ${dewPoint.toFixed(1)}°C` : 'Rocío: —');
+    setText('kpiPressure',   pressRel  !== null ? pressRel.toFixed(1)  : '—');
+    setText('kpiAbsPressure',pressAbs  !== null ? `Abs: ${pressAbs.toFixed(1)} hPa` : 'Abs: —');
+    setText('kpiRainDay',    rainDay   !== null ? rainDay.toFixed(1)   : '—');
+    setText('kpiRainRate',   rainRate  !== null ? `Tasa: ${rainRate.toFixed(1)} mm/hr` : 'Tasa: — mm/hr');
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: SOIL CHANNELS
+  ────────────────────────────────────────── */
+  function updateSoil(data) {
+    const container = document.getElementById('soilChannels');
+    container.innerHTML = '';
+
+    const values = [];
+
+    SOIL_CHANNELS.forEach(ch => {
+      const raw = data[ch.key]?.soilmoisture?.value;
+      const pct = parseVal(raw);
+      if (pct === null) return; // skip missing channels
+      values.push(pct);
+
+      const color = soilColor(pct);
+      const widthPct = Math.min(Math.max(pct, 0), 100);
+
+      const row = document.createElement('div');
+      row.className = 'channel-row';
+      row.innerHTML = `
+        <div class="channel-label">${ch.label.split(' — ')[0]}</div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${widthPct}%;background:${color}"></div>
+          <div class="threshold-marker dry"  data-label="35%"></div>
+          <div class="threshold-marker opt"  data-label="50%"></div>
+          <div class="threshold-marker wet"  data-label="80%"></div>
+        </div>
+        <div class="channel-pct" style="color:${color}">${Math.round(pct)}%</div>
+      `;
+      container.appendChild(row);
+    });
+
+    // Average
+    if (values.length > 0) {
+      const avg = values.reduce((a, b) => a + b, 0) / values.length;
+      const avgEl = document.getElementById('soilAvgValue');
+      avgEl.textContent = Math.round(avg) + '%';
+      avgEl.style.color = soilColor(avg);
+    }
+
+    checkAlerts(data);
+  }
+
+  /* ──────────────────────────────────────────
+     CHECK: IRRIGATION ALERTS
+  ────────────────────────────────────────── */
+  function checkAlerts(data) {
+    const banner = document.getElementById('alertBanner');
+    const items  = document.getElementById('alertItems');
+    items.innerHTML = '';
+
+    const needsWater = [];
+    SOIL_CHANNELS.forEach(ch => {
+      const pct = parseVal(data[ch.key]?.soilmoisture?.value);
+      if (pct !== null && pct < CONFIG.soilAlertThreshold) {
+        needsWater.push({ label: ch.label, pct });
+      }
+    });
+
+    if (needsWater.length > 0) {
+      needsWater.forEach(({ label, pct }) => {
+        const div = document.createElement('div');
+        div.className = 'alert-item';
+        div.textContent = `⚠ ${label} necesita riego — ${Math.round(pct)}% humedad`;
+        items.appendChild(div);
+      });
+      banner.classList.add('visible');
+    } else {
+      banner.classList.remove('visible');
+    }
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: CLIMA COMPLETO
+  ────────────────────────────────────────── */
+  function updateClima(data) {
+    const outdoor = data.outdoor || {};
+    const indoor  = data.indoor  || {};
+    const ch1     = data.temp_and_humidity_ch1 || {};
+
+    const fmt = (val, unit) => val !== null ? `${val}${unit}` : '—';
+
+    setText('climaTempExt',   fmt(parseVal(outdoor.temperature?.value), '°C'));
+    setText('climaTempInt',   fmt(parseVal(indoor.temperature?.value),  '°C'));
+    setText('climaHumExt',    fmt(parseVal(outdoor.humidity?.value),    '%'));
+    setText('climaHumInt',    fmt(parseVal(indoor.humidity?.value),     '%'));
+    setText('climaDewPoint',  fmt(parseVal(outdoor.dew_point?.value),   '°C'));
+    setText('climaFeelsLike', fmt(parseVal(outdoor.feels_like?.value),  '°C'));
+    setText('climaTempCh1',   fmt(parseVal(ch1.temperature?.value),     '°C'));
+    setText('climaHumCh1',    fmt(parseVal(ch1.humidity?.value),        '%'));
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: RAIN SECTION
+  ────────────────────────────────────────── */
+  function updateRain(data) {
+    const r = data.rainfall || {};
+    const fmt = (val, decimals = 1) => val !== null ? val.toFixed(decimals) : '—';
+
+    setText('rainRateValue', fmt(parseVal(r.rain_rate?.value)));
+    setText('rain1h',   fmt(parseVal(r['1_hour']?.value)) + ' mm');
+    setText('rainDay2', fmt(parseVal(r.daily?.value))    + ' mm');
+    setText('rainWeek', fmt(parseVal(r.weekly?.value))   + ' mm');
+    setText('rainMonth',fmt(parseVal(r.monthly?.value))  + ' mm');
+    setText('rainYear', fmt(parseVal(r.yearly?.value))   + ' mm');
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: BATTERY TABLE
+  ────────────────────────────────────────── */
+  function updateBattery(data) {
+    const battery = data.battery || {};
+    const tbody   = document.getElementById('batteryTableBody');
+    tbody.innerHTML = '';
+
+    Object.entries(battery).forEach(([key, batt]) => {
+      const name  = BATTERY_SENSOR_NAMES[key] || key;
+      const unit  = batt.unit;
+      const value = parseVal(batt.value);
+      if (value === null) return;
+
+      let levelText, badgeClass, icon;
+
+      if (unit === 'V') {
+        // Voltage sensor (soil moisture sensors)
+        levelText = `${value.toFixed(2)} V`;
+        if (value >= 1.4) {
+          badgeClass = 'ok';     icon = '●';
+        } else if (value >= 1.2) {
+          badgeClass = 'medium'; icon = '◑';
+        } else {
+          badgeClass = 'low';    icon = '○';
+        }
+      } else {
+        // Status code sensor (0 = OK, ≥5 = low)
+        levelText = value === 0 ? 'Normal' : `Código ${value}`;
+        if (value === 0) {
+          badgeClass = 'ok';     icon = '●';
+        } else if (value < 5) {
+          badgeClass = 'medium'; icon = '◑';
+        } else {
+          badgeClass = 'low';    icon = '○';
+        }
+      }
+
+      const statusLabel = { ok: 'Buena', medium: 'Media', low: 'Baja' }[badgeClass];
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${name}</td>
+        <td>${levelText}</td>
+        <td><span class="batt-badge ${badgeClass}"><span class="batt-icon">${icon}</span>${statusLabel}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: HISTORY CHART
+  ────────────────────────────────────────── */
+  function updateHistory(data) {
+    // Build datasets for soil channels
+    const soilDatasets = SOIL_CHANNELS.map(ch => {
+      const soilList = data[ch.key]?.soilmoisture?.list || {};
+      const points = Object.entries(soilList).map(([ts, val]) => ({
+        x: new Date(parseInt(ts, 10) * 1000),
+        y: parseFloat(val),
+      })).sort((a, b) => a.x - b.x);
+
+      return {
+        label:           ch.label,
+        data:            points,
+        borderColor:     ch.color,
+        backgroundColor: ch.color + '18',
+        borderWidth:     2,
+        pointRadius:     0,
+        pointHoverRadius:4,
+        tension:         0.3,
+        yAxisID:         'ySoil',
+        fill:            false,
+      };
+    });
+
+    // Temperature dataset (secondary Y)
+    const tempList = data.outdoor?.temperature?.list || {};
+    const tempPoints = Object.entries(tempList).map(([ts, val]) => ({
+      x: new Date(parseInt(ts, 10) * 1000),
+      y: parseFloat(val),
+    })).sort((a, b) => a.x - b.x);
+
+    const tempDataset = {
+      label:           'Temp. Exterior (°C)',
+      data:            tempPoints,
+      borderColor:     '#FF8A95',
+      backgroundColor: '#FF4757' + '10',
+      borderWidth:     1.5,
+      borderDash:      [4, 4],
+      pointRadius:     0,
+      pointHoverRadius:4,
+      tension:         0.3,
+      yAxisID:         'yTemp',
+      fill:            false,
+    };
+
+    const allDatasets = [...soilDatasets, tempDataset];
+
+    const annotations = {
+      dryLine: {
+        type: 'line',
+        yMin: CONFIG.soilAlertThreshold,
+        yMax: CONFIG.soilAlertThreshold,
+        borderColor: 'rgba(255,71,87,0.6)',
+        borderWidth: 1,
+        borderDash: [6, 4],
+        yScaleID: 'ySoil',
+        label: { content: 'Riego 35%', display: true, position: 'end', color: '#FF4757', font: { size: 10 }, yAdjust: -8 },
+      },
+      wetLine: {
+        type: 'line',
+        yMin: CONFIG.soilOptimalMax,
+        yMax: CONFIG.soilOptimalMax,
+        borderColor: 'rgba(78,205,196,0.6)',
+        borderWidth: 1,
+        borderDash: [6, 4],
+        yScaleID: 'ySoil',
+        label: { content: 'Exceso 80%', display: true, position: 'end', color: '#4ECDC4', font: { size: 10 }, yAdjust: 8 },
+      },
+    };
+
+    if (historyChart) {
+      historyChart.data.datasets = allDatasets;
+      historyChart.update('none');
+    } else {
+      const ctx = document.getElementById('historyChart').getContext('2d');
+      historyChart = new Chart(ctx, {
+        type: 'line',
+        data: { datasets: allDatasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { color: '#8888AA', font: { size: 11 }, boxWidth: 14, padding: 16 },
+            },
+            tooltip: {
+              backgroundColor: '#1A1A2E',
+              borderColor: '#2A2A4A',
+              borderWidth: 1,
+              titleColor: '#E8E8F0',
+              bodyColor: '#8888AA',
+              padding: 10,
+              callbacks: {
+                title: items => {
+                  if (!items.length) return '';
+                  return formatTime(items[0].raw.x);
+                },
+                label: item => {
+                  const v = item.raw.y;
+                  const unit = item.dataset.yAxisID === 'yTemp' ? '°C' : '%';
+                  return ` ${item.dataset.label}: ${v !== undefined ? v.toFixed(1) : '—'}${unit}`;
+                },
+              },
+            },
+            annotation: { annotations },
+          },
+          scales: {
+            x: {
+              type: 'time',
+              time: { unit: 'hour', tooltipFormat: 'HH:mm', displayFormats: { hour: 'HH:mm' } },
+              ticks: { color: '#8888AA', font: { size: 10 }, maxTicksLimit: 12 },
+              grid:  { color: 'rgba(42,42,74,0.6)' },
+            },
+            ySoil: {
+              type: 'linear',
+              position: 'left',
+              min: 0,
+              max: 100,
+              title: { display: true, text: 'Humedad del suelo (%)', color: '#8888AA', font: { size: 11 } },
+              ticks: { color: '#8888AA', font: { size: 10 }, stepSize: 10 },
+              grid:  { color: 'rgba(42,42,74,0.6)' },
+            },
+            yTemp: {
+              type: 'linear',
+              position: 'right',
+              title: { display: true, text: 'Temperatura (°C)', color: '#FF8A95', font: { size: 11 } },
+              ticks: { color: '#FF8A95', font: { size: 10 } },
+              grid:  { drawOnChartArea: false },
+            },
+          },
+        },
+      });
+    }
+  }
+
+  /* ──────────────────────────────────────────
+     MAIN UPDATE DASHBOARD
+  ────────────────────────────────────────── */
+  function updateDashboard(data) {
+    // Determine timestamp for status dot (outdoor sensor time)
+    const ts = parseInt(data.outdoor?.temperature?.time, 10) || null;
+    lastDataTimestamp = ts;
+    updateStatusDot(ts);
+
+    // Last updated display
+    setText('lastUpdated', formatDatetime(new Date()));
+
+    updateKPI(data);
+    updateSoil(data);
+    updateClima(data);
+    updateRain(data);
+    updateBattery(data);
+
+    hideError('globalError');
+  }
+
+  /* ──────────────────────────────────────────
+     COUNTDOWN TIMER
+  ────────────────────────────────────────── */
+  function startCountdown() {
+    if (countdownTimer) clearInterval(countdownTimer);
+    countdownSeconds = CONFIG.refreshInterval / 1000;
+
+    countdownTimer = setInterval(() => {
+      countdownSeconds--;
+      if (countdownSeconds < 0) countdownSeconds = 0;
+      const m = Math.floor(countdownSeconds / 60);
+      const s = countdownSeconds % 60;
+      setText('countdownDisplay', `${m}:${String(s).padStart(2, '0')}`);
+    }, 1000);
+  }
+
+  /* ──────────────────────────────────────────
+     REFRESH BUTTON SPIN
+  ────────────────────────────────────────── */
+  function setRefreshSpinning(spinning) {
+    const btn = document.getElementById('refreshBtn');
+    if (spinning) btn.classList.add('spinning');
+    else           btn.classList.remove('spinning');
+    btn.disabled = spinning;
+  }
+
+  /* ──────────────────────────────────────────
+     LOAD REALTIME DATA
+  ────────────────────────────────────────── */
+  async function loadRealtime() {
+    setRefreshSpinning(true);
+    try {
+      const data = await fetchRealtime();
+      updateDashboard(data);
+      startCountdown();
+    } catch (err) {
+      console.error('Realtime fetch error:', err);
+      showError('globalError', `Error al obtener datos: ${err.message}. Se reintentará en ${CONFIG.refreshInterval / 60000} minutos.`);
+    } finally {
+      setRefreshSpinning(false);
+    }
+  }
+
+  /* ──────────────────────────────────────────
+     LOAD HISTORY DATA
+  ────────────────────────────────────────── */
+  async function loadHistory() {
+    try {
+      const data = await fetchHistory();
+      updateHistory(data);
+      hideError('historyError');
+    } catch (err) {
+      console.error('History fetch error:', err);
+      showError('historyError', `Error al cargar historial: ${err.message}`);
+    }
+  }
+
+  /* ──────────────────────────────────────────
+     MANUAL REFRESH
+  ────────────────────────────────────────── */
+  function manualRefresh() {
+    loadRealtime();
+  }
+
+  /* ──────────────────────────────────────────
+     DOM HELPERS
+  ────────────────────────────────────────── */
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+
+  function hideError(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('visible');
+  }
+
+  /* ──────────────────────────────────────────
+     INIT
+  ────────────────────────────────────────── */
+  async function init() {
+    // Load both in parallel on first load
+    await Promise.allSettled([loadRealtime(), loadHistory()]);
+
+    // Schedule auto-refresh for real-time data
+    setInterval(loadRealtime, CONFIG.refreshInterval);
+
+    // Schedule auto-refresh for history
+    setInterval(loadHistory, CONFIG.historyRefreshInterval);
+  }
+
+  // Kick off
+  init();
+  </script>
+</body>
+</html>
