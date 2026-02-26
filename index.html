@@ -2388,9 +2388,10 @@
    * @param {number|null} humidity - Humidity value (live or cached) or null
    * @param {boolean} isLive - True if the humidity comes from a currently assigned sensor
    * @param {number|null} cachedTimestamp - Epoch ms of last cached reading (when not live)
+   * @param {string|null} adValue - Raw AD sensor value
    * @returns {HTMLElement}
    */
-  function renderBedCard(bed, humidity, isLive, cachedTimestamp) {
+  function renderBedCard(bed, humidity, isLive, cachedTimestamp, adValue) {
     const { glowClass, color } = bedHumidityStatus(humidity, bed.group);
     const t = CROP_THRESHOLDS[bed.group] || CROP_THRESHOLDS.rotacion;
 
@@ -2419,10 +2420,11 @@
 
     // Build humidity display
     let humidityHtml;
+    const adHtml = adValue !== null ? `<span class="channel-ad">(AD: ${adValue})</span>` : '';
     if (humidity !== null && isLive) {
       humidityHtml = `
         <div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:0.1rem">
-          <div class="bed-humidity" style="color:${color}">${Math.round(humidity)}%</div>
+          <div class="bed-humidity" style="color:${color}">${Math.round(humidity)}% ${adHtml}</div>
           <span class="bed-live-badge">En vivo</span>
         </div>
         <div class="bed-humidity-sub">Óptimo: ${t.optMin}–${t.optMax}%</div>
@@ -2468,6 +2470,7 @@
       let humidity = null;
       let isLive = false;
       let cachedTimestamp = null;
+      let adValue = null;
 
       if (assignedSensor) {
         // Try to get live reading from assigned sensor
@@ -2475,8 +2478,9 @@
         if (liveVal !== null) {
           humidity = liveVal;
           isLive = true;
-          // Cache this reading
-          bedReadings[bed.id] = { humidity: liveVal, timestamp: Date.now(), sensor: assignedSensor };
+          adValue = data[assignedSensor]?.ad?.value ?? null;
+          // Cache this reading (include AD)
+          bedReadings[bed.id] = { humidity: liveVal, timestamp: Date.now(), sensor: assignedSensor, ad: adValue };
         }
       }
 
@@ -2486,7 +2490,7 @@
         cachedTimestamp = bedReadings[bed.id].timestamp;
       }
 
-      const card = renderBedCard(bed, humidity, isLive, cachedTimestamp);
+      const card = renderBedCard(bed, humidity, isLive, cachedTimestamp, adValue);
       const bedNum = parseInt(bed.id.replace('cama', ''), 10);
       if (bedNum % 2 === 1) {
         rowOdd.appendChild(card);  // 1,3,5,7,9,11
@@ -2504,12 +2508,15 @@
     let ghIsLive = false;
     let ghCachedTs = null;
 
+    let ghAd = null;
+
     if (ghAssigned) {
       const liveGh = parseVal(data[ghAssigned]?.soilmoisture?.value);
       if (liveGh !== null) {
         ghHum = liveGh;
         ghIsLive = true;
-        bedReadings['invernadero'] = { humidity: liveGh, timestamp: Date.now(), sensor: ghAssigned };
+        ghAd = data[ghAssigned]?.ad?.value ?? null;
+        bedReadings['invernadero'] = { humidity: liveGh, timestamp: Date.now(), sensor: ghAssigned, ad: ghAd };
         saveBedReadings(bedReadings);
       }
     }
@@ -2518,7 +2525,7 @@
       ghCachedTs = bedReadings['invernadero'].timestamp;
     }
 
-    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs);
+    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs, ghAd);
     _updateGreenhouseSensorSelect(sensorAssignments);
 
     // Update greenhouse crops display from BED_PLANTS
@@ -2531,13 +2538,14 @@
    * @param {boolean} isLive
    * @param {number|null} cachedTs
    */
-  function _updateGreenhouseHumidity(ghHum, isLive, cachedTs) {
+  function _updateGreenhouseHumidity(ghHum, isLive, cachedTs, ghAd) {
     const ghEl   = document.getElementById('greenhouseHumidity');
     const ghCard = document.getElementById('greenhouseCard');
     const ghLabel= document.getElementById('greenhouseDimsLabel');
 
     if (ghHum !== null) {
-      ghEl.textContent = Math.round(ghHum) + '%';
+      const adStr = ghAd !== null && ghAd !== undefined ? ` <span class="channel-ad">(AD: ${ghAd})</span>` : '';
+      ghEl.innerHTML = Math.round(ghHum) + '%' + (isLive ? adStr : '');
       const t = CROP_THRESHOLDS.tomate;
       if (ghHum < t.critical)                        { ghEl.style.color = '#FF4757'; ghCard.style.borderLeftColor = '#FF4757'; }
       else if (ghHum < t.alert)                      { ghEl.style.color = '#FFB800'; ghCard.style.borderLeftColor = '#FFB800'; }
@@ -3293,12 +3301,14 @@
       let humidity = null;
       let isLive = false;
       let cachedTimestamp = null;
+      let adValue = null;
 
       if (assignedSensor && _lastApiData) {
         const liveVal = parseVal(_lastApiData[assignedSensor]?.soilmoisture?.value);
         if (liveVal !== null) {
           humidity = liveVal;
           isLive = true;
+          adValue = _lastApiData[assignedSensor]?.ad?.value ?? null;
         }
       }
 
@@ -3307,7 +3317,7 @@
         cachedTimestamp = bedReadings[bed.id].timestamp;
       }
 
-      const card = renderBedCard(bed, humidity, isLive, cachedTimestamp);
+      const card = renderBedCard(bed, humidity, isLive, cachedTimestamp, adValue);
       const bedNum = parseInt(bed.id.replace('cama', ''), 10);
       if (bedNum % 2 === 1) {
         rowOdd.appendChild(card);
@@ -3321,12 +3331,14 @@
     let ghHum = null;
     let ghIsLive = false;
     let ghCachedTs = null;
+    let ghAd = null;
 
     if (ghAssigned && _lastApiData) {
       const liveGh = parseVal(_lastApiData[ghAssigned]?.soilmoisture?.value);
       if (liveGh !== null) {
         ghHum = liveGh;
         ghIsLive = true;
+        ghAd = _lastApiData[ghAssigned]?.ad?.value ?? null;
       }
     }
     if (!ghIsLive && bedReadings['invernadero']) {
@@ -3334,7 +3346,7 @@
       ghCachedTs = bedReadings['invernadero'].timestamp;
     }
 
-    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs);
+    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs, ghAd);
     _updateGreenhouseSensorSelect(sensorAssignments);
 
     renderGreenhouseCrops();
