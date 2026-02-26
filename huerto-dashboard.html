@@ -1036,7 +1036,7 @@
               <span class="greenhouse-crop">🍅 Cherry</span>
               <span class="greenhouse-crop">🍅 Chonto</span>
             </div>
-            <div class="greenhouse-note">Sensor CH5 · Óptimo tomate: 20–30%</div>
+            <div class="greenhouse-note">Sensor CH4 · Óptimo tomate: 20–30%</div>
           </div>
           <div class="greenhouse-dims">
             <div class="greenhouse-dims-value" id="greenhouseHumidity">—</div>
@@ -1222,11 +1222,11 @@
 
   /* Channel labels & chart colours */
   const SOIL_CHANNELS = [
-    { key: 'soil_ch1', label: 'CH1 — Camas 1-3 (Hojas)',      color: '#00D68F' },
-    { key: 'soil_ch2', label: 'CH2 — Camas 4-6 (Hierbas)',     color: '#4ECDC4' },
-    { key: 'soil_ch3', label: 'CH3 — Camas 7-9 (Brásicas)',    color: '#A855F7' },
-    { key: 'soil_ch4', label: 'CH4 — Camas 10-12 (Brásicas)',  color: '#FFB800' },
-    { key: 'soil_ch5', label: 'CH5 — Invernadero (Tomate)',    color: '#FF6B6B' },
+    { key: 'soil_ch1', label: 'CH1 — Cama 3 (Hojas)',         color: '#00D68F' },
+    { key: 'soil_ch2', label: 'CH2 — Cama 1 (Hojas)',         color: '#4ECDC4' },
+    { key: 'soil_ch3', label: 'CH3 — Cama 4 (Hojas)',         color: '#A855F7' },
+    { key: 'soil_ch4', label: 'CH4 — Invernadero (Tomate)',   color: '#FFB800' },
+    { key: 'soil_ch5', label: 'CH5 — Cama 2 (Hojas)',         color: '#FF6B6B' },
   ];
 
   const BATTERY_SENSOR_NAMES = {
@@ -1248,11 +1248,11 @@
    * beds: which bed IDs share this sensor reading.
    */
   const SENSOR_BED_MAP = {
-    'soil_ch1': { beds: ['cama1', 'cama2', 'cama3'],    label: 'CH1 → Camas 1-3',    group: 'hojas',    sensorIn: 'Cama 1' },
-    'soil_ch2': { beds: ['cama4', 'cama5', 'cama6'],    label: 'CH2 → Camas 4-6',    group: 'hierbas',  sensorIn: 'Cama 2' },
-    'soil_ch3': { beds: ['cama7', 'cama8', 'cama9'],    label: 'CH3 → Camas 7-9',    group: 'brasicas', sensorIn: 'Cama 3' },
-    'soil_ch4': { beds: ['cama10', 'cama11', 'cama12'], label: 'CH4 → Camas 10-12',  group: 'brasicas', sensorIn: 'Cama 4' },
-    'soil_ch5': { beds: ['invernadero'],                 label: 'CH5 → Invernadero',  group: 'tomate',   sensorIn: 'Invernadero' },
+    'soil_ch1': { beds: ['cama3', 'cama5', 'cama7'],    label: 'CH1 → Cama 3 (+ 5,7)',    group: 'hojas',    sensorIn: 'Cama 3' },
+    'soil_ch2': { beds: ['cama1', 'cama2', 'cama4'],    label: 'CH2 → Cama 1 (+ 2,4)',    group: 'hojas',    sensorIn: 'Cama 1' },
+    'soil_ch3': { beds: ['cama6', 'cama8', 'cama9'],    label: 'CH3 → Cama 4 (+ 6,8,9)',  group: 'hojas',    sensorIn: 'Cama 4' },
+    'soil_ch4': { beds: ['invernadero'],                 label: 'CH4 → Invernadero',        group: 'tomate',   sensorIn: 'Invernadero' },
+    'soil_ch5': { beds: ['cama10', 'cama11', 'cama12'], label: 'CH5 → Cama 2 (+ 10-12)',  group: 'hojas',    sensorIn: 'Cama 2' },
   };
 
   /** Crop-specific moisture thresholds (separate from cloud-forest bars above). */
@@ -1266,18 +1266,18 @@
 
   /** Full bed definitions — impares = derecha, pares = izquierda. */
   const BEDS = [
-    { id: 'cama1',  name: 'Cama 1',  group: 'hojas',    crops: ['🥬 Lechuga'],                                sensor: 'soil_ch1', hasSensor: true },
-    { id: 'cama2',  name: 'Cama 2',  group: 'hojas',    crops: ['🥗 Rúcula', '🥬 Espinaca'],                  sensor: 'soil_ch1' },
-    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Acelga'],                                 sensor: 'soil_ch1' },
-    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Espinaca', '🌿 Mostaza'],                 sensor: 'soil_ch2', hasSensor: true },
-    { id: 'cama5',  name: 'Cama 5',  group: 'hierbas',  crops: ['🌿 Albahaca', '🌿 Cilantro', '🌿 Perejil'],  sensor: 'soil_ch2' },
-    { id: 'cama6',  name: 'Cama 6',  group: 'hierbas',  crops: ['🌿 Cebollín', '🌿 Orégano', '🌿 Tomillo'],   sensor: 'soil_ch2' },
-    { id: 'cama7',  name: 'Cama 7',  group: 'brasicas',  crops: ['🥦 Brócoli'],                                sensor: 'soil_ch3', hasSensor: true },
+    { id: 'cama1',  name: 'Cama 1',  group: 'hojas',    crops: ['🥬 Lechuga'],                                sensor: 'soil_ch2', hasSensor: true },
+    { id: 'cama2',  name: 'Cama 2',  group: 'hojas',    crops: ['🥗 Rúcula', '🥬 Espinaca'],                  sensor: 'soil_ch5', hasSensor: true },
+    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Acelga'],                                 sensor: 'soil_ch1', hasSensor: true },
+    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Espinaca', '🌿 Mostaza'],                 sensor: 'soil_ch3', hasSensor: true },
+    { id: 'cama5',  name: 'Cama 5',  group: 'hierbas',  crops: ['🌿 Albahaca', '🌿 Cilantro', '🌿 Perejil'],  sensor: 'soil_ch1' },
+    { id: 'cama6',  name: 'Cama 6',  group: 'hierbas',  crops: ['🌿 Cebollín', '🌿 Orégano', '🌿 Tomillo'],   sensor: 'soil_ch3' },
+    { id: 'cama7',  name: 'Cama 7',  group: 'brasicas',  crops: ['🥦 Brócoli'],                                sensor: 'soil_ch1' },
     { id: 'cama8',  name: 'Cama 8',  group: 'brasicas',  crops: ['🥦 Coliflor'],                               sensor: 'soil_ch3' },
     { id: 'cama9',  name: 'Cama 9',  group: 'brasicas',  crops: ['🥬 Repollo'],                                sensor: 'soil_ch3' },
-    { id: 'cama10', name: 'Cama 10', group: 'brasicas',  crops: ['🥬 Kale'],                                   sensor: 'soil_ch4', hasSensor: true },
-    { id: 'cama11', name: 'Cama 11', group: 'brasicas',  crops: ['🥦 Brócoli', '🥦 Coliflor'],                 sensor: 'soil_ch4' },
-    { id: 'cama12', name: 'Cama 12', group: 'rotacion',  crops: ['🔄 Rotación'],                               sensor: 'soil_ch4' },
+    { id: 'cama10', name: 'Cama 10', group: 'brasicas',  crops: ['🥬 Kale'],                                   sensor: 'soil_ch5' },
+    { id: 'cama11', name: 'Cama 11', group: 'brasicas',  crops: ['🥦 Brócoli', '🥦 Coliflor'],                 sensor: 'soil_ch5' },
+    { id: 'cama12', name: 'Cama 12', group: 'rotacion',  crops: ['🔄 Rotación'],                               sensor: 'soil_ch5' },
   ];
 
   /** Group display labels. */
@@ -1685,7 +1685,7 @@
       }
     });
 
-    // Update greenhouse with CH5
+    // Update greenhouse with CH4
     const ghHum = humMap.get('invernadero') ?? null;
     const ghEl = document.getElementById('greenhouseHumidity');
     const ghCard = document.getElementById('greenhouseCard');
