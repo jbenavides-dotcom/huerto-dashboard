@@ -1,0 +1,696 @@
+{
+  "metadata": {
+    "proyecto": "Huerta Inteligente LPET",
+    "finca": "La Palma y El Tucan",
+    "ubicacion": "Zipacon, Cundinamarca, Colombia",
+    "altitud_msnm": 2500,
+    "clima_promedio_c": 14,
+    "fecha_generacion": "2026-01-31",
+    "version": "1.0"
+  },
+  "dimensiones": {
+    "area_total_m2": 398.26,
+    "area_cultivo_activo_m2": 118.35,
+    "camas_huerta": [
+      {
+        "numero": 1,
+        "ancho_m": 1.21,
+        "largo_m": 8.92,
+        "area_m2": 10.79,
+        "uso": "Ensaladas",
+        "cultivos": [
+          "lechuga",
+          "rucula",
+          "espinaca baby",
+          "mezcla mesclun"
+        ],
+        "color": "#90EE90"
+      },
+      {
+        "numero": 2,
+        "ancho_m": 1.21,
+        "largo_m": 9.2,
+        "area_m2": 11.13,
+        "uso": "Hojas + Aromaticas",
+        "cultivos": [
+          "acelga",
+          "mostaza verde",
+          "cilantro",
+          "cebollin"
+        ],
+        "color": "#98FB98"
+      },
+      {
+        "numero": 3,
+        "ancho_m": 1.32,
+        "largo_m": 12.11,
+        "area_m2": 15.99,
+        "uso": "Base Italiana",
+        "cultivos": [
+          "cebolla larga",
+          "ajo",
+          "perejil",
+          "apio"
+        ],
+        "color": "#8B4513"
+      },
+      {
+        "numero": 4,
+        "ancho_m": 1.31,
+        "largo_m": 11.95,
+        "area_m2": 15.65,
+        "uso": "Cruciferas",
+        "cultivos": [
+          "brocoli",
+          "coliflor",
+          "kale",
+          "repollo"
+        ],
+        "color": "#228B22"
+      },
+      {
+        "numero": 5,
+        "ancho_m": 1.31,
+        "largo_m": 11.95,
+        "area_m2": 15.65,
+        "uso": "Raices",
+        "cultivos": [
+          "zanahoria",
+          "remolacha",
+          "rabano",
+          "nabo"
+        ],
+        "color": "#D2691E"
+      },
+      {
+        "numero": 6,
+        "ancho_m": 1.31,
+        "largo_m": 11.9,
+        "area_m2": 15.59,
+        "uso": "Rotacion/Descanso",
+        "cultivos": [
+          "habas",
+          "arvejas",
+          "abono verde",
+          "gallinas"
+        ],
+        "color": "#DEB887"
+      }
+    ],
+    "invernadero": {
+      "largo_m": 5.99,
+      "ancho_m": 5.6,
+      "alto_m": 2.6,
+      "area_m2": 33.54,
+      "uso": "Produccion protegida",
+      "cultivos": [
+        "tomate",
+        "albahaca",
+        "curcuma",
+        "jengibre",
+        "almacigos"
+      ],
+      "color": "#87CEEB"
+    },
+    "espacio_libre": {
+      "siembra": {
+        "largo_m": 11,
+        "ancho_m": 8,
+        "area_m2": 88.0
+      },
+      "adicional": {
+        "largo_m": 8.5,
+        "ancho_m": 8.5,
+        "area_m2": 72.25
+      },
+      "area_total_m2": 160.25,
+      "uso": "Tour de Bienestar",
+      "subzonas": {
+        "jardin_medicinal": [
+          "romero",
+          "oregano",
+          "tomillo",
+          "calendula",
+          "manzanilla",
+          "ortiga",
+          "kalanchoe",
+          "moringa"
+        ],
+        "impacto_visual": [
+          "girasol",
+          "flores",
+          "fresas",
+          "parra de uva"
+        ]
+      },
+      "color": "#FFD700"
+    },
+    "compostaje": {
+      "placa_compostera": {
+        "largo_m": 5.7,
+        "ancho_m": 9.21,
+        "area_m2": 52.5
+      },
+      "espacio_libre": {
+        "largo_m": 7.3,
+        "ancho_m": 9.2,
+        "area_m2": 67.16
+      },
+      "camas_lombricompost": {
+        "cantidad": 14,
+        "area_total_m2": 73.59,
+        "produccion_estimada_kg_mes": 250
+      },
+      "color": "#8B4513"
+    }
+  },
+  "animales": {
+    "gallinas": {
+      "cantidad": {
+        "min": 20,
+        "max": 30,
+        "objetivo": 25
+      },
+      "sistema": "Pastoreo rotacional con gallinero movil",
+      "produccion_huevos_semana": {
+        "min": 100,
+        "max": 175
+      },
+      "alimentacion": [
+        "pasto",
+        "insectos",
+        "azolla",
+        "balanceado organico",
+        "restos cocina"
+      ],
+      "funciones": [
+        "control plagas",
+        "fertilizacion",
+        "deshierbe post-cosecha"
+      ]
+    },
+    "conejos": {
+      "cantidad": {
+        "min": 10,
+        "max": 15,
+        "objetivo": 12
+      },
+      "sistema": "Jaulas moviles tipo tractor",
+      "produccion_estiercol_kg_mes": 30,
+      "alimentacion": [
+        "pasto",
+        "forraje",
+        "restos huerta"
+      ],
+      "funciones": [
+        "fertilizacion",
+        "control maleza"
+      ]
+    },
+    "azolla": {
+      "ubicacion": "Estanques existentes",
+      "funcion": "Alimento gallinas (alto proteina)",
+      "produccion": "Duplica biomasa cada 3-5 dias"
+    }
+  },
+  "agua": {
+    "fuentes": [
+      {
+        "tipo": "Nacimiento natural",
+        "prioridad": 1,
+        "uso": "Riego principal"
+      },
+      {
+        "tipo": "Acueducto municipal",
+        "prioridad": 2,
+        "uso": "Backup"
+      },
+      {
+        "tipo": "Tanque de reserva",
+        "prioridad": 3,
+        "uso": "Emergencia/Almacenamiento"
+      }
+    ],
+    "sistema_riego": {
+      "tipo": "Goteo inteligente",
+      "zonas": 2,
+      "control": "Valvulas WiFi por humedad",
+      "frecuencia_estimada": "Cada 2-3 dias segun sensor"
+    }
+  },
+  "tecnologia": {
+    "sensores": [
+      {
+        "zona": "Huerta camas 1-2",
+        "tipo": "Humedad + Temp suelo",
+        "cantidad": 1
+      },
+      {
+        "zona": "Huerta camas 3-4",
+        "tipo": "Humedad + Temp suelo",
+        "cantidad": 1
+      },
+      {
+        "zona": "Huerta camas 5-6",
+        "tipo": "Humedad + Temp suelo",
+        "cantidad": 1
+      },
+      {
+        "zona": "Invernadero",
+        "tipo": "Temp + Humedad + Luz",
+        "cantidad": 2
+      },
+      {
+        "zona": "Compost",
+        "tipo": "Temp + Humedad",
+        "cantidad": 1
+      },
+      {
+        "zona": "Gallinero",
+        "tipo": "Temp + Nivel agua",
+        "cantidad": 2
+      },
+      {
+        "zona": "Estanques",
+        "tipo": "Temp agua",
+        "cantidad": 1
+      }
+    ],
+    "camaras": [
+      {
+        "ubicacion": "Vista general huerta",
+        "tipo": "Exterior gran angular"
+      },
+      {
+        "ubicacion": "Invernadero",
+        "tipo": "Interior"
+      },
+      {
+        "ubicacion": "Gallinas + estanques",
+        "tipo": "Exterior vision nocturna"
+      }
+    ],
+    "automatizaciones": [
+      {
+        "nombre": "Riego Huerta",
+        "trigger": "Humedad < 30%",
+        "accion": "Alerta + tarea riego"
+      },
+      {
+        "nombre": "Riego Invernadero",
+        "trigger": "Humedad < 35% AND Temp > 22C",
+        "accion": "Alerta prioritaria"
+      },
+      {
+        "nombre": "Estres termico",
+        "trigger": "Temp invernadero > 28C",
+        "accion": "Alerta ROJA + ventilacion"
+      },
+      {
+        "nombre": "Compost caliente",
+        "trigger": "Temp > 60C",
+        "accion": "Alerta voltear"
+      },
+      {
+        "nombre": "Agua gallinas",
+        "trigger": "Nivel < 25%",
+        "accion": "Tarea rellenar"
+      },
+      {
+        "nombre": "Cosecha viernes",
+        "trigger": "Dia = viernes 6am",
+        "accion": "Lista cosecha automatica"
+      }
+    ],
+    "plataforma": {
+      "backend": "Home Assistant (local)",
+      "tareas": "Notion",
+      "dispositivo_operario": "iPad dedicado",
+      "dashboard": "Streamlit"
+    }
+  },
+  "produccion": {
+    "demanda_hotel_kg_semana": {
+      "min": 15,
+      "max": 25,
+      "objetivo": 20
+    },
+    "produccion_estimada": {
+      "hojas_kg_semana": 8,
+      "cruciferas_kg_semana": 4,
+      "raices_kg_semana": 5,
+      "aromaticas_kg_semana": 2,
+      "tomate_kg_semana": 4,
+      "huevos_unidades_semana": 150,
+      "total_verduras_kg_semana": 23
+    },
+    "cultivos_por_ciclo": {
+      "rapido_30_dias": [
+        "lechuga",
+        "rucula",
+        "rabano",
+        "cilantro"
+      ],
+      "medio_60_dias": [
+        "espinaca",
+        "acelga",
+        "cebollin"
+      ],
+      "largo_90_dias": [
+        "brocoli",
+        "coliflor",
+        "zanahoria",
+        "remolacha"
+      ],
+      "permanente": [
+        "romero",
+        "tomillo",
+        "oregano",
+        "cebolla larga"
+      ]
+    }
+  },
+  "finanzas": {
+    "inversion_inicial_usd": {
+      "tecnologia_iot": 1950,
+      "infraestructura_animales": 1000,
+      "sistema_riego": 500,
+      "insumos_iniciales": 400,
+      "contingencia": 400,
+      "total": 4250
+    },
+    "costos_operativos_mensual_cop": {
+      "operario_medio_tiempo": 800000,
+      "internet": 100000,
+      "energia_adicional": 40000,
+      "insumos": 120000,
+      "total": 1060000
+    },
+    "ahorros_mensual_cop": {
+      "verduras_hotel": 700000,
+      "huevos": 250000,
+      "aromaticas": 100000,
+      "total": 1050000
+    },
+    "ingresos_mensual_cop": {
+      "tour_bienestar": {
+        "frecuencia_mes": 4,
+        "personas_por_tour": 10,
+        "precio_persona": 60000,
+        "total": 2400000
+      }
+    },
+    "analisis": {
+      "beneficio_bruto_cop": 3450000,
+      "costo_operativo_cop": 1060000,
+      "beneficio_neto_cop": 2390000,
+      "payback_meses": 7
+    }
+  },
+  "cronograma": {
+    "fases": [
+      {
+        "numero": 0,
+        "nombre": "Base Operativa",
+        "semana": 0,
+        "fecha_inicio": "2025-02-10",
+        "fecha_fin": "2025-02-10",
+        "tareas": [
+          "Numerar camas",
+          "Configurar Notion",
+          "Definir rutinas"
+        ],
+        "costo_usd": 100,
+        "responsable": "Propietario"
+      },
+      {
+        "numero": 1,
+        "nombre": "Sistema Digital",
+        "semana": 1,
+        "fecha_inicio": "2025-02-17",
+        "fecha_fin": "2025-02-23",
+        "tareas": [
+          "Comprar iPad",
+          "Instalar apps",
+          "Configurar dashboard",
+          "Entrenar operario"
+        ],
+        "costo_usd": 500,
+        "responsable": "Propietario + Tecnico"
+      },
+      {
+        "numero": 2,
+        "nombre": "Sensores Criticos",
+        "semana": 2,
+        "fecha_inicio": "2025-02-24",
+        "fecha_fin": "2025-03-02",
+        "tareas": [
+          "Instalar sensores huerta",
+          "Instalar sensores invernadero",
+          "Configurar alertas"
+        ],
+        "costo_usd": 400,
+        "responsable": "Tecnico IoT"
+      },
+      {
+        "numero": 3,
+        "nombre": "Camaras",
+        "semana": 3,
+        "fecha_inicio": "2025-03-03",
+        "fecha_fin": "2025-03-09",
+        "tareas": [
+          "Instalar 3 camaras",
+          "Configurar grabacion",
+          "Acceso remoto"
+        ],
+        "costo_usd": 350,
+        "responsable": "Tecnico IoT"
+      },
+      {
+        "numero": 4,
+        "nombre": "Riego Inteligente",
+        "semana": 4,
+        "fecha_inicio": "2025-03-10",
+        "fecha_fin": "2025-03-16",
+        "tareas": [
+          "Instalar valvulas WiFi",
+          "Conectar sensores",
+          "Programar automatizacion"
+        ],
+        "costo_usd": 350,
+        "responsable": "Tecnico + Plomero"
+      },
+      {
+        "numero": 5,
+        "nombre": "Animales",
+        "semana": 5,
+        "fecha_inicio": "2025-03-17",
+        "fecha_fin": "2025-03-30",
+        "tareas": [
+          "Construir gallinero movil",
+          "Construir conejeras",
+          "Adquirir animales",
+          "Configurar sensores animales"
+        ],
+        "costo_usd": 1000,
+        "responsable": "Constructor + Veterinario"
+      },
+      {
+        "numero": 6,
+        "nombre": "Optimizacion",
+        "semana": 7,
+        "fecha_inicio": "2025-03-31",
+        "fecha_fin": "2025-04-13",
+        "tareas": [
+          "Ajustar umbrales",
+          "Disenar tour",
+          "Senalizacion",
+          "Marketing inicial"
+        ],
+        "costo_usd": 300,
+        "responsable": "Propietario"
+      }
+    ],
+    "duracion_total_semanas": 9,
+    "fecha_operacion_plena": "2025-04-14"
+  },
+  "operacion": {
+    "rutina_semanal": [
+      {
+        "dia": "Lunes",
+        "enfoque": "Huerta + siembras",
+        "horas": 2.5,
+        "tareas": [
+          "Revisar humedad",
+          "Deshierbe",
+          "Siembra escalonada",
+          "Aplicar humus"
+        ]
+      },
+      {
+        "dia": "Martes",
+        "enfoque": "Compost + lombrices",
+        "horas": 1.75,
+        "tareas": [
+          "Agregar restos",
+          "Mezclar",
+          "Alimentar lombrices",
+          "Cosechar humus"
+        ]
+      },
+      {
+        "dia": "Miercoles",
+        "enfoque": "Animales",
+        "horas": 2,
+        "tareas": [
+          "Mover gallinero",
+          "Recolectar huevos",
+          "Dar azolla",
+          "Limpiar conejeras"
+        ]
+      },
+      {
+        "dia": "Jueves",
+        "enfoque": "Invernadero",
+        "horas": 2,
+        "tareas": [
+          "Podar tomate",
+          "Amarrar plantas",
+          "Revisar plagas",
+          "Regar"
+        ]
+      },
+      {
+        "dia": "Viernes",
+        "enfoque": "Cosecha hotel",
+        "horas": 1.5,
+        "tareas": [
+          "Cosecha 6-8am",
+          "Registro kg",
+          "Entrega cocina"
+        ]
+      },
+      {
+        "dia": "Sabado",
+        "enfoque": "Tour/experiencia",
+        "horas": 3,
+        "tareas": [
+          "Preparar recorrido",
+          "Guiar tour",
+          "Venta experiencia"
+        ]
+      },
+      {
+        "dia": "Domingo",
+        "enfoque": "Revision ligera",
+        "horas": 0.5,
+        "tareas": [
+          "Agua",
+          "Animales",
+          "Revision general"
+        ]
+      }
+    ],
+    "horas_semanales_total": 13.25,
+    "perfil_operario": {
+      "dedicacion": "Medio tiempo",
+      "horas_dia": 3.5,
+      "requisitos": [
+        "Saber leer",
+        "Usar iPad",
+        "Responsable",
+        "Actitud cuidado"
+      ],
+      "no_requiere": [
+        "Titulo",
+        "Experiencia agricola avanzada",
+        "Conocimiento tecnico"
+      ]
+    }
+  },
+  "kpis": {
+    "produccion": [
+      {
+        "nombre": "Verduras cosechadas",
+        "unidad": "kg/semana",
+        "meta": 20,
+        "minimo": 15
+      },
+      {
+        "nombre": "Huevos recolectados",
+        "unidad": "unidades/semana",
+        "meta": 150,
+        "minimo": 100
+      },
+      {
+        "nombre": "Humus producido",
+        "unidad": "kg/mes",
+        "meta": 250,
+        "minimo": 150
+      }
+    ],
+    "operacion": [
+      {
+        "nombre": "Tareas completadas",
+        "unidad": "%",
+        "meta": 95,
+        "minimo": 80
+      },
+      {
+        "nombre": "Alertas atendidas",
+        "unidad": "% en <2h",
+        "meta": 90,
+        "minimo": 70
+      },
+      {
+        "nombre": "Tiempo operacion",
+        "unidad": "h/dia",
+        "meta": 3.5,
+        "maximo": 4
+      }
+    ],
+    "finanzas": [
+      {
+        "nombre": "Ahorro hotel",
+        "unidad": "COP/mes",
+        "meta": 1050000
+      },
+      {
+        "nombre": "Ingreso tours",
+        "unidad": "COP/mes",
+        "meta": 2400000
+      },
+      {
+        "nombre": "Costo operativo",
+        "unidad": "COP/mes",
+        "maximo": 1200000
+      }
+    ],
+    "salud_sistema": [
+      {
+        "nombre": "Humedad suelo",
+        "unidad": "%",
+        "rango": [
+          30,
+          70
+        ]
+      },
+      {
+        "nombre": "Temp invernadero",
+        "unidad": "C",
+        "rango": [
+          12,
+          28
+        ]
+      },
+      {
+        "nombre": "Temp compost",
+        "unidad": "C",
+        "rango": [
+          40,
+          60
+        ]
+      }
+    ]
+  }
+}
