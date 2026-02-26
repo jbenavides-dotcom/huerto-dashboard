@@ -1915,16 +1915,23 @@
     const needsWater = [];
     SOIL_CHANNELS.forEach(ch => {
       const pct = parseVal(data[ch.key]?.soilmoisture?.value);
-      if (pct !== null && pct < CONFIG.soilAlertThreshold) {
-        needsWater.push({ label: ch.label, pct });
+      if (pct === null) return;
+      // Usar umbral específico por cultivo, no el genérico
+      const mapping = SENSOR_BED_MAP[ch.key];
+      const group = mapping ? mapping.group : 'hojas';
+      const t = CROP_THRESHOLDS[group] || CROP_THRESHOLDS.hojas;
+      if (pct < t.alert) {
+        needsWater.push({ label: ch.label, pct, critical: pct < t.critical });
       }
     });
 
     if (needsWater.length > 0) {
-      needsWater.forEach(({ label, pct }) => {
+      needsWater.forEach(({ label, pct, critical }) => {
         const div = document.createElement('div');
         div.className = 'alert-item';
-        div.textContent = `⚠ ${label} necesita riego — ${Math.round(pct)}% humedad`;
+        const icon = critical ? '🚨' : '⚠';
+        const msg = critical ? 'riego urgente' : 'necesita riego';
+        div.textContent = `${icon} ${label} ${msg} — ${Math.round(pct)}% humedad`;
         items.appendChild(div);
       });
       banner.classList.add('visible');
@@ -2192,11 +2199,17 @@
           icon: '⚠️',
           msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Riego recomendado (aviso: <${t.alert}%)`,
         });
-      } else if (pct > t.optMax) {
+      } else if (pct > t.optMax + 15) {
         notifications.push({
           severity: 'rain',
           icon: '💧',
           msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Suelo saturado, no regar`,
+        });
+      } else if (pct > t.optMax) {
+        notifications.push({
+          severity: 'info',
+          icon: 'ℹ️',
+          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Sobre el óptimo (máx: ${t.optMax}%), reducir riego`,
         });
       }
     });
