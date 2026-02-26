@@ -2016,6 +2016,7 @@
     updateClima(data);
     updateRain(data);
     updateBattery(data);
+    checkBrowserAlerts(data);
 
     hideError('globalError');
   }
@@ -2085,6 +2086,82 @@
   }
 
   /* ──────────────────────────────────────────
+     BROWSER PUSH NOTIFICATIONS
+  ────────────────────────────────────────── */
+  let notifPermission = Notification?.permission || 'denied';
+
+  async function requestNotifPermission() {
+    if (!('Notification' in window)) return;
+    if (notifPermission === 'default') {
+      notifPermission = await Notification.requestPermission();
+    }
+  }
+
+  function sendBrowserNotif(title, body, tag) {
+    if (notifPermission !== 'granted') return;
+    try {
+      new Notification(title, {
+        body,
+        icon: '🌱',
+        tag, // prevents duplicate notifs with same tag
+        requireInteraction: true,
+      });
+    } catch (e) { /* silent fail on iOS if not supported */ }
+  }
+
+  /**
+   * Check data and fire browser notifications for critical conditions.
+   * Called from updateDashboard after each refresh.
+   */
+  function checkBrowserAlerts(data) {
+    if (notifPermission !== 'granted') return;
+
+    const alerts = [];
+
+    // Soil alerts per sensor-bed mapping
+    Object.entries(SENSOR_BED_MAP).forEach(([sensorKey, mapping]) => {
+      const pct = parseVal(data[sensorKey]?.soilmoisture?.value);
+      if (pct === null) return;
+      const t = CROP_THRESHOLDS[mapping.group] || CROP_THRESHOLDS.rotacion;
+      if (pct < t.critical) {
+        alerts.push(`🚨 ${mapping.label}: ${Math.round(pct)}% — ¡Riego urgente!`);
+      } else if (pct < t.alert) {
+        alerts.push(`⚠️ ${mapping.label}: ${Math.round(pct)}% — Riego recomendado`);
+      }
+    });
+
+    // Rain alert
+    const rainRate = parseVal(data.rainfall?.rain_rate?.value);
+    if (rainRate !== null && rainRate > 0) {
+      alerts.push(`🌧️ Lluvia activa: ${rainRate.toFixed(1)} mm/hr`);
+    }
+
+    // Frost alert
+    const tempExt = parseVal(data.outdoor?.temperature?.value);
+    if (tempExt !== null && tempExt < 8) {
+      alerts.push(`🥶 Temperatura ${tempExt.toFixed(1)}°C — Proteger cultivos`);
+    }
+
+    // Battery alert
+    const battery = data.battery || {};
+    Object.entries(battery).forEach(([key, batt]) => {
+      if (batt.unit === 'V' && parseVal(batt.value) < 1.2) {
+        const name = BATTERY_SENSOR_NAMES[key] || key;
+        alerts.push(`🔋 ${name}: batería baja ${batt.value}V`);
+      }
+    });
+
+    // Send one combined notification if there are alerts
+    if (alerts.length > 0) {
+      sendBrowserNotif(
+        `Huerto — ${alerts.length} alerta${alerts.length > 1 ? 's' : ''}`,
+        alerts.join('\n'),
+        'huerto-alert'
+      );
+    }
+  }
+
+  /* ──────────────────────────────────────────
      DOM HELPERS
   ────────────────────────────────────────── */
   function setText(id, text) {
@@ -2109,6 +2186,9 @@
      INIT
   ────────────────────────────────────────── */
   async function init() {
+    // Request notification permission on first load
+    await requestNotifPermission();
+
     // Load both in parallel on first load
     await Promise.allSettled([loadRealtime(), loadHistory()]);
 
