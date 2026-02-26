@@ -1014,16 +1014,15 @@
           </div>
         </div>
 
-        <!-- Row 1: Hojas + Hierbas (Camas 1–6) -->
-        <div class="beds-row-label">Fila 1 — Hojas &amp; Hierbas (Camas 1–6)</div>
+        <!-- Disposición real: 2 columnas (Impares derecha, Pares izquierda) -->
+        <div class="beds-row-label">Derecha — Impares (1, 3, 5, 7, 9, 11)</div>
         <div class="beds-grid" id="bedsRow1">
-          <!-- Filled by JS -->
+          <!-- Filled by JS: odd beds -->
         </div>
 
-        <!-- Row 2: Brásicas + Rotación (Camas 7–12) -->
-        <div class="beds-row-label">Fila 2 — Brásicas &amp; Rotación (Camas 7–12)</div>
+        <div class="beds-row-label">Izquierda — Pares (2, 4, 6, 8, 10, 12)</div>
         <div class="beds-grid" id="bedsRow2">
-          <!-- Filled by JS -->
+          <!-- Filled by JS: even beds -->
         </div>
 
         <!-- Greenhouse -->
@@ -1036,7 +1035,6 @@
               <span class="greenhouse-crop">🍅 Tomate San Marzano</span>
               <span class="greenhouse-crop">🍅 Cherry</span>
               <span class="greenhouse-crop">🍅 Chonto</span>
-              <span class="greenhouse-crop">🌿 Albahaca</span>
             </div>
             <div class="greenhouse-note">Sensores pendientes (WH51-6, WH51-7, WH31)</div>
           </div>
@@ -1670,18 +1668,19 @@
   function updateBedMap(data) {
     const humMap = buildBedHumidityMap(data);
 
-    const row1 = document.getElementById('bedsRow1');
-    const row2 = document.getElementById('bedsRow2');
-    row1.innerHTML = '';
-    row2.innerHTML = '';
+    const rowOdd  = document.getElementById('bedsRow1'); // impares (derecha)
+    const rowEven = document.getElementById('bedsRow2'); // pares (izquierda)
+    rowOdd.innerHTML = '';
+    rowEven.innerHTML = '';
 
-    BEDS.forEach((bed, idx) => {
+    BEDS.forEach(bed => {
       const humidity = humMap.get(bed.id) ?? null;
       const card = renderBedCard(bed, humidity);
-      if (idx < 6) {
-        row1.appendChild(card);
+      const bedNum = parseInt(bed.id.replace('cama', ''), 10);
+      if (bedNum % 2 === 1) {
+        rowOdd.appendChild(card);  // 1,3,5,7,9,11
       } else {
-        row2.appendChild(card);
+        rowEven.appendChild(card); // 2,4,6,8,10,12
       }
     });
   }
