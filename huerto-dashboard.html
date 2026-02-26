@@ -1158,6 +1158,63 @@
     .bed-crop-item[data-plant-id] {
       cursor: help;
     }
+
+    /* ──────────────────────────────────────────
+       SENSOR ASSIGNMENT SYSTEM
+    ────────────────────────────────────────── */
+    .bed-sensor-row {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.2rem;
+    }
+
+    .bed-sensor-select {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      font-size: 0.65rem;
+      padding: 0.15rem 0.3rem;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .bed-sensor-select:focus {
+      border-color: var(--accent-green);
+      outline: none;
+    }
+
+    .bed-sensor-select option:disabled {
+      color: var(--muted);
+    }
+
+    .bed-live-badge {
+      display: inline-block;
+      background: var(--accent-green);
+      color: #000;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-left: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    .bed-cached-info {
+      font-size: 0.6rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .bed-humidity-cached {
+      font-size: 1.1rem;
+      font-weight: 800;
+      line-height: 1;
+      opacity: 0.6;
+    }
   </style>
 </head>
 <body>
@@ -1317,11 +1374,16 @@
             <div class="greenhouse-crops" id="greenhouseCropsDisplay">
               <!-- Filled by JS -->
             </div>
-            <div class="greenhouse-note">Sensor CH4 · Óptimo tomate: 20–30%</div>
+            <div class="greenhouse-note" id="greenhouseNote">Sensor CH4 · Óptimo tomate: 20–30%</div>
+            <div class="bed-sensor-row" style="margin-top:0.4rem;max-width:180px">
+              <select class="bed-sensor-select" id="greenhouseSensorSelect" onchange="assignSensorToBed('invernadero', this.value)">
+                <!-- Filled by JS -->
+              </select>
+            </div>
           </div>
           <div class="greenhouse-dims">
             <div class="greenhouse-dims-value" id="greenhouseHumidity">—</div>
-            <div class="greenhouse-dims-label">Humedad suelo</div>
+            <div class="greenhouse-dims-label" id="greenhouseDimsLabel">Humedad suelo</div>
           </div>
         </div>
       </div>
@@ -1582,6 +1644,174 @@
 
   /** localStorage key for plant assignments */
   const LS_KEY = 'huerta_bed_plants';
+
+  /** localStorage keys for sensor assignment system */
+  const LS_SENSOR_ASSIGNMENTS = 'huerta_sensor_assignments';
+  const LS_BED_READINGS        = 'huerta_bed_readings';
+
+  /** Default physical sensor placement */
+  const DEFAULT_SENSOR_ASSIGNMENTS = {
+    cama1:       'soil_ch2',
+    cama2:       'soil_ch5',
+    cama3:       'soil_ch1',
+    cama4:       'soil_ch3',
+    cama5:       null,
+    cama6:       null,
+    cama7:       null,
+    cama8:       null,
+    cama9:       null,
+    cama10:      null,
+    cama11:      null,
+    cama12:      null,
+    invernadero: 'soil_ch4',
+  };
+
+  /**
+   * Load sensor-to-bed assignments from localStorage or use defaults.
+   * @returns {Object<string, string|null>}
+   */
+  function loadSensorAssignments() {
+    try {
+      const raw = localStorage.getItem(LS_SENSOR_ASSIGNMENTS);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed === 'object' && parsed !== null) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to parse sensor assignments:', e);
+    }
+    return JSON.parse(JSON.stringify(DEFAULT_SENSOR_ASSIGNMENTS));
+  }
+
+  /**
+   * Save sensor-to-bed assignments to localStorage.
+   * @param {Object<string, string|null>} data
+   */
+  function saveSensorAssignments(data) {
+    try {
+      localStorage.setItem(LS_SENSOR_ASSIGNMENTS, JSON.stringify(data));
+    } catch (e) {
+      console.warn('Failed to save sensor assignments:', e);
+    }
+  }
+
+  /**
+   * Load last-known bed readings cache from localStorage.
+   * @returns {Object<string, { humidity: number, timestamp: number, sensor: string }>}
+   */
+  function loadBedReadings() {
+    try {
+      const raw = localStorage.getItem(LS_BED_READINGS);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed === 'object' && parsed !== null) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to parse bed readings:', e);
+    }
+    return {};
+  }
+
+  /**
+   * Save bed readings cache to localStorage.
+   * @param {Object} data
+   */
+  function saveBedReadings(data) {
+    try {
+      localStorage.setItem(LS_BED_READINGS, JSON.stringify(data));
+    } catch (e) {
+      console.warn('Failed to save bed readings:', e);
+    }
+  }
+
+  /**
+   * Reverse lookup: which bed (if any) is currently using this sensor key.
+   * @param {string} sensorKey - e.g. 'soil_ch1'
+   * @returns {string|null} bedId or null
+   */
+  function getSensorBed(sensorKey) {
+    const assignments = loadSensorAssignments();
+    for (const [bedId, assigned] of Object.entries(assignments)) {
+      if (assigned === sensorKey) return bedId;
+    }
+    return null;
+  }
+
+  /**
+   * Assign a sensor to a bed.  Auto-unassigns it from any other bed first.
+   * Pass null/empty string as sensorKey to remove sensor from the bed.
+   * @param {string} bedId
+   * @param {string|null} sensorKey
+   */
+  function assignSensorToBed(bedId, sensorKey) {
+    const assignments = loadSensorAssignments();
+
+    // Normalize empty string to null
+    const newKey = sensorKey || null;
+
+    // If this sensor is already in another bed, clear it there first
+    if (newKey) {
+      for (const [bid, assigned] of Object.entries(assignments)) {
+        if (bid !== bedId && assigned === newKey) {
+          assignments[bid] = null;
+        }
+      }
+    }
+
+    assignments[bedId] = newKey;
+    saveSensorAssignments(assignments);
+
+    // Re-render the entire bed map with the cached last API data
+    refreshBedCardsOnly();
+  }
+
+  /**
+   * Format a relative time string from a millisecond timestamp.
+   * @param {number} timestampMs
+   * @returns {string}
+   */
+  function timeAgo(timestampMs) {
+    const diff = Date.now() - timestampMs;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1)  return 'ahora';
+    if (mins < 60) return `hace ${mins}min`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24)  return `hace ${hrs}h`;
+    const days = Math.floor(hrs / 24);
+    return `hace ${days}d`;
+  }
+
+  /**
+   * Build the sensor select dropdown options for a given bed.
+   * @param {string} bedId
+   * @param {string|null} assignedSensor - currently assigned sensor key for this bed
+   * @param {Object<string,string|null>} assignments - full assignment map
+   * @returns {string} HTML string of <option> elements
+   */
+  function buildSensorOptions(bedId, assignedSensor, assignments) {
+    let html = '<option value="">Sin sensor</option>';
+    SOIL_CHANNELS.forEach(ch => {
+      const isSelected = assignedSensor === ch.key;
+      // Check if assigned to ANOTHER bed
+      const occupiedBy = Object.entries(assignments).find(
+        ([bid, sk]) => bid !== bedId && sk === ch.key
+      );
+      const chNum = ch.key.replace('soil_ch', 'CH');
+      let label = `📡 ${chNum}`;
+      if (occupiedBy) {
+        // Find bed name for display
+        const occBed = BEDS.find(b => b.id === occupiedBy[0]);
+        const occName = occBed ? occBed.name : (occupiedBy[0] === 'invernadero' ? 'Invernadero' : occupiedBy[0]);
+        label += ` (en ${occName})`;
+      }
+      html += `<option value="${ch.key}"${isSelected ? ' selected' : ''}>${label}</option>`;
+    });
+    return html;
+  }
 
   /**
    * Load bed plant assignments from localStorage or fall back to defaults.
@@ -1912,16 +2142,28 @@
     const items  = document.getElementById('alertItems');
     items.innerHTML = '';
 
+    const sensorAssignments = loadSensorAssignments();
     const needsWater = [];
-    SOIL_CHANNELS.forEach(ch => {
-      const pct = parseVal(data[ch.key]?.soilmoisture?.value);
+
+    // Only alert for beds that have an active sensor assigned
+    Object.entries(sensorAssignments).forEach(([bedId, sensorKey]) => {
+      if (!sensorKey) return; // no sensor — skip
+      const pct = parseVal(data[sensorKey]?.soilmoisture?.value);
       if (pct === null) return;
-      // Usar umbral específico por cultivo, no el genérico
-      const mapping = SENSOR_BED_MAP[ch.key];
-      const group = mapping ? mapping.group : 'hojas';
+
+      // Find the bed group for crop-specific thresholds
+      const bed = BEDS.find(b => b.id === bedId);
+      const group = bed ? bed.group : (bedId === 'invernadero' ? 'tomate' : 'hojas');
       const t = CROP_THRESHOLDS[group] || CROP_THRESHOLDS.hojas;
+
       if (pct < t.alert) {
-        needsWater.push({ label: ch.label, pct, critical: pct < t.critical });
+        const chNum = sensorKey.replace('soil_ch', 'CH');
+        const bedName = bed ? bed.name : (bedId === 'invernadero' ? 'Invernadero' : bedId);
+        needsWater.push({
+          label: `${chNum} (${bedName})`,
+          pct,
+          critical: pct < t.critical,
+        });
       }
     });
 
@@ -2030,20 +2272,6 @@
   ────────────────────────────────────────── */
 
   /**
-   * Build a map of bedId -> humidity value from current API data.
-   * @param {object} data - Ecowitt real-time API data object
-   * @returns {Map<string, number|null>}
-   */
-  function buildBedHumidityMap(data) {
-    const map = new Map();
-    Object.entries(SENSOR_BED_MAP).forEach(([sensorKey, mapping]) => {
-      const pct = parseVal(data[sensorKey]?.soilmoisture?.value);
-      mapping.beds.forEach(bedId => map.set(bedId, pct));
-    });
-    return map;
-  }
-
-  /**
    * Build crop item HTML for a plant ID or fallback string.
    * @param {string} plantId
    * @returns {string}
@@ -2063,10 +2291,12 @@
   /**
    * Render a single bed card element.
    * @param {object} bed - Bed definition from BEDS array
-   * @param {number|null} humidity - Live humidity value or null
+   * @param {number|null} humidity - Humidity value (live or cached) or null
+   * @param {boolean} isLive - True if the humidity comes from a currently assigned sensor
+   * @param {number|null} cachedTimestamp - Epoch ms of last cached reading (when not live)
    * @returns {HTMLElement}
    */
-  function renderBedCard(bed, humidity) {
+  function renderBedCard(bed, humidity, isLive, cachedTimestamp) {
     const { glowClass, color } = bedHumidityStatus(humidity, bed.group);
     const t = CROP_THRESHOLDS[bed.group] || CROP_THRESHOLDS.rotacion;
 
@@ -2081,12 +2311,32 @@
     const plantIds = BED_PLANTS[bed.id] || bed.crops || [];
     const cropsHtml = plantIds.map(id => buildCropItemHtml(id)).join('');
 
+    // Build sensor selector
+    const assignments = loadSensorAssignments();
+    const assignedSensor = assignments[bed.id] || null;
+    const sensorOptionsHtml = buildSensorOptions(bed.id, assignedSensor, assignments);
+    const sensorRowHtml = `
+      <div class="bed-sensor-row">
+        <select class="bed-sensor-select" onchange="assignSensorToBed('${bed.id}', this.value)">
+          ${sensorOptionsHtml}
+        </select>
+      </div>
+    `;
+
+    // Build humidity display
     let humidityHtml;
-    if (humidity !== null) {
-      const sensorTag = bed.hasSensor ? ' 📡' : '';
+    if (humidity !== null && isLive) {
       humidityHtml = `
-        <div class="bed-humidity" style="color:${color}">${Math.round(humidity)}%${sensorTag}</div>
+        <div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:0.1rem">
+          <div class="bed-humidity" style="color:${color}">${Math.round(humidity)}%</div>
+          <span class="bed-live-badge">En vivo</span>
+        </div>
         <div class="bed-humidity-sub">Óptimo: ${t.optMin}–${t.optMax}%</div>
+      `;
+    } else if (humidity !== null && cachedTimestamp) {
+      humidityHtml = `
+        <div class="bed-humidity-cached" style="color:${color}">${Math.round(humidity)}%</div>
+        <div class="bed-cached-info">Último: ${timeAgo(cachedTimestamp)}</div>
       `;
     } else {
       humidityHtml = `<div class="bed-no-sensor">Sin datos</div>`;
@@ -2096,6 +2346,7 @@
       <button class="bed-edit-btn" onclick="openPlantModal('${bed.id}')" title="Editar plantas">✏️</button>
       <div class="bed-card-name">${bed.name} · ${groupLabel}</div>
       <div class="bed-card-crops">${cropsHtml}</div>
+      ${sensorRowHtml}
       ${humidityHtml}
     `;
 
@@ -2103,12 +2354,15 @@
   }
 
   /**
-   * Update the visual bed map with live humidity data.
+   * Update the visual bed map with live humidity data using the sensor assignment system.
    * @param {object} data - Ecowitt real-time API data object
    */
   function updateBedMap(data) {
-    const humMap = buildBedHumidityMap(data);
-    _lastHumMap = humMap; // cache for lightweight re-renders after plant edits
+    const sensorAssignments = loadSensorAssignments();
+    const bedReadings = loadBedReadings();
+
+    // Cache for lightweight re-renders (stores the raw API data)
+    _lastApiData = data;
 
     const rowOdd  = document.getElementById('bedsRow1'); // impares (derecha)
     const rowEven = document.getElementById('bedsRow2'); // pares (izquierda)
@@ -2116,8 +2370,29 @@
     rowEven.innerHTML = '';
 
     BEDS.forEach(bed => {
-      const humidity = humMap.get(bed.id) ?? null;
-      const card = renderBedCard(bed, humidity);
+      const assignedSensor = sensorAssignments[bed.id] || null;
+      let humidity = null;
+      let isLive = false;
+      let cachedTimestamp = null;
+
+      if (assignedSensor) {
+        // Try to get live reading from assigned sensor
+        const liveVal = parseVal(data[assignedSensor]?.soilmoisture?.value);
+        if (liveVal !== null) {
+          humidity = liveVal;
+          isLive = true;
+          // Cache this reading
+          bedReadings[bed.id] = { humidity: liveVal, timestamp: Date.now(), sensor: assignedSensor };
+        }
+      }
+
+      if (!isLive && bedReadings[bed.id]) {
+        // Fall back to cached reading
+        humidity = bedReadings[bed.id].humidity;
+        cachedTimestamp = bedReadings[bed.id].timestamp;
+      }
+
+      const card = renderBedCard(bed, humidity, isLive, cachedTimestamp);
       const bedNum = parseInt(bed.id.replace('cama', ''), 10);
       if (bedNum % 2 === 1) {
         rowOdd.appendChild(card);  // 1,3,5,7,9,11
@@ -2126,27 +2401,82 @@
       }
     });
 
-    // Update greenhouse with CH4
-    const ghHum = humMap.get('invernadero') ?? null;
-    const ghEl = document.getElementById('greenhouseHumidity');
-    const ghCard = document.getElementById('greenhouseCard');
-    if (ghHum !== null) {
-      ghEl.textContent = Math.round(ghHum) + '%';
-      const t = CROP_THRESHOLDS.tomate;
-      if (ghHum < t.critical) { ghEl.style.color = '#FF4757'; ghCard.style.borderLeftColor = '#FF4757'; }
-      else if (ghHum < t.alert) { ghEl.style.color = '#FFB800'; ghCard.style.borderLeftColor = '#FFB800'; }
-      else if (ghHum >= t.optMin && ghHum <= t.optMax) { ghEl.style.color = '#00D68F'; ghCard.style.borderLeftColor = '#00D68F'; }
-      else { ghEl.style.color = '#4ECDC4'; ghCard.style.borderLeftColor = '#4ECDC4'; }
-    } else {
-      ghEl.textContent = '—';
+    // Save updated bed readings cache
+    saveBedReadings(bedReadings);
+
+    // Update greenhouse card
+    const ghAssigned = sensorAssignments['invernadero'] || null;
+    let ghHum = null;
+    let ghIsLive = false;
+    let ghCachedTs = null;
+
+    if (ghAssigned) {
+      const liveGh = parseVal(data[ghAssigned]?.soilmoisture?.value);
+      if (liveGh !== null) {
+        ghHum = liveGh;
+        ghIsLive = true;
+        bedReadings['invernadero'] = { humidity: liveGh, timestamp: Date.now(), sensor: ghAssigned };
+        saveBedReadings(bedReadings);
+      }
     }
+    if (!ghIsLive && bedReadings['invernadero']) {
+      ghHum = bedReadings['invernadero'].humidity;
+      ghCachedTs = bedReadings['invernadero'].timestamp;
+    }
+
+    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs);
+    _updateGreenhouseSensorSelect(sensorAssignments);
 
     // Update greenhouse crops display from BED_PLANTS
     renderGreenhouseCrops();
   }
 
   /**
+   * Update the greenhouse humidity display.
+   * @param {number|null} ghHum
+   * @param {boolean} isLive
+   * @param {number|null} cachedTs
+   */
+  function _updateGreenhouseHumidity(ghHum, isLive, cachedTs) {
+    const ghEl   = document.getElementById('greenhouseHumidity');
+    const ghCard = document.getElementById('greenhouseCard');
+    const ghLabel= document.getElementById('greenhouseDimsLabel');
+
+    if (ghHum !== null) {
+      ghEl.textContent = Math.round(ghHum) + '%';
+      const t = CROP_THRESHOLDS.tomate;
+      if (ghHum < t.critical)                        { ghEl.style.color = '#FF4757'; ghCard.style.borderLeftColor = '#FF4757'; }
+      else if (ghHum < t.alert)                      { ghEl.style.color = '#FFB800'; ghCard.style.borderLeftColor = '#FFB800'; }
+      else if (ghHum >= t.optMin && ghHum <= t.optMax){ ghEl.style.color = '#00D68F'; ghCard.style.borderLeftColor = '#00D68F'; }
+      else                                            { ghEl.style.color = '#4ECDC4'; ghCard.style.borderLeftColor = '#4ECDC4'; }
+
+      if (isLive) {
+        ghLabel.innerHTML = 'Humedad suelo <span class="bed-live-badge">En vivo</span>';
+      } else if (cachedTs) {
+        ghLabel.textContent = `Último: ${timeAgo(cachedTs)}`;
+      } else {
+        ghLabel.textContent = 'Humedad suelo';
+      }
+    } else {
+      ghEl.textContent = '—';
+      ghLabel.textContent = 'Humedad suelo';
+    }
+  }
+
+  /**
+   * Update the greenhouse sensor select dropdown.
+   * @param {Object<string, string|null>} assignments
+   */
+  function _updateGreenhouseSensorSelect(assignments) {
+    const select = document.getElementById('greenhouseSensorSelect');
+    if (!select) return;
+    const assignedSensor = assignments['invernadero'] || null;
+    select.innerHTML = buildSensorOptions('invernadero', assignedSensor, assignments);
+  }
+
+  /**
    * Render the greenhouse crops row from BED_PLANTS['invernadero'].
+   * Also refreshes the sensor select dropdown.
    */
   function renderGreenhouseCrops() {
     const cropsEl = document.getElementById('greenhouseCropsDisplay');
@@ -2164,6 +2494,12 @@
       }
       return `<span class="greenhouse-crop">${id}</span>`;
     }).join('');
+
+    // Ensure greenhouse sensor select is populated on initial render
+    const select = document.getElementById('greenhouseSensorSelect');
+    if (select && select.options.length <= 1) {
+      _updateGreenhouseSensorSelect(loadSensorAssignments());
+    }
   }
 
   /* ──────────────────────────────────────────
@@ -2180,36 +2516,45 @@
     const now = formatTime(new Date());
 
     // ── 1. Check soil channels against crop-specific thresholds
-    Object.entries(SENSOR_BED_MAP).forEach(([sensorKey, mapping]) => {
+    // Only generate alerts for beds that have a sensor actively assigned
+    const sensorAssignments = loadSensorAssignments();
+    Object.entries(sensorAssignments).forEach(([bedId, sensorKey]) => {
+      if (!sensorKey) return; // no sensor assigned to this bed
+
       const pct = parseVal(data[sensorKey]?.soilmoisture?.value);
       if (pct === null) return;
 
-      const t = CROP_THRESHOLDS[mapping.group] || CROP_THRESHOLDS.rotacion;
-      const groupLabel = (CROP_THRESHOLDS[mapping.group] || CROP_THRESHOLDS.rotacion).label;
+      const bed = BEDS.find(b => b.id === bedId);
+      const group = bed ? bed.group : (bedId === 'invernadero' ? 'tomate' : 'hojas');
+      const t = CROP_THRESHOLDS[group] || CROP_THRESHOLDS.rotacion;
+      const groupLabel = t.label;
+      const chNum = sensorKey.replace('soil_ch', 'CH');
+      const bedName = bed ? bed.name : (bedId === 'invernadero' ? 'Invernadero' : bedId);
+      const sensorLabel = `${chNum} → ${bedName}`;
 
       if (pct < t.critical) {
         notifications.push({
           severity: 'critical',
           icon: '🚨',
-          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — ¡Riego urgente! (crítico: <${t.critical}%)`,
+          msg: `${sensorLabel} (${groupLabel}): Humedad ${Math.round(pct)}% — ¡Riego urgente! (crítico: <${t.critical}%)`,
         });
       } else if (pct < t.alert) {
         notifications.push({
           severity: 'warning',
           icon: '⚠️',
-          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Riego recomendado (aviso: <${t.alert}%)`,
+          msg: `${sensorLabel} (${groupLabel}): Humedad ${Math.round(pct)}% — Riego recomendado (aviso: <${t.alert}%)`,
         });
       } else if (pct > t.optMax + 15) {
         notifications.push({
           severity: 'rain',
           icon: '💧',
-          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Suelo saturado, no regar`,
+          msg: `${sensorLabel} (${groupLabel}): Humedad ${Math.round(pct)}% — Suelo saturado, no regar`,
         });
       } else if (pct > t.optMax) {
         notifications.push({
           severity: 'info',
           icon: 'ℹ️',
-          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Sobre el óptimo (máx: ${t.optMax}%), reducir riego`,
+          msg: `${sensorLabel} (${groupLabel}): Humedad ${Math.round(pct)}% — Sobre el óptimo (máx: ${t.optMax}%), reducir riego`,
         });
       }
     });
@@ -2589,15 +2934,21 @@
 
     const alerts = [];
 
-    // Soil alerts per sensor-bed mapping
-    Object.entries(SENSOR_BED_MAP).forEach(([sensorKey, mapping]) => {
+    // Soil alerts — only for beds with an active sensor assignment
+    const sensorAssignments = loadSensorAssignments();
+    Object.entries(sensorAssignments).forEach(([bedId, sensorKey]) => {
+      if (!sensorKey) return;
       const pct = parseVal(data[sensorKey]?.soilmoisture?.value);
       if (pct === null) return;
-      const t = CROP_THRESHOLDS[mapping.group] || CROP_THRESHOLDS.rotacion;
+      const bed = BEDS.find(b => b.id === bedId);
+      const group = bed ? bed.group : (bedId === 'invernadero' ? 'tomate' : 'hojas');
+      const t = CROP_THRESHOLDS[group] || CROP_THRESHOLDS.rotacion;
+      const chNum = sensorKey.replace('soil_ch', 'CH');
+      const bedName = bed ? bed.name : (bedId === 'invernadero' ? 'Invernadero' : bedId);
       if (pct < t.critical) {
-        alerts.push(`🚨 ${mapping.label}: ${Math.round(pct)}% — ¡Riego urgente!`);
+        alerts.push(`🚨 ${chNum} (${bedName}): ${Math.round(pct)}% — ¡Riego urgente!`);
       } else if (pct < t.alert) {
-        alerts.push(`⚠️ ${mapping.label}: ${Math.round(pct)}% — Riego recomendado`);
+        alerts.push(`⚠️ ${chNum} (${bedName}): ${Math.round(pct)}% — Riego recomendado`);
       }
     });
 
@@ -2826,22 +3177,43 @@
   }
 
   /**
-   * Lightweight re-render of just the bed cards without making an API call.
-   * Uses the last known humidity map stored in state.
+   * Lightweight re-render of just the bed cards without making a new API call.
+   * Uses the last known API data stored in state plus the current sensor assignments
+   * and cached bed readings from localStorage.
    */
-  let _lastHumMap = null; // cache last humidity map
+  let _lastApiData = null; // cache last raw API data
 
   function refreshBedCardsOnly() {
     const rowOdd  = document.getElementById('bedsRow1');
     const rowEven = document.getElementById('bedsRow2');
     if (!rowOdd || !rowEven) return;
 
+    const sensorAssignments = loadSensorAssignments();
+    const bedReadings = loadBedReadings();
+
     rowOdd.innerHTML = '';
     rowEven.innerHTML = '';
 
     BEDS.forEach(bed => {
-      const humidity = _lastHumMap ? (_lastHumMap.get(bed.id) ?? null) : null;
-      const card = renderBedCard(bed, humidity);
+      const assignedSensor = sensorAssignments[bed.id] || null;
+      let humidity = null;
+      let isLive = false;
+      let cachedTimestamp = null;
+
+      if (assignedSensor && _lastApiData) {
+        const liveVal = parseVal(_lastApiData[assignedSensor]?.soilmoisture?.value);
+        if (liveVal !== null) {
+          humidity = liveVal;
+          isLive = true;
+        }
+      }
+
+      if (!isLive && bedReadings[bed.id]) {
+        humidity = bedReadings[bed.id].humidity;
+        cachedTimestamp = bedReadings[bed.id].timestamp;
+      }
+
+      const card = renderBedCard(bed, humidity, isLive, cachedTimestamp);
       const bedNum = parseInt(bed.id.replace('cama', ''), 10);
       if (bedNum % 2 === 1) {
         rowOdd.appendChild(card);
@@ -2849,6 +3221,27 @@
         rowEven.appendChild(card);
       }
     });
+
+    // Refresh greenhouse as well
+    const ghAssigned = sensorAssignments['invernadero'] || null;
+    let ghHum = null;
+    let ghIsLive = false;
+    let ghCachedTs = null;
+
+    if (ghAssigned && _lastApiData) {
+      const liveGh = parseVal(_lastApiData[ghAssigned]?.soilmoisture?.value);
+      if (liveGh !== null) {
+        ghHum = liveGh;
+        ghIsLive = true;
+      }
+    }
+    if (!ghIsLive && bedReadings['invernadero']) {
+      ghHum = bedReadings['invernadero'].humidity;
+      ghCachedTs = bedReadings['invernadero'].timestamp;
+    }
+
+    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs);
+    _updateGreenhouseSensorSelect(sensorAssignments);
 
     renderGreenhouseCrops();
   }
