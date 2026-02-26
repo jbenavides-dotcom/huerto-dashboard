@@ -600,6 +600,7 @@
 
     /* Each bed card */
     .bed-card {
+      position: relative;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-left: 4px solid var(--card-border);
@@ -888,6 +889,7 @@
       position: absolute;
       top: 0.4rem;
       right: 0.4rem;
+      z-index: 1;
       background: transparent;
       border: 1px solid transparent;
       border-radius: 4px;
@@ -1170,6 +1172,8 @@
     }
 
     .bed-sensor-select {
+      position: relative;
+      z-index: 2;
       background: var(--bg);
       color: var(--text);
       border: 1px solid var(--card-border);
@@ -1178,6 +1182,7 @@
       padding: 0.15rem 0.3rem;
       width: 100%;
       cursor: pointer;
+      -webkit-appearance: menulist;
     }
 
     .bed-sensor-select:focus {
