@@ -876,6 +876,288 @@
       color: var(--muted);
       font-size: 0.85rem;
     }
+
+    /* ──────────────────────────────────────────
+       PLANT EDIT BUTTON
+    ────────────────────────────────────────── */
+    .bed-card {
+      position: relative;
+    }
+
+    .bed-edit-btn {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity var(--transition), border-color var(--transition), color var(--transition);
+    }
+
+    .bed-card:hover .bed-edit-btn,
+    .greenhouse-card:hover .bed-edit-btn {
+      opacity: 1;
+    }
+
+    .bed-edit-btn:hover {
+      border-color: var(--card-border);
+      color: var(--accent-blue);
+    }
+
+    .greenhouse-card {
+      position: relative;
+    }
+
+    .greenhouse-edit-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity var(--transition), border-color var(--transition), color var(--transition);
+    }
+
+    .greenhouse-card:hover .greenhouse-edit-btn {
+      opacity: 1;
+    }
+
+    .greenhouse-edit-btn:hover {
+      border-color: rgba(135,206,235,0.4);
+      color: #87CEEB;
+    }
+
+    /* ──────────────────────────────────────────
+       PLANT MODAL OVERLAY
+    ────────────────────────────────────────── */
+    .plant-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .plant-modal-overlay.open {
+      display: flex;
+    }
+
+    .plant-modal {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      width: 100%;
+      max-width: 380px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .plant-modal-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .plant-modal-section-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .plant-current-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+      min-height: 1.5rem;
+    }
+
+    .plant-current-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.65rem;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    .plant-remove-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1;
+      padding: 0 0.15rem;
+      transition: color var(--transition);
+    }
+
+    .plant-remove-btn:hover {
+      color: var(--accent-red);
+    }
+
+    .plant-empty-msg {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+      padding: 0.25rem 0;
+    }
+
+    .plant-add-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .plant-select {
+      flex: 1;
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.82rem;
+      padding: 0.45rem 0.6rem;
+      cursor: pointer;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .plant-select:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .plant-select option {
+      background: #1A1A2E;
+      color: var(--text);
+    }
+
+    .plant-select optgroup {
+      background: #0F0F1A;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .plant-add-btn {
+      background: var(--accent-green);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #0F0F1A;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.45rem 0.75rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity var(--transition);
+    }
+
+    .plant-add-btn:hover {
+      opacity: 0.85;
+    }
+
+    .plant-add-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .plant-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .plant-close-btn {
+      background: var(--card-border);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .plant-close-btn:hover {
+      background: #3A3A6A;
+    }
+
+    /* ──────────────────────────────────────────
+       PLANT TOOLTIP
+    ────────────────────────────────────────── */
+    .plant-tooltip {
+      position: fixed;
+      background: #0F0F1A;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text);
+      z-index: 2000;
+      pointer-events: none;
+      display: none;
+      max-width: 220px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      line-height: 1.5;
+    }
+
+    .plant-tooltip.visible {
+      display: block;
+    }
+
+    .plant-tooltip-name {
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: var(--accent-green);
+    }
+
+    .plant-tooltip-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--muted);
+    }
+
+    .plant-tooltip-row span:last-child {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .bed-crop-item {
+      cursor: default;
+    }
+
+    .bed-crop-item[data-plant-id] {
+      cursor: help;
+    }
   </style>
 </head>
 <body>
@@ -1028,13 +1310,12 @@
         <!-- Greenhouse -->
         <div class="beds-row-label">Invernadero</div>
         <div class="greenhouse-card" id="greenhouseCard">
+          <button class="greenhouse-edit-btn" onclick="openPlantModal('invernadero')" title="Editar plantas">✏️</button>
           <div class="greenhouse-icon">🏡</div>
           <div>
             <div class="greenhouse-title">Invernadero · 5.6m × 6m</div>
-            <div class="greenhouse-crops">
-              <span class="greenhouse-crop">🍅 Tomate San Marzano</span>
-              <span class="greenhouse-crop">🍅 Cherry</span>
-              <span class="greenhouse-crop">🍅 Chonto</span>
+            <div class="greenhouse-crops" id="greenhouseCropsDisplay">
+              <!-- Filled by JS -->
             </div>
             <div class="greenhouse-note">Sensor CH4 · Óptimo tomate: 20–30%</div>
           </div>
@@ -1197,12 +1478,145 @@
 
   </div><!-- .page-wrapper -->
 
+  <!-- ════════════════════════════════════════
+       PLANT SELECTION MODAL
+  ════════════════════════════════════════ -->
+  <div class="plant-modal-overlay" id="plantModalOverlay" onclick="handleOverlayClick(event)">
+    <div class="plant-modal" id="plantModal">
+      <div class="plant-modal-title" id="plantModalTitle">Editar plantas — Cama X</div>
+
+      <div class="plant-modal-section-label">Plantas actuales (máx. 3)</div>
+      <div class="plant-current-list" id="plantCurrentList"></div>
+
+      <div class="plant-modal-section-label">Agregar planta</div>
+      <div class="plant-add-row">
+        <select class="plant-select" id="plantSelectDropdown">
+          <option value="">— Seleccionar planta —</option>
+        </select>
+        <button class="plant-add-btn" id="plantAddBtn" onclick="addPlantToCurrentBed()">Agregar</button>
+      </div>
+
+      <div class="plant-modal-footer">
+        <button class="plant-close-btn" onclick="closePlantModal()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plant tooltip (global, moved on mousemove) -->
+  <div class="plant-tooltip" id="plantTooltip"></div>
+
 
   <!-- ════════════════════════════════════════
        JAVASCRIPT
   ════════════════════════════════════════ -->
   <script>
   'use strict';
+
+  /* ──────────────────────────────────────────
+     PLANT CATALOG
+  ────────────────────────────────────────── */
+  const PLANT_CATALOG = [
+    // HOJAS
+    { id: 'lechuga_batavia',   nombre: 'Lechuga Batavia',   emoji: '🥬', grupo: 'hojas',       dias: '40-55',   espaciamiento: 25, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
+    { id: 'lechuga_romana',    nombre: 'Lechuga Romana',    emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 30, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
+    { id: 'lechuga_crespa',    nombre: 'Lechuga Crespa',    emoji: '🥬', grupo: 'hojas',       dias: '35-50',   espaciamiento: 25, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
+    { id: 'rucula',            nombre: 'Rúcula',            emoji: '🥗', grupo: 'hojas',       dias: '25-35',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 22, companeras: ['lechuga','espinaca','zanahoria'],  enemigos: ['brassicas'] },
+    { id: 'espinaca',          nombre: 'Espinaca',          emoji: '🥬', grupo: 'hojas',       dias: '35-50',   espaciamiento: 15, humMin: 35, humMax: 55, tempMin: 5,  tempMax: 22, companeras: ['lechuga','acelga','remolacha'],    enemigos: ['girasol'] },
+    { id: 'acelga_comun',      nombre: 'Acelga Común',      emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 25, humMin: 35, humMax: 55, tempMin: 8,  tempMax: 24, companeras: ['lechuga','cebolla','zanahoria'],   enemigos: ['maiz'] },
+    { id: 'acelga_roja',       nombre: 'Acelga Roja',       emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 25, humMin: 35, humMax: 55, tempMin: 8,  tempMax: 24, companeras: ['lechuga','cebolla'],              enemigos: ['maiz'] },
+    { id: 'acelga_amarilla',   nombre: 'Acelga Amarilla',   emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 25, humMin: 35, humMax: 55, tempMin: 8,  tempMax: 24, companeras: ['lechuga','cebolla'],              enemigos: ['maiz'] },
+    { id: 'mizuna_verde',      nombre: 'Mizuna Verde',      emoji: '🥬', grupo: 'hojas',       dias: '30-40',   espaciamiento: 20, humMin: 30, humMax: 50, tempMin: 5,  tempMax: 25, companeras: ['lechuga','espinaca'],             enemigos: [] },
+    { id: 'mizuna_roja',       nombre: 'Mizuna Roja',       emoji: '🥬', grupo: 'hojas',       dias: '30-40',   espaciamiento: 20, humMin: 30, humMax: 50, tempMin: 5,  tempMax: 25, companeras: ['lechuga','espinaca'],             enemigos: [] },
+    { id: 'mostaza_red',       nombre: 'Mostaza Red',       emoji: '🌿', grupo: 'hojas',       dias: '30-45',   espaciamiento: 20, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['lechuga','espinaca'],             enemigos: [] },
+    { id: 'tat_soi',           nombre: 'Tat Soi',           emoji: '🥬', grupo: 'hojas',       dias: '30-45',   espaciamiento: 20, humMin: 35, humMax: 55, tempMin: 3,  tempMax: 25, companeras: ['lechuga','cebolla'],              enemigos: ['brassicas'] },
+    // AROMÁTICAS
+    { id: 'albahaca',          nombre: 'Albahaca',          emoji: '🌿', grupo: 'aromaticas',  dias: '50-70',   espaciamiento: 25, humMin: 25, humMax: 45, tempMin: 15, tempMax: 30, companeras: ['tomate','pimiento'],              enemigos: ['salvia','ruda'] },
+    { id: 'albahaca_morada',   nombre: 'Albahaca Morada',   emoji: '🌿', grupo: 'aromaticas',  dias: '50-70',   espaciamiento: 25, humMin: 25, humMax: 45, tempMin: 15, tempMax: 30, companeras: ['tomate','pimiento'],              enemigos: ['salvia','ruda'] },
+    { id: 'perejil_liso',      nombre: 'Perejil Liso',      emoji: '🌿', grupo: 'aromaticas',  dias: '60-80',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 25, companeras: ['tomate','zanahoria'],             enemigos: ['lechuga'] },
+    { id: 'cilantro',          nombre: 'Cilantro',          emoji: '🌿', grupo: 'aromaticas',  dias: '40-55',   espaciamiento: 10, humMin: 30, humMax: 50, tempMin: 10, tempMax: 25, companeras: ['tomate','espinaca'],              enemigos: ['hinojo'] },
+    { id: 'oregano',           nombre: 'Orégano',           emoji: '🌿', grupo: 'aromaticas',  dias: '80-100',  espaciamiento: 30, humMin: 20, humMax: 40, tempMin: 10, tempMax: 30, companeras: ['tomate','pimiento','albahaca'],   enemigos: [] },
+    { id: 'tomillo',           nombre: 'Tomillo',           emoji: '🌿', grupo: 'aromaticas',  dias: '80-100',  espaciamiento: 25, humMin: 20, humMax: 35, tempMin: 8,  tempMax: 28, companeras: ['repollo','fresa','zanahoria'],    enemigos: [] },
+    { id: 'cebollin',          nombre: 'Cebollín',          emoji: '🌿', grupo: 'aromaticas',  dias: '60-80',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 25, companeras: ['zanahoria','tomate','lechuga'],   enemigos: ['frijol','arveja'] },
+    { id: 'menta',             nombre: 'Menta',             emoji: '🌿', grupo: 'aromaticas',  dias: '60-90',   espaciamiento: 30, humMin: 35, humMax: 60, tempMin: 5,  tempMax: 25, companeras: ['tomate','repollo'],               enemigos: ['manzanilla'] },
+    { id: 'romero',            nombre: 'Romero',            emoji: '🌿', grupo: 'aromaticas',  dias: '120-180', espaciamiento: 40, humMin: 15, humMax: 35, tempMin: 8,  tempMax: 30, companeras: ['repollo','zanahoria','frijol'],   enemigos: [] },
+    // BRÁSICAS
+    { id: 'brocoli',           nombre: 'Brócoli',           emoji: '🥦', grupo: 'brasicas',    dias: '60-80',   espaciamiento: 40, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['cebolla','menta','romero'],       enemigos: ['tomate','fresa'] },
+    { id: 'coliflor_blanca',   nombre: 'Coliflor Blanca',   emoji: '🥦', grupo: 'brasicas',    dias: '70-90',   espaciamiento: 45, humMin: 30, humMax: 50, tempMin: 10, tempMax: 22, companeras: ['cebolla','apio','menta'],         enemigos: ['tomate','fresa'] },
+    { id: 'coliflor_verde',    nombre: 'Coliflor Verde',    emoji: '🥦', grupo: 'brasicas',    dias: '70-90',   espaciamiento: 45, humMin: 30, humMax: 50, tempMin: 10, tempMax: 22, companeras: ['cebolla','apio'],                 enemigos: ['tomate','fresa'] },
+    { id: 'repollo_verde',     nombre: 'Repollo Verde',     emoji: '🥬', grupo: 'brasicas',    dias: '80-100',  espaciamiento: 40, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['cebolla','menta','tomillo'],      enemigos: ['tomate','fresa'] },
+    { id: 'repollo_morado',    nombre: 'Repollo Morado',    emoji: '🥬', grupo: 'brasicas',    dias: '85-110',  espaciamiento: 40, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['cebolla','menta','tomillo'],      enemigos: ['tomate','fresa'] },
+    { id: 'kale_toscano',      nombre: 'Kale Toscano',      emoji: '🥬', grupo: 'brasicas',    dias: '55-70',   espaciamiento: 35, humMin: 30, humMax: 50, tempMin: 5,  tempMax: 25, companeras: ['cebolla','remolacha','cebollin'], enemigos: ['tomate','fresa'] },
+    { id: 'kale_rizado',       nombre: 'Kale Rizado',       emoji: '🥬', grupo: 'brasicas',    dias: '55-70',   espaciamiento: 35, humMin: 30, humMax: 50, tempMin: 5,  tempMax: 25, companeras: ['cebolla','remolacha'],            enemigos: ['tomate','fresa'] },
+    // RAÍCES
+    { id: 'cebolla_larga',     nombre: 'Cebolla Larga',     emoji: '🧅', grupo: 'raices',      dias: '90-120',  espaciamiento: 10, humMin: 25, humMax: 45, tempMin: 10, tempMax: 25, companeras: ['zanahoria','lechuga','remolacha'],enemigos: ['frijol','arveja'] },
+    { id: 'zanahoria',         nombre: 'Zanahoria',         emoji: '🥕', grupo: 'raices',      dias: '70-90',   espaciamiento: 5,  humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['cebolla','lechuga','tomate'],     enemigos: ['eneldo'] },
+    { id: 'remolacha',         nombre: 'Remolacha',         emoji: '🥕', grupo: 'raices',      dias: '55-70',   espaciamiento: 10, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['lechuga','cebolla','repollo'],    enemigos: ['frijol'] },
+    // INVERNADERO
+    { id: 'tomate_san_marzano',    nombre: 'Tomate San Marzano',    emoji: '🍅', grupo: 'invernadero', dias: '75-90', espaciamiento: 50, humMin: 20, humMax: 35, tempMin: 18, tempMax: 30, companeras: ['albahaca','cebollin','zanahoria'], enemigos: ['brocoli','repollo'] },
+    { id: 'tomate_cherry',         nombre: 'Tomate Cherry',         emoji: '🍅', grupo: 'invernadero', dias: '60-75', espaciamiento: 40, humMin: 20, humMax: 35, tempMin: 18, tempMax: 32, companeras: ['albahaca','cebollin','zanahoria'], enemigos: ['brocoli','repollo'] },
+    { id: 'tomate_chonto',         nombre: 'Tomate Chonto',         emoji: '🍅', grupo: 'invernadero', dias: '70-85', espaciamiento: 50, humMin: 20, humMax: 35, tempMin: 18, tempMax: 30, companeras: ['albahaca','cebollin','zanahoria'], enemigos: ['brocoli','repollo'] },
+    { id: 'albahaca_invernadero',  nombre: 'Albahaca (Invernadero)',emoji: '🌿', grupo: 'invernadero', dias: '50-70', espaciamiento: 25, humMin: 25, humMax: 45, tempMin: 15, tempMax: 30, companeras: ['tomate'],                          enemigos: ['salvia','ruda'] },
+  ];
+
+  /** Quick lookup map: plantId -> plant object */
+  const PLANT_MAP = Object.fromEntries(PLANT_CATALOG.map(p => [p.id, p]));
+
+  /* ──────────────────────────────────────────
+     DEFAULT BED PLANT ASSIGNMENTS
+  ────────────────────────────────────────── */
+  const DEFAULT_BED_PLANTS = {
+    cama1:       ['lechuga_batavia', 'lechuga_romana', 'lechuga_crespa'],
+    cama2:       ['rucula', 'espinaca'],
+    cama3:       ['acelga_comun', 'acelga_roja', 'acelga_amarilla'],
+    cama4:       ['mizuna_verde', 'mizuna_roja', 'mostaza_red'],
+    cama5:       ['albahaca', 'cilantro', 'perejil_liso'],
+    cama6:       ['cebollin', 'oregano', 'tomillo'],
+    cama7:       ['brocoli'],
+    cama8:       ['coliflor_blanca', 'coliflor_verde'],
+    cama9:       ['repollo_verde', 'repollo_morado'],
+    cama10:      ['kale_toscano', 'kale_rizado'],
+    cama11:      ['brocoli', 'coliflor_blanca'],
+    cama12:      ['cebolla_larga', 'zanahoria', 'remolacha'],
+    invernadero: ['tomate_san_marzano', 'tomate_cherry', 'tomate_chonto'],
+  };
+
+  /** localStorage key for plant assignments */
+  const LS_KEY = 'huerta_bed_plants';
+
+  /**
+   * Load bed plant assignments from localStorage or fall back to defaults.
+   * @returns {Object<string, string[]>}
+   */
+  function loadBedPlants() {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Validate: must be an object with string arrays
+        if (typeof parsed === 'object' && parsed !== null) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to parse localStorage plant data:', e);
+    }
+    return JSON.parse(JSON.stringify(DEFAULT_BED_PLANTS)); // deep copy
+  }
+
+  /**
+   * Save bed plant assignments to localStorage.
+   * @param {Object<string, string[]>} data
+   */
+  function saveBedPlants(data) {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.warn('Failed to save plant data to localStorage:', e);
+    }
+  }
+
+  /** Live bed plant assignments (mutable, persisted to localStorage) */
+  let BED_PLANTS = loadBedPlants();
 
   /* ──────────────────────────────────────────
      CONFIG
@@ -1623,6 +2037,23 @@
   }
 
   /**
+   * Build crop item HTML for a plant ID or fallback string.
+   * @param {string} plantId
+   * @returns {string}
+   */
+  function buildCropItemHtml(plantId) {
+    const plant = PLANT_MAP[plantId];
+    if (plant) {
+      return `<div class="bed-crop-item" data-plant-id="${plant.id}"
+                   onmouseenter="showPlantTooltip(event, '${plant.id}')"
+                   onmouseleave="hidePlantTooltip()"
+                   onmousemove="movePlantTooltip(event)">${plant.emoji} ${plant.nombre}</div>`;
+    }
+    // Fallback: treat as raw emoji string
+    return `<div class="bed-crop-item">${plantId}</div>`;
+  }
+
+  /**
    * Render a single bed card element.
    * @param {object} bed - Bed definition from BEDS array
    * @param {number|null} humidity - Live humidity value or null
@@ -1638,9 +2069,10 @@
     card.dataset.bedId = bed.id;
 
     const groupLabel = GROUP_LABELS[bed.group] || bed.group;
-    const cropsHtml = bed.crops
-      .map(c => `<div class="bed-crop-item">${c}</div>`)
-      .join('');
+
+    // Use BED_PLANTS (from localStorage) as source of truth for crops
+    const plantIds = BED_PLANTS[bed.id] || bed.crops || [];
+    const cropsHtml = plantIds.map(id => buildCropItemHtml(id)).join('');
 
     let humidityHtml;
     if (humidity !== null) {
@@ -1654,6 +2086,7 @@
     }
 
     card.innerHTML = `
+      <button class="bed-edit-btn" onclick="openPlantModal('${bed.id}')" title="Editar plantas">✏️</button>
       <div class="bed-card-name">${bed.name} · ${groupLabel}</div>
       <div class="bed-card-crops">${cropsHtml}</div>
       ${humidityHtml}
@@ -1668,6 +2101,7 @@
    */
   function updateBedMap(data) {
     const humMap = buildBedHumidityMap(data);
+    _lastHumMap = humMap; // cache for lightweight re-renders after plant edits
 
     const rowOdd  = document.getElementById('bedsRow1'); // impares (derecha)
     const rowEven = document.getElementById('bedsRow2'); // pares (izquierda)
@@ -1692,13 +2126,37 @@
     if (ghHum !== null) {
       ghEl.textContent = Math.round(ghHum) + '%';
       const t = CROP_THRESHOLDS.tomate;
-      if (ghHum < t.critical) { ghEl.style.color = '#FF4757'; ghCard.style.borderColor = '#FF4757'; }
-      else if (ghHum < t.alert) { ghEl.style.color = '#FFB800'; ghCard.style.borderColor = '#FFB800'; }
-      else if (ghHum >= t.optMin && ghHum <= t.optMax) { ghEl.style.color = '#00D68F'; ghCard.style.borderColor = '#00D68F'; }
-      else { ghEl.style.color = '#4ECDC4'; ghCard.style.borderColor = '#4ECDC4'; }
+      if (ghHum < t.critical) { ghEl.style.color = '#FF4757'; ghCard.style.borderLeftColor = '#FF4757'; }
+      else if (ghHum < t.alert) { ghEl.style.color = '#FFB800'; ghCard.style.borderLeftColor = '#FFB800'; }
+      else if (ghHum >= t.optMin && ghHum <= t.optMax) { ghEl.style.color = '#00D68F'; ghCard.style.borderLeftColor = '#00D68F'; }
+      else { ghEl.style.color = '#4ECDC4'; ghCard.style.borderLeftColor = '#4ECDC4'; }
     } else {
       ghEl.textContent = '—';
     }
+
+    // Update greenhouse crops display from BED_PLANTS
+    renderGreenhouseCrops();
+  }
+
+  /**
+   * Render the greenhouse crops row from BED_PLANTS['invernadero'].
+   */
+  function renderGreenhouseCrops() {
+    const cropsEl = document.getElementById('greenhouseCropsDisplay');
+    if (!cropsEl) return;
+    const plantIds = BED_PLANTS['invernadero'] || DEFAULT_BED_PLANTS['invernadero'];
+    cropsEl.innerHTML = plantIds.map(id => {
+      const plant = PLANT_MAP[id];
+      if (plant) {
+        return `<span class="greenhouse-crop"
+                     data-plant-id="${plant.id}"
+                     onmouseenter="showPlantTooltip(event, '${plant.id}')"
+                     onmouseleave="hidePlantTooltip()"
+                     onmousemove="movePlantTooltip(event)"
+                     style="cursor:help">${plant.emoji} ${plant.nombre}</span>`;
+      }
+      return `<span class="greenhouse-crop">${id}</span>`;
+    }).join('');
   }
 
   /* ──────────────────────────────────────────
@@ -2183,11 +2641,281 @@
   }
 
   /* ──────────────────────────────────────────
+     PLANT MODAL STATE
+  ────────────────────────────────────────── */
+  let currentEditBedId = null; // which bed is being edited
+
+  /**
+   * Open the plant selection modal for a given bed ID.
+   * @param {string} bedId - e.g. 'cama1', 'invernadero'
+   */
+  function openPlantModal(bedId) {
+    currentEditBedId = bedId;
+
+    // Set title
+    const bed = BEDS.find(b => b.id === bedId);
+    const titleEl = document.getElementById('plantModalTitle');
+    if (bedId === 'invernadero') {
+      titleEl.textContent = 'Editar plantas — Invernadero';
+    } else if (bed) {
+      titleEl.textContent = `Editar plantas — ${bed.name}`;
+    } else {
+      titleEl.textContent = `Editar plantas — ${bedId}`;
+    }
+
+    // Populate dropdown (filter by bed type)
+    populatePlantDropdown(bedId);
+
+    // Render current plants list
+    renderCurrentPlantsList();
+
+    // Show overlay
+    document.getElementById('plantModalOverlay').classList.add('open');
+  }
+
+  /**
+   * Close the plant modal and refresh the bed cards to reflect changes.
+   */
+  function closePlantModal() {
+    document.getElementById('plantModalOverlay').classList.remove('open');
+    currentEditBedId = null;
+    // Re-render bed map to show updated plants (keep last known data)
+    // We trigger a lightweight re-render using the last known humidity map
+    refreshBedCardsOnly();
+  }
+
+  /**
+   * Close modal when clicking the overlay (outside the modal card).
+   * @param {MouseEvent} event
+   */
+  function handleOverlayClick(event) {
+    if (event.target === document.getElementById('plantModalOverlay')) {
+      closePlantModal();
+    }
+  }
+
+  /**
+   * Populate the plant selection <select> with groups.
+   * @param {string} bedId
+   */
+  function populatePlantDropdown(bedId) {
+    const select = document.getElementById('plantSelectDropdown');
+    select.innerHTML = '<option value="">— Seleccionar planta —</option>';
+
+    const isGreenhouse = bedId === 'invernadero';
+
+    // Group order and labels
+    const groups = isGreenhouse
+      ? [{ key: 'invernadero', label: 'Invernadero' }]
+      : [
+          { key: 'hojas',      label: 'Hojas' },
+          { key: 'aromaticas', label: 'Aromáticas' },
+          { key: 'brasicas',   label: 'Brásicas' },
+          { key: 'raices',     label: 'Raíces' },
+        ];
+
+    const currentIds = BED_PLANTS[bedId] || [];
+
+    groups.forEach(({ key, label }) => {
+      const plants = PLANT_CATALOG.filter(p => p.grupo === key);
+      if (plants.length === 0) return;
+
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = label;
+
+      plants.forEach(plant => {
+        const opt = document.createElement('option');
+        opt.value = plant.id;
+        opt.textContent = `${plant.emoji} ${plant.nombre}`;
+        if (currentIds.includes(plant.id)) {
+          opt.disabled = true;
+          opt.textContent += ' ✓';
+        }
+        optgroup.appendChild(opt);
+      });
+
+      select.appendChild(optgroup);
+    });
+
+    // Disable add button if already at max 3
+    updateAddButtonState();
+  }
+
+  /**
+   * Render the list of currently assigned plants inside the modal.
+   */
+  function renderCurrentPlantsList() {
+    const listEl = document.getElementById('plantCurrentList');
+    const plantIds = BED_PLANTS[currentEditBedId] || [];
+
+    if (plantIds.length === 0) {
+      listEl.innerHTML = '<div class="plant-empty-msg">Sin plantas asignadas</div>';
+      return;
+    }
+
+    listEl.innerHTML = plantIds.map(id => {
+      const plant = PLANT_MAP[id];
+      const label = plant ? `${plant.emoji} ${plant.nombre}` : id;
+      return `
+        <div class="plant-current-item">
+          <span>${label}</span>
+          <button class="plant-remove-btn" onclick="removePlantFromBed('${id}')" title="Quitar planta">❌</button>
+        </div>
+      `;
+    }).join('');
+
+    updateAddButtonState();
+  }
+
+  /**
+   * Enable/disable the add button based on plant count.
+   */
+  function updateAddButtonState() {
+    const addBtn = document.getElementById('plantAddBtn');
+    const plantIds = BED_PLANTS[currentEditBedId] || [];
+    addBtn.disabled = plantIds.length >= 3;
+  }
+
+  /**
+   * Add the selected plant from the dropdown to the current bed.
+   */
+  function addPlantToCurrentBed() {
+    if (!currentEditBedId) return;
+    const select = document.getElementById('plantSelectDropdown');
+    const plantId = select.value;
+    if (!plantId) return;
+
+    const currentIds = BED_PLANTS[currentEditBedId] || [];
+    if (currentIds.length >= 3) return;
+    if (currentIds.includes(plantId)) return;
+
+    BED_PLANTS[currentEditBedId] = [...currentIds, plantId];
+    saveBedPlants(BED_PLANTS);
+
+    // Reset dropdown and re-render
+    select.value = '';
+    populatePlantDropdown(currentEditBedId);
+    renderCurrentPlantsList();
+  }
+
+  /**
+   * Remove a plant from the current bed assignment.
+   * @param {string} plantId
+   */
+  function removePlantFromBed(plantId) {
+    if (!currentEditBedId) return;
+    const currentIds = BED_PLANTS[currentEditBedId] || [];
+    BED_PLANTS[currentEditBedId] = currentIds.filter(id => id !== plantId);
+    saveBedPlants(BED_PLANTS);
+
+    populatePlantDropdown(currentEditBedId);
+    renderCurrentPlantsList();
+  }
+
+  /**
+   * Lightweight re-render of just the bed cards without making an API call.
+   * Uses the last known humidity map stored in state.
+   */
+  let _lastHumMap = null; // cache last humidity map
+
+  function refreshBedCardsOnly() {
+    const rowOdd  = document.getElementById('bedsRow1');
+    const rowEven = document.getElementById('bedsRow2');
+    if (!rowOdd || !rowEven) return;
+
+    rowOdd.innerHTML = '';
+    rowEven.innerHTML = '';
+
+    BEDS.forEach(bed => {
+      const humidity = _lastHumMap ? (_lastHumMap.get(bed.id) ?? null) : null;
+      const card = renderBedCard(bed, humidity);
+      const bedNum = parseInt(bed.id.replace('cama', ''), 10);
+      if (bedNum % 2 === 1) {
+        rowOdd.appendChild(card);
+      } else {
+        rowEven.appendChild(card);
+      }
+    });
+
+    renderGreenhouseCrops();
+  }
+
+  /* ──────────────────────────────────────────
+     PLANT TOOLTIP
+  ────────────────────────────────────────── */
+
+  /**
+   * Show the plant info tooltip near the cursor.
+   * @param {MouseEvent} event
+   * @param {string} plantId
+   */
+  function showPlantTooltip(event, plantId) {
+    const plant = PLANT_MAP[plantId];
+    if (!plant) return;
+
+    const tooltip = document.getElementById('plantTooltip');
+    tooltip.innerHTML = `
+      <div class="plant-tooltip-name">${plant.emoji} ${plant.nombre}</div>
+      <div class="plant-tooltip-row"><span>Cosecha:</span><span>${plant.dias} días</span></div>
+      <div class="plant-tooltip-row"><span>Espacio:</span><span>${plant.espaciamiento} cm</span></div>
+      <div class="plant-tooltip-row"><span>Hum. suelo:</span><span>${plant.humMin}–${plant.humMax}%</span></div>
+      <div class="plant-tooltip-row"><span>Temp. óptima:</span><span>${plant.tempMin}–${plant.tempMax}°C</span></div>
+    `;
+
+    positionTooltip(event);
+    tooltip.classList.add('visible');
+  }
+
+  /**
+   * Hide the plant tooltip.
+   */
+  function hidePlantTooltip() {
+    document.getElementById('plantTooltip').classList.remove('visible');
+  }
+
+  /**
+   * Move tooltip to follow cursor.
+   * @param {MouseEvent} event
+   */
+  function movePlantTooltip(event) {
+    positionTooltip(event);
+  }
+
+  /**
+   * Position the tooltip element near the mouse cursor.
+   * @param {MouseEvent} event
+   */
+  function positionTooltip(event) {
+    const tooltip = document.getElementById('plantTooltip');
+    const offset = 14;
+    let x = event.clientX + offset;
+    let y = event.clientY + offset;
+
+    // Prevent tooltip from going off-screen to the right
+    const tooltipWidth = 220;
+    if (x + tooltipWidth > window.innerWidth) {
+      x = event.clientX - tooltipWidth - offset;
+    }
+
+    // Prevent overflow at bottom
+    const tooltipHeight = tooltip.offsetHeight || 120;
+    if (y + tooltipHeight > window.innerHeight) {
+      y = event.clientY - tooltipHeight - offset;
+    }
+
+    tooltip.style.left = x + 'px';
+    tooltip.style.top  = y + 'px';
+  }
+
+  /* ──────────────────────────────────────────
      INIT
   ────────────────────────────────────────── */
   async function init() {
     // Request notification permission on first load
     await requestNotifPermission();
+
+    // Render greenhouse crops immediately from localStorage (no API needed)
+    renderGreenhouseCrops();
 
     // Load both in parallel on first load
     await Promise.allSettled([loadRealtime(), loadHistory()]);
