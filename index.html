@@ -1027,7 +1027,7 @@
 
         <!-- Greenhouse -->
         <div class="beds-row-label">Invernadero</div>
-        <div class="greenhouse-card">
+        <div class="greenhouse-card" id="greenhouseCard">
           <div class="greenhouse-icon">🏡</div>
           <div>
             <div class="greenhouse-title">Invernadero · 5.6m × 6m</div>
@@ -1036,11 +1036,11 @@
               <span class="greenhouse-crop">🍅 Cherry</span>
               <span class="greenhouse-crop">🍅 Chonto</span>
             </div>
-            <div class="greenhouse-note">Sensores pendientes (WH51-6, WH51-7, WH31)</div>
+            <div class="greenhouse-note">Sensor CH5 · Óptimo tomate: 20–30%</div>
           </div>
           <div class="greenhouse-dims">
-            <div class="greenhouse-dims-value">33.54 m²</div>
-            <div class="greenhouse-dims-label">Área cultivo</div>
+            <div class="greenhouse-dims-value" id="greenhouseHumidity">—</div>
+            <div class="greenhouse-dims-label">Humedad suelo</div>
           </div>
         </div>
       </div>
@@ -1222,11 +1222,11 @@
 
   /* Channel labels & chart colours */
   const SOIL_CHANNELS = [
-    { key: 'soil_ch1', label: 'CH1 — Zona 1', color: '#00D68F' },
-    { key: 'soil_ch2', label: 'CH2 — Zona 2', color: '#4ECDC4' },
-    { key: 'soil_ch3', label: 'CH3 — Zona 3', color: '#A855F7' },
-    { key: 'soil_ch4', label: 'CH4 — Zona 4', color: '#FFB800' },
-    { key: 'soil_ch5', label: 'CH5 — Zona 5', color: '#FF6B6B' },
+    { key: 'soil_ch1', label: 'CH1 — Camas 1-3 (Hojas)',      color: '#00D68F' },
+    { key: 'soil_ch2', label: 'CH2 — Camas 4-6 (Hierbas)',     color: '#4ECDC4' },
+    { key: 'soil_ch3', label: 'CH3 — Camas 7-9 (Brásicas)',    color: '#A855F7' },
+    { key: 'soil_ch4', label: 'CH4 — Camas 10-12 (Brásicas)',  color: '#FFB800' },
+    { key: 'soil_ch5', label: 'CH5 — Invernadero (Tomate)',    color: '#FF6B6B' },
   ];
 
   const BATTERY_SENSOR_NAMES = {
@@ -1248,11 +1248,11 @@
    * beds: which bed IDs share this sensor reading.
    */
   const SENSOR_BED_MAP = {
-    'soil_ch1': { beds: ['cama1', 'cama2'],            label: 'CH1 → Camas 1-2',   group: 'hojas' },
-    'soil_ch2': { beds: ['cama3', 'cama4'],            label: 'CH2 → Camas 3-4',   group: 'hojas' },
-    'soil_ch3': { beds: ['cama5', 'cama6'],            label: 'CH3 → Camas 5-6',   group: 'hierbas' },
-    'soil_ch4': { beds: ['cama7', 'cama8', 'cama9'],   label: 'CH4 → Camas 7-9',   group: 'brasicas' },
-    'soil_ch5': { beds: ['cama10', 'cama11', 'cama12'],label: 'CH5 → Camas 10-12', group: 'brasicas' },
+    'soil_ch1': { beds: ['cama1', 'cama2', 'cama3'],    label: 'CH1 → Camas 1-3',    group: 'hojas',    sensorIn: 'Cama 1' },
+    'soil_ch2': { beds: ['cama4', 'cama5', 'cama6'],    label: 'CH2 → Camas 4-6',    group: 'hierbas',  sensorIn: 'Cama 2' },
+    'soil_ch3': { beds: ['cama7', 'cama8', 'cama9'],    label: 'CH3 → Camas 7-9',    group: 'brasicas', sensorIn: 'Cama 3' },
+    'soil_ch4': { beds: ['cama10', 'cama11', 'cama12'], label: 'CH4 → Camas 10-12',  group: 'brasicas', sensorIn: 'Cama 4' },
+    'soil_ch5': { beds: ['invernadero'],                 label: 'CH5 → Invernadero',  group: 'tomate',   sensorIn: 'Invernadero' },
   };
 
   /** Crop-specific moisture thresholds (separate from cloud-forest bars above). */
@@ -1264,20 +1264,20 @@
     rotacion: { optMin: 25, optMax: 40, alert: 22, critical: 18, label: 'Rotación' },
   };
 
-  /** Full bed definitions — row 1 = indices 0-5, row 2 = indices 6-11. */
+  /** Full bed definitions — impares = derecha, pares = izquierda. */
   const BEDS = [
-    { id: 'cama1',  name: 'Cama 1',  group: 'hojas',    crops: ['🥬 Lechuga'],                               sensor: 'soil_ch1' },
-    { id: 'cama2',  name: 'Cama 2',  group: 'hojas',    crops: ['🥗 Rúcula', '🥬 Espinaca'],                 sensor: 'soil_ch1' },
-    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Acelga'],                                sensor: 'soil_ch2' },
-    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Espinaca', '🌿 Mostaza'],                sensor: 'soil_ch2' },
-    { id: 'cama5',  name: 'Cama 5',  group: 'hierbas',  crops: ['🌿 Albahaca', '🌿 Cilantro', '🌿 Perejil'], sensor: 'soil_ch3' },
-    { id: 'cama6',  name: 'Cama 6',  group: 'hierbas',  crops: ['🌿 Cebollín', '🌿 Orégano', '🌿 Tomillo'],  sensor: 'soil_ch3' },
-    { id: 'cama7',  name: 'Cama 7',  group: 'brasicas',  crops: ['🥦 Brócoli'],                               sensor: 'soil_ch4' },
-    { id: 'cama8',  name: 'Cama 8',  group: 'brasicas',  crops: ['🥦 Coliflor'],                              sensor: 'soil_ch4' },
-    { id: 'cama9',  name: 'Cama 9',  group: 'brasicas',  crops: ['🥬 Repollo'],                               sensor: 'soil_ch4' },
-    { id: 'cama10', name: 'Cama 10', group: 'brasicas',  crops: ['🥬 Kale'],                                  sensor: 'soil_ch5' },
-    { id: 'cama11', name: 'Cama 11', group: 'brasicas',  crops: ['🥦 Brócoli', '🥦 Coliflor'],                sensor: 'soil_ch5' },
-    { id: 'cama12', name: 'Cama 12', group: 'rotacion', crops: ['🔄 Rotación'],                              sensor: 'soil_ch5' },
+    { id: 'cama1',  name: 'Cama 1',  group: 'hojas',    crops: ['🥬 Lechuga'],                                sensor: 'soil_ch1', hasSensor: true },
+    { id: 'cama2',  name: 'Cama 2',  group: 'hojas',    crops: ['🥗 Rúcula', '🥬 Espinaca'],                  sensor: 'soil_ch1' },
+    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Acelga'],                                 sensor: 'soil_ch1' },
+    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Espinaca', '🌿 Mostaza'],                 sensor: 'soil_ch2', hasSensor: true },
+    { id: 'cama5',  name: 'Cama 5',  group: 'hierbas',  crops: ['🌿 Albahaca', '🌿 Cilantro', '🌿 Perejil'],  sensor: 'soil_ch2' },
+    { id: 'cama6',  name: 'Cama 6',  group: 'hierbas',  crops: ['🌿 Cebollín', '🌿 Orégano', '🌿 Tomillo'],   sensor: 'soil_ch2' },
+    { id: 'cama7',  name: 'Cama 7',  group: 'brasicas',  crops: ['🥦 Brócoli'],                                sensor: 'soil_ch3', hasSensor: true },
+    { id: 'cama8',  name: 'Cama 8',  group: 'brasicas',  crops: ['🥦 Coliflor'],                               sensor: 'soil_ch3' },
+    { id: 'cama9',  name: 'Cama 9',  group: 'brasicas',  crops: ['🥬 Repollo'],                                sensor: 'soil_ch3' },
+    { id: 'cama10', name: 'Cama 10', group: 'brasicas',  crops: ['🥬 Kale'],                                   sensor: 'soil_ch4', hasSensor: true },
+    { id: 'cama11', name: 'Cama 11', group: 'brasicas',  crops: ['🥦 Brócoli', '🥦 Coliflor'],                 sensor: 'soil_ch4' },
+    { id: 'cama12', name: 'Cama 12', group: 'rotacion',  crops: ['🔄 Rotación'],                               sensor: 'soil_ch4' },
   ];
 
   /** Group display labels. */
@@ -1644,8 +1644,9 @@
 
     let humidityHtml;
     if (humidity !== null) {
+      const sensorTag = bed.hasSensor ? ' 📡' : '';
       humidityHtml = `
-        <div class="bed-humidity" style="color:${color}">${Math.round(humidity)}%</div>
+        <div class="bed-humidity" style="color:${color}">${Math.round(humidity)}%${sensorTag}</div>
         <div class="bed-humidity-sub">Óptimo: ${t.optMin}–${t.optMax}%</div>
       `;
     } else {
@@ -1683,6 +1684,21 @@
         rowEven.appendChild(card); // 2,4,6,8,10,12
       }
     });
+
+    // Update greenhouse with CH5
+    const ghHum = humMap.get('invernadero') ?? null;
+    const ghEl = document.getElementById('greenhouseHumidity');
+    const ghCard = document.getElementById('greenhouseCard');
+    if (ghHum !== null) {
+      ghEl.textContent = Math.round(ghHum) + '%';
+      const t = CROP_THRESHOLDS.tomate;
+      if (ghHum < t.critical) { ghEl.style.color = '#FF4757'; ghCard.style.borderColor = '#FF4757'; }
+      else if (ghHum < t.alert) { ghEl.style.color = '#FFB800'; ghCard.style.borderColor = '#FFB800'; }
+      else if (ghHum >= t.optMin && ghHum <= t.optMax) { ghEl.style.color = '#00D68F'; ghCard.style.borderColor = '#00D68F'; }
+      else { ghEl.style.color = '#4ECDC4'; ghCard.style.borderColor = '#4ECDC4'; }
+    } else {
+      ghEl.textContent = '—';
+    }
   }
 
   /* ──────────────────────────────────────────
