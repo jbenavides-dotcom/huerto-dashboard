@@ -1455,6 +1455,7 @@
           <div class="greenhouse-dims">
             <div class="greenhouse-dims-value" id="greenhouseHumidity">—</div>
             <div class="greenhouse-dims-label" id="greenhouseDimsLabel">Humedad suelo</div>
+            <div class="greenhouse-temp" id="greenhouseTemp" style="margin-top:0.3rem;font-size:0.85rem;color:#4ECDC4">—</div>
           </div>
         </div>
       </div>
@@ -1499,11 +1500,11 @@
             <div class="mini-value" id="climaFeelsLike">—</div>
           </div>
           <div class="mini-card">
-            <div class="mini-label">Temp. CH1 (WN31)</div>
+            <div class="mini-label">Temp. Invernadero (WN31)</div>
             <div class="mini-value" id="climaTempCh1">—</div>
           </div>
           <div class="mini-card">
-            <div class="mini-label">Hum. CH1 (WN31)</div>
+            <div class="mini-label">Hum. Invernadero (WN31)</div>
             <div class="mini-value" id="climaHumCh1">—</div>
           </div>
         </div>
@@ -2525,7 +2526,12 @@
       ghCachedTs = bedReadings['invernadero'].timestamp;
     }
 
-    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs, ghAd);
+    // Greenhouse temp from WN31 (temp_and_humidity_ch1)
+    const ghTempData = data.temp_and_humidity_ch1 || {};
+    const ghTemp = parseVal(ghTempData.temperature?.value);
+    const ghTempHum = parseVal(ghTempData.humidity?.value);
+
+    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs, ghAd, ghTemp, ghTempHum);
     _updateGreenhouseSensorSelect(sensorAssignments);
 
     // Update greenhouse crops display from BED_PLANTS
@@ -2538,10 +2544,11 @@
    * @param {boolean} isLive
    * @param {number|null} cachedTs
    */
-  function _updateGreenhouseHumidity(ghHum, isLive, cachedTs, ghAd) {
+  function _updateGreenhouseHumidity(ghHum, isLive, cachedTs, ghAd, ghTemp, ghTempHum) {
     const ghEl   = document.getElementById('greenhouseHumidity');
     const ghCard = document.getElementById('greenhouseCard');
     const ghLabel= document.getElementById('greenhouseDimsLabel');
+    const ghTempEl = document.getElementById('greenhouseTemp');
 
     if (ghHum !== null) {
       const adStr = ghAd !== null && ghAd !== undefined ? ` <span class="channel-ad">(AD: ${ghAd})</span>` : '';
@@ -2562,6 +2569,17 @@
     } else {
       ghEl.textContent = '—';
       ghLabel.textContent = 'Humedad suelo';
+    }
+
+    // Greenhouse ambient temp/hum from WN31
+    if (ghTempEl) {
+      if (ghTemp !== null) {
+        let tempStr = ghTemp.toFixed(1) + '°C';
+        if (ghTempHum !== null) tempStr += ' · ' + Math.round(ghTempHum) + '% aire';
+        ghTempEl.textContent = tempStr;
+      } else {
+        ghTempEl.textContent = '—';
+      }
     }
   }
 
@@ -3346,7 +3364,12 @@
       ghCachedTs = bedReadings['invernadero'].timestamp;
     }
 
-    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs, ghAd);
+    // Greenhouse temp from WN31
+    const ghTempData2 = _lastApiData ? (_lastApiData.temp_and_humidity_ch1 || {}) : {};
+    const ghTemp2 = parseVal(ghTempData2.temperature?.value);
+    const ghTempHum2 = parseVal(ghTempData2.humidity?.value);
+
+    _updateGreenhouseHumidity(ghHum, ghIsLive, ghCachedTs, ghAd, ghTemp2, ghTempHum2);
     _updateGreenhouseSensorSelect(sensorAssignments);
 
     renderGreenhouseCrops();
