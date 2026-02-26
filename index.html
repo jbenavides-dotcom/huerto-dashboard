@@ -555,6 +555,327 @@
       white-space: nowrap;
     }
     .countdown-pill span { color: var(--accent-green); font-weight: 600; }
+
+    /* ──────────────────────────────────────────
+       BED MAP SECTION
+    ────────────────────────────────────────── */
+    .bed-map-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .bed-map-legend {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .bed-map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .bed-map-legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      border: 2px solid currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Beds grid — 6 columns */
+    .beds-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Each bed card */
+    .bed-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      min-height: 110px;
+    }
+
+    .bed-card.glow-green {
+      border-left-color: #90EE90;
+      box-shadow: 0 0 0 1px rgba(144,238,144,0.25), 0 0 12px rgba(144,238,144,0.12);
+    }
+    .bed-card.glow-yellow {
+      border-left-color: var(--accent-yellow);
+      box-shadow: 0 0 0 1px rgba(255,184,0,0.25), 0 0 12px rgba(255,184,0,0.12);
+    }
+    .bed-card.glow-red {
+      border-left-color: var(--accent-red);
+      box-shadow: 0 0 0 1px rgba(255,71,87,0.3), 0 0 14px rgba(255,71,87,0.2);
+      animation: pulse-red 1.8s ease-in-out infinite;
+    }
+    .bed-card.glow-blue {
+      border-left-color: var(--accent-blue);
+      box-shadow: 0 0 0 1px rgba(78,205,196,0.25), 0 0 12px rgba(78,205,196,0.1);
+    }
+
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(255,71,87,0.3), 0 0 14px rgba(255,71,87,0.2); }
+      50%       { box-shadow: 0 0 0 2px rgba(255,71,87,0.5), 0 0 22px rgba(255,71,87,0.35); }
+    }
+
+    /* Group border colors when no humidity data yet */
+    .bed-card[data-group="hojas"]    { border-left-color: #90EE90; }
+    .bed-card[data-group="hierbas"]  { border-left-color: #32CD32; }
+    .bed-card[data-group="brasicas"] { border-left-color: #228B22; }
+    .bed-card[data-group="rotacion"] { border-left-color: #DEB887; }
+
+    .bed-card-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      line-height: 1.1;
+    }
+
+    .bed-card-crops {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      flex: 1;
+    }
+
+    .bed-crop-item {
+      font-size: 0.75rem;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .bed-humidity {
+      font-size: 1.1rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-top: 0.2rem;
+    }
+
+    .bed-humidity-sub {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .bed-no-sensor {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: auto;
+    }
+
+    /* Greenhouse card — full width below */
+    .greenhouse-card {
+      background: rgba(135, 206, 235, 0.06);
+      border: 1px solid rgba(135, 206, 235, 0.2);
+      border-left: 4px solid #87CEEB;
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .greenhouse-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .greenhouse-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #87CEEB;
+      margin-bottom: 0.3rem;
+    }
+
+    .greenhouse-crops {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+
+    .greenhouse-crop {
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    .greenhouse-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .greenhouse-dims {
+      text-align: right;
+    }
+
+    .greenhouse-dims-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #87CEEB;
+    }
+
+    .greenhouse-dims-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Row labels above each row of beds */
+    .beds-row-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .beds-row-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--card-border);
+    }
+
+    /* Responsive beds grid */
+    @media (max-width: 1024px) {
+      .beds-grid { grid-template-columns: repeat(3, 1fr); }
+      .greenhouse-card { grid-template-columns: auto 1fr; }
+      .greenhouse-dims { display: none; }
+    }
+    @media (max-width: 600px) {
+      .beds-grid { grid-template-columns: repeat(2, 1fr); }
+      .greenhouse-card { grid-template-columns: 1fr; }
+    }
+
+    /* ──────────────────────────────────────────
+       NOTIFICATION CENTER
+    ────────────────────────────────────────── */
+    .notif-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .notif-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .notif-badges {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .notif-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+    }
+    .notif-badge.critical { background: rgba(255,71,87,0.15); color: var(--accent-red); }
+    .notif-badge.warning  { background: rgba(255,184,0,0.15);  color: var(--accent-yellow); }
+    .notif-badge.info     { background: rgba(0,214,143,0.12); color: var(--accent-green); }
+
+    .notif-timestamp {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .notif-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .notif-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--navy);
+      border-radius: var(--radius-sm);
+      border-left: 4px solid transparent;
+      transition: border-color var(--transition);
+    }
+
+    .notif-item.severity-critical {
+      border-left-color: var(--accent-red);
+      background: rgba(255,71,87,0.07);
+    }
+    .notif-item.severity-warning {
+      border-left-color: var(--accent-yellow);
+      background: rgba(255,184,0,0.06);
+    }
+    .notif-item.severity-info {
+      border-left-color: var(--accent-green);
+      background: rgba(0,214,143,0.05);
+    }
+    .notif-item.severity-rain {
+      border-left-color: var(--accent-blue);
+      background: rgba(78,205,196,0.06);
+    }
+
+    .notif-icon {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .notif-msg {
+      font-size: 0.83rem;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    .notif-time {
+      font-size: 0.68rem;
+      color: var(--muted);
+      white-space: nowrap;
+      line-height: 1.4;
+    }
+
+    .notif-empty {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
@@ -666,13 +987,74 @@
       </div>
     </section>
 
-    <!-- ── 3. ALERT BANNER ── -->
+    <!-- ── 3. MAPA DE LA HUERTA ── -->
+    <section id="bedMapSection">
+      <div class="card">
+        <div class="bed-map-header">
+          <div class="section-title-row" style="margin-bottom:0">
+            <span class="section-icon">🗺️</span>
+            <h2 style="margin-bottom:0">Mapa de la Huerta</h2>
+          </div>
+          <div class="bed-map-legend">
+            <div class="bed-map-legend-item" style="color:#90EE90">
+              <div class="bed-map-legend-swatch" style="border-color:#90EE90"></div>Hojas
+            </div>
+            <div class="bed-map-legend-item" style="color:#32CD32">
+              <div class="bed-map-legend-swatch" style="border-color:#32CD32"></div>Hierbas
+            </div>
+            <div class="bed-map-legend-item" style="color:#228B22">
+              <div class="bed-map-legend-swatch" style="border-color:#228B22"></div>Brásicas
+            </div>
+            <div class="bed-map-legend-item" style="color:#DEB887">
+              <div class="bed-map-legend-swatch" style="border-color:#DEB887"></div>Rotación
+            </div>
+            <div class="bed-map-legend-item" style="color:#87CEEB">
+              <div class="bed-map-legend-swatch" style="border-color:#87CEEB"></div>Invernadero
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 1: Hojas + Hierbas (Camas 1–6) -->
+        <div class="beds-row-label">Fila 1 — Hojas &amp; Hierbas (Camas 1–6)</div>
+        <div class="beds-grid" id="bedsRow1">
+          <!-- Filled by JS -->
+        </div>
+
+        <!-- Row 2: Brásicas + Rotación (Camas 7–12) -->
+        <div class="beds-row-label">Fila 2 — Brásicas &amp; Rotación (Camas 7–12)</div>
+        <div class="beds-grid" id="bedsRow2">
+          <!-- Filled by JS -->
+        </div>
+
+        <!-- Greenhouse -->
+        <div class="beds-row-label">Invernadero</div>
+        <div class="greenhouse-card">
+          <div class="greenhouse-icon">🏡</div>
+          <div>
+            <div class="greenhouse-title">Invernadero · 5.6m × 6m</div>
+            <div class="greenhouse-crops">
+              <span class="greenhouse-crop">🍅 Tomate San Marzano</span>
+              <span class="greenhouse-crop">🍅 Cherry</span>
+              <span class="greenhouse-crop">🍅 Chonto</span>
+              <span class="greenhouse-crop">🌿 Albahaca</span>
+            </div>
+            <div class="greenhouse-note">Sensores pendientes (WH51-6, WH51-7, WH31)</div>
+          </div>
+          <div class="greenhouse-dims">
+            <div class="greenhouse-dims-value">33.54 m²</div>
+            <div class="greenhouse-dims-label">Área cultivo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. ALERT BANNER ── -->
     <div class="alert-banner" id="alertBanner">
       <div class="alert-title">Alerta de Riego</div>
       <div class="alert-items" id="alertItems"></div>
     </div>
 
-    <!-- ── 4. CLIMA COMPLETO ── -->
+    <!-- ── 5. CLIMA COMPLETO ── -->
     <section>
       <div class="card">
         <div class="section-title-row">
@@ -716,7 +1098,7 @@
       </div>
     </section>
 
-    <!-- ── 5. LLUVIA ── -->
+    <!-- ── 6. LLUVIA ── -->
     <section>
       <div class="card">
         <div class="section-title-row">
@@ -754,7 +1136,7 @@
       </div>
     </section>
 
-    <!-- ── 6. BATERÍA ── -->
+    <!-- ── 7. BATERÍA ── -->
     <section>
       <div class="card">
         <div class="section-title-row">
@@ -778,7 +1160,30 @@
       </div>
     </section>
 
-    <!-- ── 7. HISTORIAL 24H ── -->
+    <!-- ── 8. CENTRO DE NOTIFICACIONES ── -->
+    <section id="notifSection">
+      <div class="card">
+        <div class="notif-header">
+          <div class="notif-header-left">
+            <div class="section-title-row" style="margin-bottom:0">
+              <span class="section-icon">🔔</span>
+              <h2 style="margin-bottom:0">Notificaciones</h2>
+            </div>
+            <div class="notif-badges" id="notifBadges">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+          <div class="notif-timestamp" id="notifTimestamp">—</div>
+        </div>
+        <div class="notif-list" id="notifList">
+          <div class="skeleton skeleton-text" style="width:90%"></div>
+          <div class="skeleton skeleton-text" style="width:75%"></div>
+          <div class="skeleton skeleton-text" style="width:82%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 9. HISTORIAL 24H ── -->
     <section>
       <div class="card">
         <div class="section-title-row">
@@ -837,6 +1242,55 @@
   };
 
   /* ──────────────────────────────────────────
+     BED MAP DATA
+  ────────────────────────────────────────── */
+
+  /**
+   * Sensor-to-bed mapping.
+   * beds: which bed IDs share this sensor reading.
+   */
+  const SENSOR_BED_MAP = {
+    'soil_ch1': { beds: ['cama1', 'cama2'],            label: 'CH1 → Camas 1-2',   group: 'hojas' },
+    'soil_ch2': { beds: ['cama3', 'cama4'],            label: 'CH2 → Camas 3-4',   group: 'hojas' },
+    'soil_ch3': { beds: ['cama5', 'cama6'],            label: 'CH3 → Camas 5-6',   group: 'hierbas' },
+    'soil_ch4': { beds: ['cama7', 'cama8', 'cama9'],   label: 'CH4 → Camas 7-9',   group: 'brasicas' },
+    'soil_ch5': { beds: ['cama10', 'cama11', 'cama12'],label: 'CH5 → Camas 10-12', group: 'brasicas' },
+  };
+
+  /** Crop-specific moisture thresholds (separate from cloud-forest bars above). */
+  const CROP_THRESHOLDS = {
+    hojas:    { optMin: 30, optMax: 45, alert: 28, critical: 22, label: 'Hojas' },
+    hierbas:  { optMin: 30, optMax: 45, alert: 28, critical: 22, label: 'Hierbas' },
+    brasicas: { optMin: 25, optMax: 40, alert: 22, critical: 18, label: 'Brásicas' },
+    tomate:   { optMin: 20, optMax: 30, alert: 18, critical: 15, label: 'Tomate' },
+    rotacion: { optMin: 25, optMax: 40, alert: 22, critical: 18, label: 'Rotación' },
+  };
+
+  /** Full bed definitions — row 1 = indices 0-5, row 2 = indices 6-11. */
+  const BEDS = [
+    { id: 'cama1',  name: 'Cama 1',  group: 'hojas',    crops: ['🥬 Lechuga'],                               sensor: 'soil_ch1' },
+    { id: 'cama2',  name: 'Cama 2',  group: 'hojas',    crops: ['🥗 Rúcula', '🥬 Espinaca'],                 sensor: 'soil_ch1' },
+    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Acelga'],                                sensor: 'soil_ch2' },
+    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Espinaca', '🌿 Mostaza'],                sensor: 'soil_ch2' },
+    { id: 'cama5',  name: 'Cama 5',  group: 'hierbas',  crops: ['🌿 Albahaca', '🌿 Cilantro', '🌿 Perejil'], sensor: 'soil_ch3' },
+    { id: 'cama6',  name: 'Cama 6',  group: 'hierbas',  crops: ['🌿 Cebollín', '🌿 Orégano', '🌿 Tomillo'],  sensor: 'soil_ch3' },
+    { id: 'cama7',  name: 'Cama 7',  group: 'brasicas',  crops: ['🥦 Brócoli'],                               sensor: 'soil_ch4' },
+    { id: 'cama8',  name: 'Cama 8',  group: 'brasicas',  crops: ['🥦 Coliflor'],                              sensor: 'soil_ch4' },
+    { id: 'cama9',  name: 'Cama 9',  group: 'brasicas',  crops: ['🥬 Repollo'],                               sensor: 'soil_ch4' },
+    { id: 'cama10', name: 'Cama 10', group: 'brasicas',  crops: ['🥬 Kale'],                                  sensor: 'soil_ch5' },
+    { id: 'cama11', name: 'Cama 11', group: 'brasicas',  crops: ['🥦 Brócoli', '🥦 Coliflor'],                sensor: 'soil_ch5' },
+    { id: 'cama12', name: 'Cama 12', group: 'rotacion', crops: ['🔄 Rotación'],                              sensor: 'soil_ch5' },
+  ];
+
+  /** Group display labels. */
+  const GROUP_LABELS = {
+    hojas:    'Hojas',
+    hierbas:  'Hierbas',
+    brasicas: 'Brásicas',
+    rotacion: 'Rotación',
+  };
+
+  /* ──────────────────────────────────────────
      STATE
   ────────────────────────────────────────── */
   let historyChart       = null;
@@ -881,7 +1335,7 @@
   }
 
   /**
-   * Determine soil bar colour from moisture percentage.
+   * Determine soil bar colour from moisture percentage (cloud forest thresholds).
    * @param {number} pct
    * @returns {string}
    */
@@ -890,6 +1344,23 @@
     if (pct < CONFIG.soilOptimalMin)       return '#FFB800'; // yellow — getting dry
     if (pct <= CONFIG.soilOptimalMax)      return '#00D68F'; // green — optimal
     return '#4ECDC4';                                        // blue — very wet
+  }
+
+  /**
+   * Determine bed card glow class and humidity colour using crop-specific thresholds.
+   * @param {number|null} pct
+   * @param {string} group
+   * @returns {{ glowClass: string, color: string }}
+   */
+  function bedHumidityStatus(pct, group) {
+    if (pct === null) return { glowClass: '', color: 'var(--muted)' };
+    const t = CROP_THRESHOLDS[group] || CROP_THRESHOLDS.rotacion;
+    if (pct < t.critical)             return { glowClass: 'glow-red',    color: '#FF4757' };
+    if (pct < t.alert)                return { glowClass: 'glow-yellow', color: '#FFB800' };
+    if (pct >= t.optMin && pct <= t.optMax) return { glowClass: 'glow-green', color: '#00D68F' };
+    if (pct > t.optMax)               return { glowClass: 'glow-blue',   color: '#4ECDC4' };
+    // between critical and optMin (dry but not alarming)
+    return { glowClass: 'glow-yellow', color: '#FFB800' };
   }
 
   /**
@@ -1136,6 +1607,243 @@
   }
 
   /* ──────────────────────────────────────────
+     UPDATE: BED MAP
+  ────────────────────────────────────────── */
+
+  /**
+   * Build a map of bedId -> humidity value from current API data.
+   * @param {object} data - Ecowitt real-time API data object
+   * @returns {Map<string, number|null>}
+   */
+  function buildBedHumidityMap(data) {
+    const map = new Map();
+    Object.entries(SENSOR_BED_MAP).forEach(([sensorKey, mapping]) => {
+      const pct = parseVal(data[sensorKey]?.soilmoisture?.value);
+      mapping.beds.forEach(bedId => map.set(bedId, pct));
+    });
+    return map;
+  }
+
+  /**
+   * Render a single bed card element.
+   * @param {object} bed - Bed definition from BEDS array
+   * @param {number|null} humidity - Live humidity value or null
+   * @returns {HTMLElement}
+   */
+  function renderBedCard(bed, humidity) {
+    const { glowClass, color } = bedHumidityStatus(humidity, bed.group);
+    const t = CROP_THRESHOLDS[bed.group] || CROP_THRESHOLDS.rotacion;
+
+    const card = document.createElement('div');
+    card.className = `bed-card${glowClass ? ' ' + glowClass : ''}`;
+    card.dataset.group = bed.group;
+    card.dataset.bedId = bed.id;
+
+    const groupLabel = GROUP_LABELS[bed.group] || bed.group;
+    const cropsHtml = bed.crops
+      .map(c => `<div class="bed-crop-item">${c}</div>`)
+      .join('');
+
+    let humidityHtml;
+    if (humidity !== null) {
+      humidityHtml = `
+        <div class="bed-humidity" style="color:${color}">${Math.round(humidity)}%</div>
+        <div class="bed-humidity-sub">Óptimo: ${t.optMin}–${t.optMax}%</div>
+      `;
+    } else {
+      humidityHtml = `<div class="bed-no-sensor">Sin datos</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="bed-card-name">${bed.name} · ${groupLabel}</div>
+      <div class="bed-card-crops">${cropsHtml}</div>
+      ${humidityHtml}
+    `;
+
+    return card;
+  }
+
+  /**
+   * Update the visual bed map with live humidity data.
+   * @param {object} data - Ecowitt real-time API data object
+   */
+  function updateBedMap(data) {
+    const humMap = buildBedHumidityMap(data);
+
+    const row1 = document.getElementById('bedsRow1');
+    const row2 = document.getElementById('bedsRow2');
+    row1.innerHTML = '';
+    row2.innerHTML = '';
+
+    BEDS.forEach((bed, idx) => {
+      const humidity = humMap.get(bed.id) ?? null;
+      const card = renderBedCard(bed, humidity);
+      if (idx < 6) {
+        row1.appendChild(card);
+      } else {
+        row2.appendChild(card);
+      }
+    });
+  }
+
+  /* ──────────────────────────────────────────
+     UPDATE: NOTIFICATIONS
+  ────────────────────────────────────────── */
+
+  /**
+   * Generate a list of notification objects from real-time sensor data.
+   * @param {object} data - Ecowitt real-time API data object
+   * @returns {Array<{ severity: string, icon: string, msg: string }>}
+   */
+  function generateNotifications(data) {
+    const notifications = [];
+    const now = formatTime(new Date());
+
+    // ── 1. Check soil channels against crop-specific thresholds
+    Object.entries(SENSOR_BED_MAP).forEach(([sensorKey, mapping]) => {
+      const pct = parseVal(data[sensorKey]?.soilmoisture?.value);
+      if (pct === null) return;
+
+      const t = CROP_THRESHOLDS[mapping.group] || CROP_THRESHOLDS.rotacion;
+      const groupLabel = (CROP_THRESHOLDS[mapping.group] || CROP_THRESHOLDS.rotacion).label;
+
+      if (pct < t.critical) {
+        notifications.push({
+          severity: 'critical',
+          icon: '🚨',
+          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — ¡Riego urgente! (crítico: <${t.critical}%)`,
+        });
+      } else if (pct < t.alert) {
+        notifications.push({
+          severity: 'warning',
+          icon: '⚠️',
+          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Riego recomendado (aviso: <${t.alert}%)`,
+        });
+      } else if (pct > t.optMax) {
+        notifications.push({
+          severity: 'rain',
+          icon: '💧',
+          msg: `${mapping.label} (${groupLabel}): Humedad ${Math.round(pct)}% — Suelo saturado, no regar`,
+        });
+      }
+    });
+
+    // ── 2. Battery low alerts
+    const battery = data.battery || {};
+    Object.entries(battery).forEach(([key, batt]) => {
+      if (batt.unit !== 'V') return;
+      const v = parseVal(batt.value);
+      if (v !== null && v < 1.2) {
+        const chMatch = key.match(/ch(\d+)/);
+        const chLabel = chMatch ? `CH${chMatch[1]}` : key;
+        notifications.push({
+          severity: 'critical',
+          icon: '🔋',
+          msg: `Sensor ${chLabel} batería baja: ${v.toFixed(2)}V — Cambiar pila`,
+        });
+      }
+    });
+
+    // ── 3. Rain active
+    const rainRate = parseVal(data.rainfall?.rain_rate?.value);
+    if (rainRate !== null && rainRate > 0) {
+      notifications.push({
+        severity: 'rain',
+        icon: '🌧️',
+        msg: `Lluvia activa: ${rainRate.toFixed(1)} mm/hr — Suspender riego manual`,
+      });
+    }
+
+    // ── 4. Low temperature alert
+    const tempExt = parseVal(data.outdoor?.temperature?.value);
+    if (tempExt !== null && tempExt < 8) {
+      notifications.push({
+        severity: 'warning',
+        icon: '🥶',
+        msg: `Temperatura ${tempExt.toFixed(1)}°C — Proteger cultivos sensibles`,
+      });
+    }
+
+    // ── 5. All good fallback
+    if (notifications.length === 0) {
+      notifications.push({
+        severity: 'info',
+        icon: '✅',
+        msg: 'Todos los sensores en rango óptimo',
+      });
+    }
+
+    return notifications;
+  }
+
+  /**
+   * Render the notification center panel with current alerts.
+   * @param {object} data - Ecowitt real-time API data object
+   */
+  function updateNotifications(data) {
+    const notifications = generateNotifications(data);
+
+    // Limit to 10 most recent (critical first, then warnings, then info)
+    const sorted = [
+      ...notifications.filter(n => n.severity === 'critical'),
+      ...notifications.filter(n => n.severity === 'warning'),
+      ...notifications.filter(n => n.severity === 'rain'),
+      ...notifications.filter(n => n.severity === 'info'),
+    ].slice(0, 10);
+
+    // Count badges
+    const critCount = notifications.filter(n => n.severity === 'critical').length;
+    const warnCount = notifications.filter(n => n.severity === 'warning').length;
+
+    const badgesEl = document.getElementById('notifBadges');
+    badgesEl.innerHTML = '';
+    if (critCount > 0) {
+      const b = document.createElement('span');
+      b.className = 'notif-badge critical';
+      b.textContent = `${critCount} 🚨`;
+      badgesEl.appendChild(b);
+    }
+    if (warnCount > 0) {
+      const b = document.createElement('span');
+      b.className = 'notif-badge warning';
+      b.textContent = `${warnCount} ⚠️`;
+      badgesEl.appendChild(b);
+    }
+    if (critCount === 0 && warnCount === 0) {
+      const b = document.createElement('span');
+      b.className = 'notif-badge info';
+      b.textContent = 'Todo normal';
+      badgesEl.appendChild(b);
+    }
+
+    // Timestamp
+    setText('notifTimestamp', `Actualizado: ${formatTime(new Date())}`);
+
+    // Render list
+    const listEl = document.getElementById('notifList');
+    listEl.innerHTML = '';
+
+    if (sorted.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'notif-empty';
+      empty.textContent = 'Sin notificaciones';
+      listEl.appendChild(empty);
+      return;
+    }
+
+    sorted.forEach(notif => {
+      const item = document.createElement('div');
+      item.className = `notif-item severity-${notif.severity}`;
+      item.innerHTML = `
+        <div class="notif-icon">${notif.icon}</div>
+        <div class="notif-msg">${notif.msg}</div>
+        <div class="notif-time">${formatTime(new Date())}</div>
+      `;
+      listEl.appendChild(item);
+    });
+  }
+
+  /* ──────────────────────────────────────────
      UPDATE: HISTORY CHART
   ────────────────────────────────────────── */
   function updateHistory(data) {
@@ -1288,6 +1996,8 @@
 
     updateKPI(data);
     updateSoil(data);
+    updateBedMap(data);
+    updateNotifications(data);
     updateClima(data);
     updateRain(data);
     updateBattery(data);
