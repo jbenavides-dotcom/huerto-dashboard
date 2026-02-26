@@ -252,7 +252,7 @@
 
     .channel-row {
       display: grid;
-      grid-template-columns: 60px 1fr 50px;
+      grid-template-columns: 60px 1fr auto;
       align-items: center;
       gap: 0.75rem;
     }
@@ -307,6 +307,72 @@
       font-size: 0.9rem;
       font-weight: 700;
       text-align: right;
+      white-space: nowrap;
+    }
+
+    .channel-ad {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-left: 0.3rem;
+      font-weight: 400;
+    }
+
+    /* ──────────────────────────────────────────
+       GLOSSARY
+    ────────────────────────────────────────── */
+    .glossary-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .glossary-toggle {
+      transition: transform 0.3s ease;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .glossary-toggle.open {
+      transform: rotate(90deg);
+    }
+
+    .glossary-body {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .glossary-body.visible {
+      display: block;
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .glossary-item {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .glossary-item:last-child {
+      border-bottom: none;
+    }
+
+    .glossary-term {
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent-green);
+      margin-bottom: 0.2rem;
+    }
+
+    .glossary-def {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
     }
 
     /* ──────────────────────────────────────────
@@ -1529,7 +1595,23 @@
       </div>
     </section>
 
-    <!-- ── 9. HISTORIAL 24H ── -->
+    <!-- ── 9. GLOSARIO TÉCNICO ── -->
+    <section id="glossarySection">
+      <div class="card">
+        <div class="glossary-header" onclick="toggleGlossary()">
+          <div class="section-title-row" style="margin-bottom:0">
+            <span class="section-icon">📖</span>
+            <h2 style="margin-bottom:0">Glosario Técnico</h2>
+          </div>
+          <span class="glossary-toggle" id="glossaryChevron">▶</span>
+        </div>
+        <div class="glossary-body" id="glossaryBody">
+          <div class="glossary-grid" id="glossaryGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 10. HISTORIAL 24H ── -->
     <section>
       <div class="card">
         <div class="section-title-row">
@@ -2110,8 +2192,15 @@
       if (pct === null) return; // skip missing channels
       values.push(pct);
 
+      const adRaw = data[ch.key]?.ad?.value;
+      const adVal = adRaw !== undefined && adRaw !== null ? adRaw : null;
+
       const color = soilColor(pct);
       const widthPct = Math.min(Math.max(pct, 0), 100);
+
+      const adHtml = adVal !== null
+        ? `<span class="channel-ad">(AD: ${adVal})</span>`
+        : '';
 
       const row = document.createElement('div');
       row.className = 'channel-row';
@@ -2123,7 +2212,7 @@
           <div class="threshold-marker opt"  data-label="50%"></div>
           <div class="threshold-marker wet"  data-label="80%"></div>
         </div>
-        <div class="channel-pct" style="color:${color}">${Math.round(pct)}%</div>
+        <div class="channel-pct" style="color:${color}">${Math.round(pct)}%${adHtml}</div>
       `;
       container.appendChild(row);
     });
@@ -3321,12 +3410,59 @@
   /* ──────────────────────────────────────────
      INIT
   ────────────────────────────────────────── */
+  /* ──────────────────────────────────────────
+     GLOSSARY
+  ────────────────────────────────────────── */
+  const GLOSSARY = [
+    { term: 'Humedad del suelo (%)', def: 'Porcentaje de agua en el suelo medido por el sensor WH51. Cada tipo de cultivo tiene su rango optimo.' },
+    { term: 'AD (Analog-to-Digital)', def: 'Valor crudo del sensor de suelo (0-255). Es la lectura electrica antes de convertirse a porcentaje. Mayor AD = suelo mas humedo.' },
+    { term: 'Umbral de riego', def: 'Nivel minimo de humedad del suelo antes de necesitar riego. Varia por cultivo: hojas 28%, brasicas 22%, tomate 18%.' },
+    { term: 'Optimo / Aviso / Critico', def: 'Tres niveles de humedad: Optimo (verde) = rango ideal. Aviso (amarillo) = regar pronto. Critico (rojo) = regar ya.' },
+    { term: 'EN VIVO', def: 'La cama tiene un sensor fisico conectado mostrando datos en tiempo real (actualiza cada 5 min).' },
+    { term: 'Ultimo registro', def: 'Dato guardado de la ultima vez que un sensor estuvo en esa cama. Se muestra cuando el sensor fue movido a otra ubicacion.' },
+    { term: 'Temperatura (C)', def: 'Temperatura del aire exterior medida por el sensor WH32. El bosque de niebla oscila entre 12-24 grados C.' },
+    { term: 'Humedad del aire (%)', def: 'Porcentaje de humedad relativa del aire. En bosque de niebla es normal 70-98%. No confundir con humedad del suelo.' },
+    { term: 'Presion barometrica (hPa)', def: 'Presion atmosferica medida por el gateway GW1100. Util para predecir cambios de clima. A 1,780m la presion normal es ~820 hPa.' },
+    { term: 'Punto de rocio', def: 'Temperatura a la cual el aire se satura y se forma rocio o niebla. Importante en bosque de niebla donde frecuentemente la temperatura real esta cerca del punto de rocio.' },
+    { term: 'Sensacion termica', def: 'Temperatura percibida considerando humedad y viento. Puede sentirse mas frio o caliente que la temperatura real.' },
+    { term: 'Tasa de lluvia (mm/hr)', def: 'Cantidad de lluvia por hora medida por el pluviometro WH40. Si es mayor a 0, esta lloviendo activamente.' },
+    { term: 'Lluvia acumulada (mm)', def: 'Total de lluvia acumulada en un periodo (hora, dia, semana, mes, anio). 1mm = 1 litro por metro cuadrado.' },
+    { term: 'Gateway GW1100', def: 'El "cerebro" del sistema Ecowitt. Recibe datos de todos los sensores por radio y los envia a la nube via WiFi.' },
+    { term: 'WH51', def: 'Sensor de humedad de suelo Ecowitt. Mide cada 72 segundos. Alcance: 100m. Alimentacion: 1 pila AA. Se tienen 5 unidades.' },
+    { term: 'WH32', def: 'Sensor de temperatura y humedad exterior. Ubicado a 1.5m del suelo en sombra ligera.' },
+    { term: 'WH40', def: 'Pluviometro (sensor de lluvia). Ubicado en zona abierta sin obstrucciones.' },
+    { term: 'Bosque de niebla', def: 'Ecosistema de la finca a 1,780 msnm en Zipacon. Caracterizado por humedad alta constante (70-98%), neblina frecuente y temperaturas frescas (12-24 C). El suelo tiende a mantenerse humedo naturalmente.' },
+    { term: 'Cooldown', def: 'Sistema anti-spam de alertas. Cuando se envia una alerta por Telegram, no se repite el mismo tipo de alerta hasta que pasen 30 minutos.' },
+    { term: 'Sensor rotativo', def: 'Sistema que permite mover los 5 sensores fisicos entre las 12 camas. Cada cama guarda su ultimo dato cuando el sensor se mueve a otra ubicacion.' },
+  ];
+
+  function toggleGlossary() {
+    const body = document.getElementById('glossaryBody');
+    const chevron = document.getElementById('glossaryChevron');
+    body.classList.toggle('visible');
+    chevron.classList.toggle('open');
+  }
+
+  function populateGlossary() {
+    const grid = document.getElementById('glossaryGrid');
+    if (!grid) return;
+    GLOSSARY.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'glossary-item';
+      div.innerHTML = `<div class="glossary-term">${item.term}</div><div class="glossary-def">${item.def}</div>`;
+      grid.appendChild(div);
+    });
+  }
+
   async function init() {
     // Request notification permission on first load
     await requestNotifPermission();
 
     // Render greenhouse crops immediately from localStorage (no API needed)
     renderGreenhouseCrops();
+
+    // Populate glossary
+    populateGlossary();
 
     // Load both in parallel on first load
     await Promise.allSettled([loadRealtime(), loadHistory()]);
