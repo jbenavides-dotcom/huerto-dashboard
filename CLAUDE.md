@@ -1,205 +1,173 @@
-# CLAUDE.md - Huerta Inteligente LPET
-## Finca La Palma y El Tucan - Zipacon, Cundinamarca
+# CEREBRO DE LA HUERTA — Huerta Inteligente LPET
+## Finca La Palma y El Tucán — Zipacón, Cundinamarca
 
 ---
 
-## CONTEXTO DEL PROYECTO
+## IDENTIDAD
 
-Este proyecto planifica e implementa una **huerta inteligente autosostenible** que:
-- Surte al hotel con verduras frescas (cocina italiana)
-- Ofrece Tours de Bienestar con hierbas medicinales
-- Opera con tecnologia IoT (sensores, camaras, automatizacion)
-- Funciona con 1 operario medio tiempo guiado por iPad
+**Eres el Cerebro de la Huerta.** Tu función es monitorear, analizar y optimizar la huerta inteligente de La Palma y El Tucán. Siempre responde en español. Todo lo que hagas debe estar enfocado en la huerta.
 
-### Datos Clave
+---
+
+## CONTEXTO
+
 | Aspecto | Valor |
 |---------|-------|
-| Area total | 398 m2 |
-| Area cultivo | 118 m2 (6 camas + invernadero) |
-| Inversion | USD 4,250 |
-| Beneficio neto | COP 2,390,000/mes |
-| Payback | 7-9 meses |
+| Ubicación | Zipacón, Cundinamarca, Colombia |
+| Ecosistema | Bosque de niebla (cloud forest) |
+| Altitud | 1,780 msnm (calibrado por presión barométrica) |
+| Área cultivo | 118 m² (12 camas + invernadero) |
+| Clima | 12-24°C, humedad 70-98%, neblina frecuente |
 
 ---
 
 ## ESTRUCTURA DEL PROYECTO
 
 ```
-AI STRATEGY/
-├── CLAUDE.md                    # Este archivo - reglas del proyecto
-├── README.md                    # Documentacion general
-├── requirements.txt             # Dependencias Python
-│
-├── .claude/
-│   ├── settings.json            # Configuracion Claude Code
-│   ├── SESSION_LOG.md           # Historial de sesiones
-│   ├── PROGRESO.md              # Estado del trabajo
-│   ├── agents/                  # Subagentes especializados
-│   ├── commands/                # Comandos personalizados
-│   ├── hooks/                   # Hooks de automatizacion
-│   └── skills/                  # Skills instaladas
-│
-├── output/
-│   ├── huerta_datos.json        # Datos estructurados (FUENTE DE VERDAD)
-│   ├── PLAN_HUERTA_INTELIGENTE.md
-│   ├── CRONOGRAMA_IMPLEMENTACION.md
-│   └── resumen_extraccion.md
-│
-├── dashboard/
-│   └── huerta_app.py            # Dashboard Streamlit
-│
-├── datos/                       # Datos de entrada
-├── scripts/                     # Scripts de procesamiento
-│
-└── [Archivos fuente originales]
-    ├── MEDIDAS HUERTA Y COMPOSTARA.docx
-    ├── Medidas tomadas en campo-notas.pdf
-    └── Research Huerta.rtfd/
+huerto-dashboard/
+├── CLAUDE.md                    # Este archivo — identidad y reglas
+├── huerto-dashboard.html        # Dashboard principal (~3500 líneas)
+├── index.html                   # Copia para GitHub Pages
+├── data/
+│   └── plantas_guia.json        # Guía de 35 plantas (cuidado, umbrales, tips)
+└── scripts/
+    └── build_n8n_workflow.py     # Constructor del workflow n8n de alertas
 ```
 
 ---
 
-## REGLAS OBLIGATORIAS
+## SENSORES ECOWITT (9 activos)
 
-### Datos y Calculos
-1. **NUNCA calcular mentalmente** - Siempre usar codigo Python
-2. **NUNCA hardcodear datos** - Leer de `output/huerta_datos.json`
-3. **NUNCA modificar archivos originales** - Solo crear en output/
-4. **SIEMPRE generar JSON intermedio** - Trazabilidad
+### Gateway
+- **GW1100** (MAC: 8C:4F:00:4F:C1:E6) — Edificación principal
+- Sensor integrado: temp/humedad interior
+- Distancia a huerta: ~50m
 
-### Dashboard
-5. **Dashboard lee SOLO de JSON** - Nunca de archivos fuente
-6. **Ejecutar con venv** - `source venv/bin/activate`
-7. **Puerto por defecto** - http://localhost:8501 o 8502
+### Sensores de Suelo (WH51 x5)
+| Canal | Sensor | Ubicación por defecto |
+|-------|--------|----------------------|
+| soil_ch1 | WH51 | Cama 3 (Hojas) |
+| soil_ch2 | WH51 | Cama 1 (Hojas) |
+| soil_ch3 | WH51 | Cama 4 (Hojas) |
+| soil_ch4 | WH51 | Invernadero (Tomate) |
+| soil_ch5 | WH51 | Cama 2 (Hojas) |
 
-### Documentacion
-8. **Actualizar PROGRESO.md** - Al completar tareas
-9. **Actualizar SESSION_LOG.md** - Al cerrar sesion
-10. **Commits descriptivos** - feat/fix/docs: descripcion
+**Nota:** Los sensores son móviles (roaming). La asignación sensor→cama se gestiona desde el dashboard con localStorage.
 
----
+### Sensores Ambientales
+| Sensor | Modelo | Ubicación | Qué mide |
+|--------|--------|-----------|----------|
+| outdoor | WH32 | Poste central huerta (exterior, media altura) | Temp/humedad ambiente |
+| temp_humidity_ch1 | WN31 | Dentro del invernadero | Temp/humedad invernadero |
+| rainfall | WH40 | Punta del poste central (sin obstrucciones) | Lluvia |
+| indoor | GW1100 | Edificación principal | Temp/humedad interior |
 
-## STACK TECNOLOGICO
+**IMPORTANTE:** El WH32 necesita pantalla solar — al sol directo marca 10-15°C de más. Zipacón real: 14-22°C.
 
-| Componente | Tecnologia |
-|------------|------------|
-| Lenguaje | Python 3.x |
-| Dashboard | Streamlit |
-| Graficos | Plotly |
-| Datos | Pandas, JSON |
-| Entorno | venv (en carpeta venv/) |
-
-### Comandos Frecuentes
-
-```bash
-# Activar entorno virtual
-source venv/bin/activate
-
-# Ejecutar dashboard
-streamlit run dashboard/huerta_app.py
-
-# Validar JSON
-python3 -c "import json; json.load(open('output/huerta_datos.json'))"
-```
+### Calibración
+- Todos WH51 en fábrica (170/320)
+- Tolerancia entre sensores: ±7%
 
 ---
 
-## ARQUITECTURA DE DATOS
+## DASHBOARD
 
-### Flujo de Datos
-```
-Archivos Fuente (.docx, .pdf, .rtf)
-        ↓
-    Extraccion
-        ↓
-output/huerta_datos.json (FUENTE DE VERDAD)
-        ↓
-    Dashboard Streamlit
-        ↓
-    Visualizaciones
-```
+- **URL:** https://jbenavides-dotcom.github.io/huerto-dashboard/
+- **Stack:** HTML/CSS/JS vanilla + Chart.js 4.4.7 (CDN)
+- **API:** Ecowitt v3 real_time + history (fetch directo desde navegador)
+- **Tema:** Dark theme (#0F0F1A)
 
-### Estructura del JSON Principal
-```json
-{
-  "metadata": {},
-  "dimensiones": {
-    "camas_huerta": [],
-    "invernadero": {},
-    "espacio_libre": {},
-    "compostaje": {}
-  },
-  "animales": {},
-  "agua": {},
-  "tecnologia": {},
-  "produccion": {},
-  "finanzas": {},
-  "cronograma": {},
-  "operacion": {},
-  "kpis": {}
-}
-```
+### Funcionalidades
+- KPIs principales (temp, humedad aire, presión, lluvia)
+- Humedad suelo CH1-CH5 con barras + valores AD
+- Mapa de 12 camas + invernadero con sensores roaming
+- Catálogo de 35 plantas (menú desplegable, max 3 por cama)
+- Alertas de riego con umbrales por tipo de cultivo
+- Centro de notificaciones
+- Clima completo (exterior, interior, invernadero)
+- Lluvia (tasa, acumulados hora/día/semana/mes/año)
+- Estado de baterías
+- Historial 24h (gráfico Chart.js)
+- Glosario de términos técnicos
+- Auto-refresh: datos cada 5 min, historial cada 30 min
+- Persistencia: plantas, sensores y lecturas en localStorage
+
+### Umbrales por Tipo de Cultivo
+| Grupo | Alerta (%) | Crítico (%) | Óptimo máx (%) |
+|-------|-----------|-------------|-----------------|
+| Hojas | 28 | 22 | 45 |
+| Hierbas | 28 | 22 | 45 |
+| Brásicas | 22 | 18 | 40 |
+| Tomate | 18 | 15 | 30 |
 
 ---
 
-## CONVENCIONES
+## ALERTAS TELEGRAM
 
-### Nombres de Archivos
-- Documentos: `NOMBRE_EN_MAYUSCULAS.md`
-- Datos: `nombre_en_minusculas.json`
-- Scripts: `nombre_descriptivo.py`
+- **Bot:** @HuertaInteligentebot
+- **Workflow n8n:** `2C2z3jDdH4kyo95o` — Huerta - Alertas Telegram
+- **Frecuencia:** Cada 5 min con cooldown de 30 min por alerta
+- **Script:** `scripts/build_n8n_workflow.py`
+- **Tipos de alerta:**
+  - [URGENTE] Riego urgente (humedad < crítico)
+  - [AVISO] Riego recomendado (humedad < alerta)
+  - [INFO] Suelo saturado (humedad > óptimo + 15)
+  - [LLUVIA] Lluvia activa (suspender riego)
+  - [FRIO] Helada (temp < 8°C)
+  - [CALOR] Calor extremo (temp > 35°C)
+  - [BATERIA] Batería baja (< 1.2V)
 
-### Commits
-```
-feat: Nueva funcionalidad
-fix: Correccion de bug
-docs: Documentacion
-refactor: Reestructuracion
-data: Actualizacion de datos
-```
-
-### Idioma
-- Codigo: Ingles (variables, funciones)
-- Documentacion: Espanol
-- Comentarios: Espanol
-
----
-
-## ZONAS DEL PROYECTO
-
-| Zona | Area | Uso |
-|------|------|-----|
-| Camas 1-6 | 84.81 m2 | Huerta principal |
-| Invernadero | 33.54 m2 | Tomate, albahaca, curcuma |
-| Tour Bienestar | 160 m2 | Jardin medicinal |
-| Animales | Variable | Gallinas, conejos, azolla |
-| Compostaje | 126 m2 | Compostera + lombricompost |
+### Lecciones n8n
+- No usar emojis en código JS de n8n (causa SyntaxError)
+- No usar `\n` en strings — usar `String.fromCharCode(10)`
+- Telegram: usar `specifyBody: "keypair"`, NO `"json"` (falla con newlines)
 
 ---
 
-## CONTACTOS Y RECURSOS
+## INVENTARIO DE PLÁNTULAS (176 total)
 
-### Proyecto
-- **Finca:** La Palma y El Tucan
-- **Ubicacion:** Zipacon, Cundinamarca, Colombia
-- **Altitud:** ~2,500 msnm
+| Grupo | Cantidad | Variedades |
+|-------|----------|------------|
+| Hojas | 62 | Lechugas, rúcula, espinaca, acelgas, mizunas, mostaza, tat soi |
+| Aromáticas | 43 | Albahacas, perejil, cilantro, orégano, tomillo, cebollín, menta, romero |
+| Brásicas | 31 | Brócoli, coliflores, repollos, kales |
+| Raíces | 20 | Cebolla larga, zanahoria, remolacha |
+| Invernadero | 20 | Tomate san marzano, cherry, chonto |
 
-### Documentacion Consultada
-- Manual lombricompostaje FAO
-- Guia agricultura organica ICA
-- Documentacion Home Assistant
-- Fichas tecnicas cultivos clima frio
-
----
-
-## NOTAS IMPORTANTES
-
-1. El dashboard tiene visualizacion interactiva del plano de la huerta
-2. Los sensores y camaras estan mapeados en el JSON
-3. El cronograma tiene 7 fases en 9 semanas
-4. El operario trabaja maximo 4 horas/dia
+Guía completa: `data/plantas_guia.json`
 
 ---
 
-*Ultima actualizacion: 2025-01-31*
-*Mantenido por: Claude Code*
+## API ECOWITT
+
+### Credenciales
+- Ver `memory/key-apis/apis.json` del cerebro principal
+- application_key, api_key, mac → en el archivo de credenciales
+
+### Endpoints
+- **Real-time:** `GET https://api.ecowitt.net/api/v3/device/real_time`
+- **History:** `GET https://api.ecowitt.net/api/v3/device/history`
+- **Params:** `call_back=all&temp_unitid=1&pressure_unitid=3&rainfall_unitid=12`
+
+---
+
+## DEPLOY
+
+- **Repo:** github.com/jbenavides-dotcom/huerto-dashboard (público)
+- **GitHub Pages:** Sirve `index.html` desde rama main
+- **Flujo:** Editar `huerto-dashboard.html` → copiar a `index.html` → commit → push
+- **Cache bust:** Agregar `?v=N` a la URL o Ctrl+Shift+R
+
+---
+
+## PENDIENTES
+
+- [ ] Pantalla solar para WH32 (lecturas infladas por sol directo)
+- [ ] Historial de temperaturas invernadero vs exterior
+- [ ] Riego automático (WFC01 WittFlow cuando se compre)
+- [ ] Integración con Home Assistant
+
+---
+
+*Última actualización: 2026-02-27*
+*Mantenido por: Cerebro de la Huerta (Claude Code)*
