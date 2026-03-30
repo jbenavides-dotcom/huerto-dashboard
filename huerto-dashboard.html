@@ -566,6 +566,242 @@
     .error-inline.visible { display: block; }
 
     /* ──────────────────────────────────────────
+       BITACORA DE CULTIVO
+    ────────────────────────────────────────── */
+    .bitacora-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .bitacora-header .section-title-row { margin-bottom: 0; }
+
+    .bitacora-new-btn {
+      background: var(--accent-green);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #0F0F1A;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity var(--transition);
+    }
+    .bitacora-new-btn:hover { opacity: 0.85; }
+
+    .bitacora-stats {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .bitacora-stat-pill {
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: 100px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .bitacora-stat-pill strong {
+      color: var(--text);
+      margin-right: 0.2rem;
+    }
+
+    .bitacora-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .bitacora-filter-select {
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 0.35rem 0.5rem;
+      cursor: pointer;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .bitacora-filter-select:focus { border-color: var(--accent-blue); }
+    .bitacora-filter-select option { background: #1A1A2E; color: var(--text); }
+
+    .bitacora-table-wrap {
+      overflow-x: auto;
+    }
+
+    .bitacora-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .bitacora-table th {
+      text-align: left;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+    .bitacora-table td {
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid rgba(42,42,74,0.4);
+      vertical-align: top;
+    }
+    .bitacora-table tr:hover td {
+      background: rgba(78,205,196,0.04);
+    }
+
+    .bitacora-tipo-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .bitacora-tipo-badge.siembra       { background: rgba(0,214,143,0.15); color: #00D68F; }
+    .bitacora-tipo-badge.cosecha       { background: rgba(255,184,0,0.15); color: #FFB800; }
+    .bitacora-tipo-badge.fertilizacion { background: rgba(168,85,247,0.15); color: #A855F7; }
+    .bitacora-tipo-badge.riego_manual  { background: rgba(78,205,196,0.15); color: #4ECDC4; }
+    .bitacora-tipo-badge.plagas        { background: rgba(255,71,87,0.15); color: #FF4757; }
+    .bitacora-tipo-badge.observacion   { background: rgba(136,136,170,0.15); color: #8888AA; }
+
+    .bitacora-delete-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.85rem;
+      padding: 0.1rem 0.3rem;
+      transition: color var(--transition);
+    }
+    .bitacora-delete-btn:hover { color: var(--accent-red); }
+
+    .bitacora-empty {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    .bitacora-charts-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      margin-bottom: 0;
+    }
+    .bitacora-charts-toggle h2 { margin-bottom: 0; cursor: pointer; }
+    .bitacora-charts-chevron {
+      font-size: 0.7rem;
+      color: var(--muted);
+      transition: transform var(--transition);
+    }
+    .bitacora-charts-chevron.open { transform: rotate(90deg); }
+
+    .bitacora-charts-body {
+      display: none;
+      padding-top: 1rem;
+    }
+    .bitacora-charts-body.visible { display: block; }
+
+    .bitacora-chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .bitacora-chart-grid .chart-item {
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+    }
+    .bitacora-chart-grid .chart-item h3 {
+      margin-bottom: 0.5rem;
+      font-size: 0.72rem;
+    }
+    .bitacora-chart-grid .chart-item.full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* Bitacora modal form fields */
+    .bitacora-form-group {
+      margin-bottom: 0.75rem;
+    }
+    .bitacora-form-group label {
+      display: block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+    .bitacora-form-group input,
+    .bitacora-form-group select,
+    .bitacora-form-group textarea {
+      width: 100%;
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.82rem;
+      padding: 0.45rem 0.6rem;
+      outline: none;
+      transition: border-color var(--transition);
+      font-family: inherit;
+    }
+    .bitacora-form-group input:focus,
+    .bitacora-form-group select:focus,
+    .bitacora-form-group textarea:focus {
+      border-color: var(--accent-blue);
+    }
+    .bitacora-form-group textarea {
+      resize: vertical;
+      min-height: 3rem;
+    }
+    .bitacora-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .bitacora-cantidad-row {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .bitacora-cantidad-row.visible {
+      display: grid;
+    }
+
+    @media (max-width: 768px) {
+      .bitacora-chart-grid {
+        grid-template-columns: 1fr;
+      }
+      .bitacora-chart-grid .chart-item.full-width {
+        grid-column: 1;
+      }
+      .bitacora-table th:nth-child(6),
+      .bitacora-table td:nth-child(6) {
+        display: none;
+      }
+    }
+
+    /* ──────────────────────────────────────────
        SECTION TITLE ROW
     ────────────────────────────────────────── */
     .section-title-row {
@@ -1286,6 +1522,236 @@
       line-height: 1;
       opacity: 0.6;
     }
+
+    /* ──────────────────────────────────────────
+       ASISTENTE DE CULTIVO (Sistema de Recomendaciones)
+    ────────────────────────────────────────── */
+    .asistente-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .asistente-toggle {
+      transition: transform 0.3s ease;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .asistente-toggle.open {
+      transform: rotate(90deg);
+    }
+
+    .asistente-body {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .asistente-body.visible {
+      display: block;
+    }
+
+    .asistente-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .asistente-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+    }
+
+    .asistente-panel-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-green);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    /* Panel 1: match list */
+    .match-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .match-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .match-item-name {
+      font-size: 0.75rem;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .match-bar-wrap {
+      width: 80px;
+      flex-shrink: 0;
+      height: 6px;
+      background: var(--bar-track);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .match-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    .match-score {
+      font-size: 0.72rem;
+      font-weight: 700;
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .match-green  { color: var(--accent-green); }
+    .match-yellow { color: var(--accent-yellow); }
+    .match-red    { color: var(--accent-red); }
+
+    .match-divider {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 0.3rem 0;
+      letter-spacing: 0.05em;
+    }
+
+    /* Panel 2: bed performance alerts */
+    .perf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .perf-item {
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.75rem;
+    }
+
+    .perf-item-bed {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .perf-line {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .perf-ok    { color: var(--accent-green); }
+    .perf-warn  { color: var(--accent-yellow); }
+    .perf-crit  { color: var(--accent-red); }
+
+    .perf-tip {
+      margin-top: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--accent-blue);
+      font-style: italic;
+    }
+
+    .perf-empty {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    /* Panel 3: companions */
+    .comp-bed-block {
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 0.6rem 0.7rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .comp-bed-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .comp-bed-name {
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .comp-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      line-height: 1.5;
+      margin-bottom: 0.2rem;
+    }
+
+    .comp-icon {
+      flex-shrink: 0;
+      width: 1.2rem;
+    }
+
+    .comp-ok   { color: var(--accent-green); }
+    .comp-bad  { color: var(--accent-red); }
+    .comp-tip  { color: var(--accent-blue); }
+
+    .comp-rules {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .comp-rules-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .comp-rule-item {
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.5;
+      padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(42,42,74,0.4);
+    }
+
+    .comp-rule-item:last-child {
+      border-bottom: none;
+    }
+
+    .asistente-loading {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
+      padding: 0.75rem;
+    }
   </style>
 </head>
 <body>
@@ -1596,7 +2062,49 @@
       </div>
     </section>
 
-    <!-- ── 9. GLOSARIO TÉCNICO ── -->
+    <!-- ── 9. ASISTENTE DE CULTIVO ── -->
+    <section id="asistenteSection">
+      <div class="card">
+        <div class="asistente-header" onclick="toggleAsistente()">
+          <div class="section-title-row" style="margin-bottom:0">
+            <span class="section-icon">🌿</span>
+            <h2 style="margin-bottom:0">Asistente de Cultivo</h2>
+          </div>
+          <span class="asistente-toggle" id="asistenteChevron">▶</span>
+        </div>
+        <div class="asistente-body" id="asistenteBody">
+          <div class="asistente-panels">
+
+            <!-- Panel 1: Condiciones actuales → Cultivos Ideales -->
+            <div class="asistente-panel">
+              <div class="asistente-panel-title">🌡️ Condiciones Actuales → Cultivos Ideales</div>
+              <div id="matchListContainer">
+                <div class="asistente-loading">Esperando datos del sensor…</div>
+              </div>
+            </div>
+
+            <!-- Panel 2: Alertas de Rendimiento por Cama -->
+            <div class="asistente-panel">
+              <div class="asistente-panel-title">📊 Alertas de Rendimiento por Cama</div>
+              <div id="perfAlertsContainer">
+                <div class="asistente-loading">Esperando datos del sensor…</div>
+              </div>
+            </div>
+
+            <!-- Panel 3: Compañeras y Enemigos -->
+            <div class="asistente-panel">
+              <div class="asistente-panel-title">🤝 Compañeras y Enemigos por Cama</div>
+              <div id="companionContainer">
+                <div class="asistente-loading">Cargando matriz de compañeras…</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 10. GLOSARIO TÉCNICO ── -->
     <section id="glossarySection">
       <div class="card">
         <div class="glossary-header" onclick="toggleGlossary()">
@@ -1622,6 +2130,83 @@
         <div class="error-inline" id="historyError"></div>
         <div class="chart-wrapper">
           <canvas id="historyChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 11. BITACORA DE CULTIVO ── -->
+    <section id="bitacoraSection">
+      <div class="card">
+        <div class="bitacora-header">
+          <div class="section-title-row">
+            <span class="section-icon">📝</span>
+            <h2 style="margin-bottom:0">Bitácora de Cultivo</h2>
+          </div>
+          <button class="bitacora-new-btn" onclick="openBitacoraModal()">+ Nueva Entrada</button>
+        </div>
+        <div class="bitacora-stats" id="bitacoraStats"></div>
+        <div class="bitacora-filters">
+          <select class="bitacora-filter-select" id="bitacoraFilterTipo" onchange="renderBitacora()">
+            <option value="">Todos los tipos</option>
+            <option value="siembra">Siembra</option>
+            <option value="cosecha">Cosecha</option>
+            <option value="fertilizacion">Fertilización</option>
+            <option value="riego_manual">Riego manual</option>
+            <option value="plagas">Plagas</option>
+            <option value="observacion">Observación</option>
+          </select>
+          <select class="bitacora-filter-select" id="bitacoraFilterCama" onchange="renderBitacora()">
+            <option value="">Todas las camas</option>
+          </select>
+          <select class="bitacora-filter-select" id="bitacoraFilterMes" onchange="renderBitacora()">
+            <option value="">Todos los meses</option>
+          </select>
+        </div>
+        <div class="bitacora-table-wrap">
+          <table class="bitacora-table" id="bitacoraTable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cama</th>
+                <th>Tipo</th>
+                <th>Planta</th>
+                <th>Cosecha</th>
+                <th>Nota</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="bitacoraTableBody"></tbody>
+          </table>
+        </div>
+        <div class="bitacora-empty" id="bitacoraEmpty" style="display:none">
+          No hay registros. Haz clic en "+ Nueva Entrada" para comenzar.
+        </div>
+      </div>
+
+      <!-- Charts card (collapsible) -->
+      <div class="card" style="margin-top:1rem">
+        <div class="bitacora-charts-toggle" onclick="toggleBitacoraCharts()">
+          <div class="section-title-row" style="margin-bottom:0">
+            <span class="section-icon">📊</span>
+            <h2 style="margin-bottom:0">Producción — Gráficas</h2>
+          </div>
+          <span class="bitacora-charts-chevron" id="bitacoraChartsChevron">▶</span>
+        </div>
+        <div class="bitacora-charts-body" id="bitacoraChartsBody">
+          <div class="bitacora-chart-grid">
+            <div class="chart-item">
+              <h3>Cosecha por Cama (kg)</h3>
+              <canvas id="bitacoraChartCama"></canvas>
+            </div>
+            <div class="chart-item">
+              <h3>Cosecha por Planta (kg)</h3>
+              <canvas id="bitacoraChartPlanta"></canvas>
+            </div>
+            <div class="chart-item full-width">
+              <h3>Tendencia Mensual de Cosecha</h3>
+              <canvas id="bitacoraChartTendencia"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1655,6 +2240,76 @@
   <!-- Plant tooltip (global, moved on mousemove) -->
   <div class="plant-tooltip" id="plantTooltip"></div>
 
+  <!-- ════════════════════════════════════════
+       BITACORA MODAL
+  ════════════════════════════════════════ -->
+  <div class="plant-modal-overlay" id="bitacoraModalOverlay" onclick="if(event.target===this)closeBitacoraModal()">
+    <div class="plant-modal" style="max-width:420px">
+      <div class="plant-modal-title">Nueva Entrada — Bitácora</div>
+
+      <div class="bitacora-form-row">
+        <div class="bitacora-form-group">
+          <label>Fecha</label>
+          <input type="date" id="btk_fecha" />
+        </div>
+        <div class="bitacora-form-group">
+          <label>Hora</label>
+          <input type="time" id="btk_hora" />
+        </div>
+      </div>
+
+      <div class="bitacora-form-group">
+        <label>Cama</label>
+        <select id="btk_cama" class="plant-select">
+          <option value="">— Seleccionar —</option>
+        </select>
+      </div>
+
+      <div class="bitacora-form-group">
+        <label>Tipo de acción</label>
+        <select id="btk_tipo" class="plant-select" onchange="onBitacoraTipoChange()">
+          <option value="">— Seleccionar —</option>
+          <option value="siembra">🌱 Siembra</option>
+          <option value="cosecha">🌾 Cosecha</option>
+          <option value="fertilizacion">💧 Fertilización</option>
+          <option value="riego_manual">🚿 Riego manual</option>
+          <option value="plagas">🐛 Plagas</option>
+          <option value="observacion">👁️ Observación</option>
+        </select>
+      </div>
+
+      <div class="bitacora-form-group">
+        <label>Planta (opcional)</label>
+        <select id="btk_planta" class="plant-select">
+          <option value="">— Ninguna —</option>
+        </select>
+      </div>
+
+      <div class="bitacora-cantidad-row" id="btk_cantidad_row">
+        <div class="bitacora-form-group">
+          <label>Cantidad</label>
+          <input type="number" id="btk_cantidad" min="0" step="0.1" placeholder="0.0" />
+        </div>
+        <div class="bitacora-form-group">
+          <label>Unidad</label>
+          <select id="btk_unidad" class="plant-select">
+            <option value="kg">kg</option>
+            <option value="unidades">unidades</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bitacora-form-group">
+        <label>Nota (max 300 caracteres)</label>
+        <textarea id="btk_nota" maxlength="300" rows="2" placeholder="Observaciones..."></textarea>
+      </div>
+
+      <div class="plant-modal-footer">
+        <button class="plant-close-btn" onclick="closeBitacoraModal()" style="margin-right:0.5rem">Cancelar</button>
+        <button class="plant-add-btn" onclick="saveBitacoraEntry()">Guardar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ════════════════════════════════════════
        JAVASCRIPT
@@ -2953,6 +3608,7 @@
     updateRain(data);
     updateBattery(data);
     checkBrowserAlerts(data);
+    updateRecommendations(data);
 
     hideError('globalError');
   }
@@ -3489,6 +4145,708 @@
     });
   }
 
+  /* ──────────────────────────────────────────
+     ASISTENTE DE CULTIVO — Sistema de Recomendaciones
+  ────────────────────────────────────────── */
+
+  /** Cached companion planting matrix */
+  let _companionMatrix = null;
+
+  /** Toggle collapse/expand for Asistente section */
+  function toggleAsistente() {
+    const body = document.getElementById('asistenteBody');
+    const chevron = document.getElementById('asistenteChevron');
+    body.classList.toggle('visible');
+    chevron.classList.toggle('open');
+  }
+
+  /**
+   * Fetch the companion planting matrix JSON once and cache it.
+   * After loading, renders the companion panel if matrix was pending.
+   */
+  async function fetchCompanionMatrix() {
+    try {
+      const res = await fetch('data/companion_planting_matrix.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      _companionMatrix = await res.json();
+      // Render companion panel now that matrix is loaded
+      renderCompanionPanel();
+    } catch (e) {
+      console.warn('No se pudo cargar companion_planting_matrix.json:', e);
+      const el = document.getElementById('companionContainer');
+      if (el) el.innerHTML = '<div class="asistente-loading">⚠️ No se pudo cargar la matriz de compañeras.</div>';
+    }
+  }
+
+  /**
+   * Calculate how well current ambient conditions match a plant's ideal ranges.
+   * Returns a score 0-100.
+   * @param {object} plant - PLANT_CATALOG entry
+   * @param {number} temp  - current outdoor temperature °C
+   * @param {number} hum   - current outdoor humidity %
+   * @returns {number} score 0-100
+   */
+  function calcConditionMatch(plant, temp, hum) {
+    // Temperature score
+    let tempScore = 100;
+    if (temp < plant.tempMin) {
+      const gap = plant.tempMin - temp;
+      tempScore = Math.max(0, 100 - gap * 8);
+    } else if (temp > plant.tempMax) {
+      const gap = temp - plant.tempMax;
+      tempScore = Math.max(0, 100 - gap * 8);
+    }
+
+    // Humidity score (air humidity mapped loosely to soil preference as orientation)
+    // We use air humidity as a proxy for ambient suitability
+    let humScore = 100;
+    // High air humidity (>85%) is generally OK for moisture-loving plants
+    // but may indicate fungal risk for dry-loving ones
+    if (plant.humMin > 30 && hum > 85) {
+      humScore = 85; // slight penalty for very high humidity in general
+    } else if (plant.humMin < 25 && hum < 50) {
+      humScore = 90;
+    }
+
+    return Math.round((tempScore * 0.75) + (humScore * 0.25));
+  }
+
+  /**
+   * Render Panel 1: ranked list of plants by condition match.
+   * @param {number} temp - outdoor temperature
+   * @param {number} hum  - outdoor humidity
+   */
+  function renderMatchList(temp, hum) {
+    const container = document.getElementById('matchListContainer');
+    if (!container) return;
+
+    const scored = PLANT_CATALOG.map(p => ({
+      plant: p,
+      score: calcConditionMatch(p, temp, hum),
+    })).sort((a, b) => b.score - a.score);
+
+    const top10   = scored.slice(0, 10);
+    const bottom5 = scored.slice(-5).reverse();
+
+    function scoreColor(s) {
+      if (s >= 90) return 'match-green';
+      if (s >= 70) return 'match-yellow';
+      return 'match-red';
+    }
+    function barColor(s) {
+      if (s >= 90) return '#00D68F';
+      if (s >= 70) return '#FFB800';
+      return '#FF4757';
+    }
+
+    function buildItems(list) {
+      return list.map(({ plant, score }) => {
+        const cls = scoreColor(score);
+        return `
+          <div class="match-item">
+            <span class="match-item-name">${plant.emoji} ${plant.nombre}</span>
+            <div class="match-bar-wrap">
+              <div class="match-bar-fill" style="width:${score}%;background:${barColor(score)}"></div>
+            </div>
+            <span class="match-score ${cls}">${score}%</span>
+          </div>`;
+      }).join('');
+    }
+
+    container.innerHTML = `
+      <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.5rem;">
+        Temp exterior: <strong style="color:var(--text)">${temp.toFixed(1)}°C</strong>
+        &nbsp;·&nbsp; Humedad aire: <strong style="color:var(--text)">${hum.toFixed(0)}%</strong>
+      </div>
+      <div class="match-list">
+        <div class="match-divider">— TOP 10 MEJORES CONDICIONES —</div>
+        ${buildItems(top10)}
+        <div class="match-divider" style="margin-top:0.4rem">— PEOR ADAPTADAS AHORA —</div>
+        ${buildItems(bottom5)}
+      </div>`;
+  }
+
+  /**
+   * Render Panel 2: per-bed performance alerts based on soil moisture + temp.
+   * @param {object} data - raw Ecowitt API data
+   */
+  function renderPerfAlerts(data) {
+    const container = document.getElementById('perfAlertsContainer');
+    if (!container) return;
+
+    const sensorAssignments = loadSensorAssignments();
+    const bedReadings       = loadBedReadings();
+    const outdoorTemp       = parseVal(data.outdoor?.temperature?.value);
+    const antifungicos      = _companionMatrix ? _companionMatrix.antifungicos_recomendados : ['tomillo', 'oregano', 'romero', 'cebollin'];
+
+    // Build list of beds that have sensor data
+    const allBedIds = [...BEDS.map(b => b.id), 'invernadero'];
+    const items = [];
+
+    allBedIds.forEach(bedId => {
+      const plantIds = BED_PLANTS[bedId] || [];
+      if (plantIds.length === 0) return;
+
+      const assignedSensor = sensorAssignments[bedId] || null;
+      let humidity = null;
+
+      if (assignedSensor && data[assignedSensor]?.soilmoisture?.value != null) {
+        humidity = parseVal(data[assignedSensor].soilmoisture.value);
+      } else if (bedReadings[bedId]?.humidity != null) {
+        humidity = bedReadings[bedId].humidity;
+      }
+
+      const bedDef  = BEDS.find(b => b.id === bedId);
+      const bedName = bedDef ? bedDef.name : (bedId === 'invernadero' ? 'Invernadero' : bedId);
+      const group   = bedDef ? bedDef.group : 'hojas';
+      const thresh  = CROP_THRESHOLDS[group] || CROP_THRESHOLDS.hojas;
+
+      const lines = [];
+
+      // Soil moisture check per plant
+      plantIds.forEach(pid => {
+        const plant = PLANT_MAP[pid];
+        if (!plant) return;
+        const name  = plant.emoji + ' ' + plant.nombre;
+
+        if (humidity !== null) {
+          if (humidity < thresh.critical) {
+            lines.push(`<div class="perf-line perf-crit">💧 ${name} — ${humidity}% suelo ⛔ CRÍTICO, regar urgente</div>`);
+          } else if (humidity < thresh.alert) {
+            lines.push(`<div class="perf-line perf-warn">💧 ${name} — ${humidity}% suelo ⚠️ Bajo, regar pronto</div>`);
+          } else if (humidity > thresh.optMax + 15) {
+            lines.push(`<div class="perf-line perf-warn">💧 ${name} — ${humidity}% suelo ⚠️ Saturado, drenar</div>`);
+          } else {
+            lines.push(`<div class="perf-line perf-ok">💧 ${name} — ${humidity}% suelo ✅ Óptimo</div>`);
+          }
+        } else {
+          lines.push(`<div class="perf-line" style="color:var(--muted)">💧 ${name} — sin sensor activo</div>`);
+        }
+
+        // Temperature check
+        if (outdoorTemp !== null) {
+          if (outdoorTemp < plant.tempMin) {
+            lines.push(`<div class="perf-line perf-warn">🌡️ ${name} — ${outdoorTemp.toFixed(1)}°C ⚠️ Por debajo del mínimo (${plant.tempMin}°C)</div>`);
+          } else if (outdoorTemp > plant.tempMax) {
+            lines.push(`<div class="perf-line perf-crit">🌡️ ${name} — ${outdoorTemp.toFixed(1)}°C ⛔ Excede máximo (${plant.tempMax}°C)</div>`);
+          }
+        }
+      });
+
+      // Companion enemy check within bed
+      if (_companionMatrix && plantIds.length > 1) {
+        const enemies = _companionMatrix.enemigos || {};
+        for (let i = 0; i < plantIds.length; i++) {
+          for (let j = i + 1; j < plantIds.length; j++) {
+            const a = plantIds[i], b = plantIds[j];
+            const aEnemies = enemies[a] || [];
+            if (aEnemies.includes(b)) {
+              const nameA = PLANT_MAP[a]?.nombre || a;
+              const nameB = PLANT_MAP[b]?.nombre || b;
+              lines.push(`<div class="perf-line perf-warn">⚠️ Conflicto: ${nameA} y ${nameB} son enemigas</div>`);
+            }
+          }
+        }
+      }
+
+      // Suggest antifungal herb if missing
+      const hasAntifungal = plantIds.some(pid => antifungicos.includes(pid));
+      if (!hasAntifungal && group !== 'invernadero') {
+        lines.push(`<div class="perf-tip">💡 Sin hierba antifúngica — considerar agregar tomillo u orégano</div>`);
+      }
+
+      if (lines.length > 0) {
+        items.push(`
+          <div class="perf-item">
+            <div class="perf-item-bed">${bedName}</div>
+            ${lines.join('')}
+          </div>`);
+      }
+    });
+
+    if (items.length === 0) {
+      container.innerHTML = '<div class="perf-empty">Sin alertas activas. Todas las camas con sensor están en rango óptimo.</div>';
+    } else {
+      container.innerHTML = `<div class="perf-list">${items.join('')}</div>`;
+    }
+  }
+
+  /**
+   * Render Panel 3: companion and enemy combinations per bed.
+   */
+  function renderCompanionPanel() {
+    const container = document.getElementById('companionContainer');
+    if (!container) return;
+    if (!_companionMatrix) {
+      container.innerHTML = '<div class="asistente-loading">Cargando matriz de compañeras…</div>';
+      return;
+    }
+
+    const companionMap = _companionMatrix.companeras || {};
+    const enemyMap     = _companionMatrix.enemigos   || {};
+    const allBedIds    = [...BEDS.map(b => b.id), 'invernadero'];
+    const blocks       = [];
+
+    allBedIds.forEach(bedId => {
+      const plantIds = BED_PLANTS[bedId] || [];
+      if (plantIds.length === 0) return;
+
+      const bedDef  = BEDS.find(b => b.id === bedId);
+      const bedName = bedDef ? bedDef.name : (bedId === 'invernadero' ? 'Invernadero' : bedId);
+
+      const goodPairs = [];
+      const badPairs  = [];
+
+      for (let i = 0; i < plantIds.length; i++) {
+        for (let j = i + 1; j < plantIds.length; j++) {
+          const a = plantIds[i], b = plantIds[j];
+          const aComp = companionMap[a] || [];
+          const aEnem = enemyMap[a]     || [];
+          const nameA = PLANT_MAP[a]?.nombre || a;
+          const nameB = PLANT_MAP[b]?.nombre || b;
+          if (aComp.includes(b))  goodPairs.push(`${nameA} + ${nameB}`);
+          if (aEnem.includes(b))  badPairs.push(`${nameA} ✗ ${nameB}`);
+        }
+      }
+
+      // Suggested companions (not in bed yet, but top recommended for plants present)
+      const suggestedSet = new Set();
+      plantIds.forEach(pid => {
+        const comps = companionMap[pid] || [];
+        comps.forEach(cid => {
+          if (!plantIds.includes(cid) && PLANT_MAP[cid]) {
+            suggestedSet.add(cid);
+          }
+        });
+      });
+      // Limit to top 3 suggestions
+      const suggestions = Array.from(suggestedSet).slice(0, 3);
+
+      const rows = [];
+
+      if (goodPairs.length > 0) {
+        goodPairs.forEach(p => {
+          rows.push(`<div class="comp-row comp-ok"><span class="comp-icon">✅</span><span>${p} — buena combinación</span></div>`);
+        });
+      } else if (plantIds.length > 1) {
+        rows.push(`<div class="comp-row" style="color:var(--muted)"><span class="comp-icon">➖</span><span>Sin sinergias especiales entre las plantas actuales</span></div>`);
+      }
+
+      if (badPairs.length > 0) {
+        badPairs.forEach(p => {
+          rows.push(`<div class="comp-row comp-bad"><span class="comp-icon">⚠️</span><span>${p} — se inhiben mutuamente</span></div>`);
+        });
+      }
+
+      if (suggestions.length > 0) {
+        const sugNames = suggestions.map(sid => {
+          const p = PLANT_MAP[sid];
+          return p ? `${p.emoji} ${p.nombre}` : sid;
+        }).join(', ');
+        rows.push(`<div class="comp-row comp-tip"><span class="comp-icon">💡</span><span>Agregar: ${sugNames}</span></div>`);
+      }
+
+      if (rows.length > 0) {
+        blocks.push(`
+          <div class="comp-bed-block">
+            <div class="comp-bed-name">${bedName}</div>
+            ${rows.join('')}
+          </div>`);
+      }
+    });
+
+    // Cloud forest rules footer
+    const rules = (_companionMatrix.reglas_bosque_niebla || [])
+      .map(r => `<div class="comp-rule-item">🌿 ${r}</div>`)
+      .join('');
+
+    const blocksHtml = blocks.length > 0
+      ? blocks.join('')
+      : '<div class="perf-empty">Asigna plantas a las camas para ver recomendaciones de compañeras.</div>';
+
+    container.innerHTML = `
+      ${blocksHtml}
+      ${rules ? `<div class="comp-rules">
+        <div class="comp-rules-title">Reglas del Bosque de Niebla</div>
+        ${rules}
+      </div>` : ''}`;
+  }
+
+  /**
+   * Main entry point called from updateDashboard(data).
+   * Renders all three recommendation panels.
+   * @param {object} data - raw Ecowitt API response
+   */
+  function updateRecommendations(data) {
+    const temp = parseVal(data.outdoor?.temperature?.value);
+    const hum  = parseVal(data.outdoor?.humidity?.value);
+
+    if (temp !== null && hum !== null) {
+      renderMatchList(temp, hum);
+    }
+
+    renderPerfAlerts(data);
+    renderCompanionPanel();
+  }
+
+  /* ──────────────────────────────────────────
+     BITACORA DE CULTIVO
+  ────────────────────────────────────────── */
+  const TIPO_LABELS = {
+    siembra: 'Siembra', cosecha: 'Cosecha', fertilizacion: 'Fertilización',
+    riego_manual: 'Riego manual', plagas: 'Plagas', observacion: 'Observación'
+  };
+
+  let bitacoraData = [];
+  let bitacoraChartCama = null;
+  let bitacoraChartPlanta = null;
+  let bitacoraChartTendencia = null;
+
+  function loadBitacora() {
+    try {
+      bitacoraData = JSON.parse(localStorage.getItem('huerta_bitacora') || '[]');
+    } catch { bitacoraData = []; }
+    // Populate cama filter
+    const camaFilter = document.getElementById('bitacoraFilterCama');
+    if (camaFilter && camaFilter.options.length <= 1) {
+      BEDS.forEach(b => {
+        const o = document.createElement('option');
+        o.value = b.id; o.textContent = b.name;
+        camaFilter.appendChild(o);
+      });
+      const oInv = document.createElement('option');
+      oInv.value = 'invernadero'; oInv.textContent = 'Invernadero';
+      camaFilter.appendChild(oInv);
+    }
+    // Populate month filter from data
+    populateBitacoraMeses();
+    // Populate modal selects
+    populateBitacoraModalSelects();
+  }
+
+  function saveBitacora() {
+    localStorage.setItem('huerta_bitacora', JSON.stringify(bitacoraData));
+  }
+
+  function populateBitacoraMeses() {
+    const sel = document.getElementById('bitacoraFilterMes');
+    if (!sel) return;
+    const current = sel.value;
+    const months = new Set();
+    bitacoraData.forEach(e => { if (e.fecha) months.add(e.fecha.slice(0, 7)); });
+    const sorted = [...months].sort().reverse();
+    sel.innerHTML = '<option value="">Todos los meses</option>';
+    sorted.forEach(m => {
+      const o = document.createElement('option');
+      o.value = m;
+      const [y, mo] = m.split('-');
+      const names = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      o.textContent = names[parseInt(mo)-1] + ' ' + y;
+      sel.appendChild(o);
+    });
+    if (current) sel.value = current;
+  }
+
+  function populateBitacoraModalSelects() {
+    // Cama select in modal
+    const camaSel = document.getElementById('btk_cama');
+    if (camaSel && camaSel.options.length <= 1) {
+      BEDS.forEach(b => {
+        const o = document.createElement('option');
+        o.value = b.id; o.textContent = b.name;
+        camaSel.appendChild(o);
+      });
+      const oInv = document.createElement('option');
+      oInv.value = 'invernadero'; oInv.textContent = 'Invernadero';
+      camaSel.appendChild(oInv);
+    }
+    // Planta select in modal
+    const plantaSel = document.getElementById('btk_planta');
+    if (plantaSel && plantaSel.options.length <= 1) {
+      const groups = {};
+      PLANT_CATALOG.forEach(p => {
+        if (!groups[p.grupo]) groups[p.grupo] = [];
+        groups[p.grupo].push(p);
+      });
+      Object.keys(groups).sort().forEach(g => {
+        const og = document.createElement('optgroup');
+        og.label = g.charAt(0).toUpperCase() + g.slice(1);
+        groups[g].forEach(p => {
+          const o = document.createElement('option');
+          o.value = p.id; o.textContent = p.emoji + ' ' + p.nombre;
+          og.appendChild(o);
+        });
+        plantaSel.appendChild(og);
+      });
+    }
+  }
+
+  function openBitacoraModal() {
+    const now = new Date();
+    document.getElementById('btk_fecha').value = now.toISOString().slice(0, 10);
+    document.getElementById('btk_hora').value = now.toTimeString().slice(0, 5);
+    document.getElementById('btk_cama').value = '';
+    document.getElementById('btk_tipo').value = '';
+    document.getElementById('btk_planta').value = '';
+    document.getElementById('btk_cantidad').value = '';
+    document.getElementById('btk_unidad').value = 'kg';
+    document.getElementById('btk_nota').value = '';
+    document.getElementById('btk_cantidad_row').classList.remove('visible');
+    document.getElementById('bitacoraModalOverlay').classList.add('open');
+  }
+
+  function closeBitacoraModal() {
+    document.getElementById('bitacoraModalOverlay').classList.remove('open');
+  }
+
+  function onBitacoraTipoChange() {
+    const tipo = document.getElementById('btk_tipo').value;
+    const row = document.getElementById('btk_cantidad_row');
+    if (tipo === 'cosecha') row.classList.add('visible');
+    else row.classList.remove('visible');
+  }
+
+  function saveBitacoraEntry() {
+    const fecha = document.getElementById('btk_fecha').value;
+    const hora = document.getElementById('btk_hora').value;
+    const cama = document.getElementById('btk_cama').value;
+    const tipo = document.getElementById('btk_tipo').value;
+    const plantaId = document.getElementById('btk_planta').value;
+    const cantidad = parseFloat(document.getElementById('btk_cantidad').value) || 0;
+    const unidad = document.getElementById('btk_unidad').value;
+    const nota = document.getElementById('btk_nota').value.trim().slice(0, 300);
+
+    if (!fecha || !tipo) {
+      alert('Fecha y tipo de acción son obligatorios.');
+      return;
+    }
+
+    const entry = {
+      id: 'btk_' + Date.now(),
+      fecha, hora, cama, tipo, plantaId,
+      cantidad: tipo === 'cosecha' ? cantidad : 0,
+      unidad: tipo === 'cosecha' ? unidad : 'kg',
+      nota,
+      ts: new Date(fecha + 'T' + (hora || '00:00')).getTime()
+    };
+
+    bitacoraData.push(entry);
+    saveBitacora();
+    closeBitacoraModal();
+    renderBitacora();
+  }
+
+  function deleteBitacoraEntry(id) {
+    if (!confirm('¿Eliminar este registro?')) return;
+    bitacoraData = bitacoraData.filter(e => e.id !== id);
+    saveBitacora();
+    renderBitacora();
+  }
+
+  function getFilteredBitacora() {
+    const filterTipo = document.getElementById('bitacoraFilterTipo').value;
+    const filterCama = document.getElementById('bitacoraFilterCama').value;
+    const filterMes = document.getElementById('bitacoraFilterMes').value;
+    let data = [...bitacoraData];
+    if (filterTipo) data = data.filter(e => e.tipo === filterTipo);
+    if (filterCama) data = data.filter(e => e.cama === filterCama);
+    if (filterMes) data = data.filter(e => e.fecha && e.fecha.startsWith(filterMes));
+    data.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+    return data;
+  }
+
+  function getBedName(camaId) {
+    if (camaId === 'invernadero') return 'Invernadero';
+    const bed = BEDS.find(b => b.id === camaId);
+    return bed ? bed.name : camaId || '—';
+  }
+
+  function getPlantName(plantaId) {
+    if (!plantaId) return '—';
+    const p = PLANT_CATALOG.find(pl => pl.id === plantaId);
+    return p ? (p.emoji + ' ' + p.nombre) : plantaId;
+  }
+
+  function renderBitacoraStats() {
+    const container = document.getElementById('bitacoraStats');
+    if (!container) return;
+    const total = bitacoraData.length;
+    const cosechas = bitacoraData.filter(e => e.tipo === 'cosecha');
+    const totalKg = cosechas.reduce((s, e) => s + (e.unidad === 'kg' ? (e.cantidad || 0) : 0), 0);
+    const totalUnidades = cosechas.reduce((s, e) => s + (e.unidad === 'unidades' ? (e.cantidad || 0) : 0), 0);
+    const siembras = bitacoraData.filter(e => e.tipo === 'siembra').length;
+
+    let html = '';
+    html += '<span class="bitacora-stat-pill"><strong>' + total + '</strong> registros</span>';
+    if (totalKg > 0) html += '<span class="bitacora-stat-pill"><strong>' + totalKg.toFixed(1) + '</strong> kg cosechados</span>';
+    if (totalUnidades > 0) html += '<span class="bitacora-stat-pill"><strong>' + totalUnidades + '</strong> unidades cosechadas</span>';
+    if (siembras > 0) html += '<span class="bitacora-stat-pill"><strong>' + siembras + '</strong> siembras</span>';
+    container.innerHTML = html;
+  }
+
+  function renderBitacoraTable() {
+    const tbody = document.getElementById('bitacoraTableBody');
+    const emptyMsg = document.getElementById('bitacoraEmpty');
+    const table = document.getElementById('bitacoraTable');
+    if (!tbody) return;
+    const data = getFilteredBitacora();
+
+    if (data.length === 0) {
+      table.style.display = 'none';
+      emptyMsg.style.display = 'block';
+      return;
+    }
+    table.style.display = '';
+    emptyMsg.style.display = 'none';
+
+    tbody.innerHTML = data.map(e => {
+      const cosechaStr = e.tipo === 'cosecha' && e.cantidad ? (e.cantidad + ' ' + (e.unidad || 'kg')) : '—';
+      return '<tr>' +
+        '<td style="white-space:nowrap">' + e.fecha + (e.hora ? ' ' + e.hora : '') + '</td>' +
+        '<td>' + getBedName(e.cama) + '</td>' +
+        '<td><span class="bitacora-tipo-badge ' + e.tipo + '">' + (TIPO_LABELS[e.tipo] || e.tipo) + '</span></td>' +
+        '<td>' + getPlantName(e.plantaId) + '</td>' +
+        '<td>' + cosechaStr + '</td>' +
+        '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + (e.nota || '').replace(/"/g, '&quot;') + '">' + (e.nota || '—') + '</td>' +
+        '<td><button class="bitacora-delete-btn" onclick="deleteBitacoraEntry(\'' + e.id + '\')" title="Eliminar">✕</button></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function toggleBitacoraCharts() {
+    const body = document.getElementById('bitacoraChartsBody');
+    const chevron = document.getElementById('bitacoraChartsChevron');
+    body.classList.toggle('visible');
+    chevron.classList.toggle('open');
+    if (body.classList.contains('visible')) renderBitacoraCharts();
+  }
+
+  function renderBitacoraCharts() {
+    const cosechas = bitacoraData.filter(e => e.tipo === 'cosecha' && e.cantidad > 0 && e.unidad === 'kg');
+    if (cosechas.length === 0) return;
+
+    const chartColors = ['#00D68F','#FFB800','#4ECDC4','#A855F7','#FF4757','#FF8A65','#64B5F6','#AED581','#FFD54F','#BA68C8','#4DD0E1','#E57373','#81C784'];
+
+    // Chart 1: Cosecha por cama (bar vertical)
+    const camaTotals = {};
+    cosechas.forEach(e => {
+      const name = getBedName(e.cama);
+      camaTotals[name] = (camaTotals[name] || 0) + e.cantidad;
+    });
+    const camaLabels = Object.keys(camaTotals);
+    const camaValues = Object.values(camaTotals);
+
+    if (bitacoraChartCama) bitacoraChartCama.destroy();
+    const ctx1 = document.getElementById('bitacoraChartCama');
+    if (ctx1) {
+      bitacoraChartCama = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: camaLabels,
+          datasets: [{
+            data: camaValues,
+            backgroundColor: camaLabels.map((_, i) => chartColors[i % chartColors.length]),
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#8888AA', font: { size: 10 } }, grid: { display: false } },
+            y: { ticks: { color: '#8888AA', font: { size: 10 } }, grid: { color: 'rgba(42,42,74,0.4)' }, title: { display: true, text: 'kg', color: '#8888AA' } }
+          }
+        }
+      });
+    }
+
+    // Chart 2: Cosecha por planta (bar horizontal)
+    const plantaTotals = {};
+    cosechas.forEach(e => {
+      const name = getPlantName(e.plantaId) || 'Sin planta';
+      plantaTotals[name] = (plantaTotals[name] || 0) + e.cantidad;
+    });
+    const plantaLabels = Object.keys(plantaTotals).sort((a,b) => plantaTotals[b] - plantaTotals[a]);
+    const plantaValues = plantaLabels.map(l => plantaTotals[l]);
+
+    if (bitacoraChartPlanta) bitacoraChartPlanta.destroy();
+    const ctx2 = document.getElementById('bitacoraChartPlanta');
+    if (ctx2) {
+      bitacoraChartPlanta = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: plantaLabels,
+          datasets: [{
+            data: plantaValues,
+            backgroundColor: plantaLabels.map((_, i) => chartColors[i % chartColors.length]),
+            borderRadius: 4
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#8888AA', font: { size: 10 } }, grid: { color: 'rgba(42,42,74,0.4)' }, title: { display: true, text: 'kg', color: '#8888AA' } },
+            y: { ticks: { color: '#8888AA', font: { size: 10 } }, grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    // Chart 3: Tendencia mensual (line)
+    const monthTotals = {};
+    cosechas.forEach(e => {
+      if (!e.fecha) return;
+      const m = e.fecha.slice(0, 7);
+      monthTotals[m] = (monthTotals[m] || 0) + e.cantidad;
+    });
+    const monthLabels = Object.keys(monthTotals).sort();
+    const monthValues = monthLabels.map(m => monthTotals[m]);
+    const monthDisplayLabels = monthLabels.map(m => {
+      const [y, mo] = m.split('-');
+      const names = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      return names[parseInt(mo)-1] + ' ' + y.slice(2);
+    });
+
+    if (bitacoraChartTendencia) bitacoraChartTendencia.destroy();
+    const ctx3 = document.getElementById('bitacoraChartTendencia');
+    if (ctx3) {
+      bitacoraChartTendencia = new Chart(ctx3, {
+        type: 'line',
+        data: {
+          labels: monthDisplayLabels,
+          datasets: [{
+            data: monthValues,
+            borderColor: '#00D68F',
+            backgroundColor: 'rgba(0,214,143,0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 4,
+            pointBackgroundColor: '#00D68F'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#8888AA', font: { size: 10 } }, grid: { display: false } },
+            y: { ticks: { color: '#8888AA', font: { size: 10 } }, grid: { color: 'rgba(42,42,74,0.4)' }, title: { display: true, text: 'kg', color: '#8888AA' }, beginAtZero: true }
+          }
+        }
+      });
+    }
+  }
+
+  function renderBitacora() {
+    populateBitacoraMeses();
+    renderBitacoraStats();
+    renderBitacoraTable();
+    if (document.getElementById('bitacoraChartsBody').classList.contains('visible')) {
+      renderBitacoraCharts();
+    }
+  }
+
   async function init() {
     // Request notification permission on first load
     await requestNotifPermission();
@@ -3498,6 +4856,13 @@
 
     // Populate glossary
     populateGlossary();
+
+    // Load bitacora
+    loadBitacora();
+    renderBitacora();
+
+    // Load companion planting matrix (cached in module-level variable)
+    fetchCompanionMatrix();
 
     // Load both in parallel on first load
     await Promise.allSettled([loadRealtime(), loadHistory()]);
