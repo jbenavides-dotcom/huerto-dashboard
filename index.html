@@ -3105,6 +3105,10 @@
     return card;
   }
 
+  // Cache for last raw API data — declared early to avoid Temporal Dead Zone on Safari/iOS.
+  // updateBedMap() assigns to this before the script finishes parsing on slower parses.
+  let _lastApiData = null;
+
   /**
    * Update the visual bed map with live humidity data using the sensor assignment system.
    * @param {object} data - Ecowitt real-time API data object
@@ -3957,8 +3961,6 @@
    * Uses the last known API data stored in state plus the current sensor assignments
    * and cached bed readings from localStorage.
    */
-  let _lastApiData = null; // cache last raw API data
-
   function refreshBedCardsOnly() {
     const rowOdd  = document.getElementById('bedsRow1');
     const rowEven = document.getElementById('bedsRow2');
