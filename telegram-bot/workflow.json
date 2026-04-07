@@ -1,0 +1,350 @@
+{
+  "name": "Huerta Bot v2 - Telegram con confirmación",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["message"],
+        "additionalFields": {}
+      },
+      "id": "telegram-trigger",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [120, 300],
+      "webhookId": "huerta-bot-webhook",
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_CRED_ID",
+          "name": "Telegram Huerta Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "typeValidation": "loose", "version": 2 },
+          "combinator": "or",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.message.chat.id }}",
+              "rightValue": "1511283217",
+              "operator": { "type": "number", "operation": "equals" }
+            },
+            {
+              "leftValue": "={{ $json.message.chat.id }}",
+              "rightValue": "CHAT_ID_2",
+              "operator": { "type": "number", "operation": "equals" }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "auth-check",
+      "name": "IF Autorizado",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://pzkxbymwvimwnfmqoihj.supabase.co/rest/v1/huerta_bot_state?chat_id=eq.{{ $json.message.chat.id }}&select=*&expires_at=gt.{{ new Date().toISOString() }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "get-state",
+      "name": "Get Bot State",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [540, 220]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge estado previo + mensaje del usuario en un solo payload\nconst msg = $('Telegram Trigger').first().json.message;\nconst userText = msg.text || '';\nconst chatId = msg.chat.id;\nconst userName = msg.from.first_name || 'usuario';\nconst today = new Date().toISOString().slice(0, 10);\n\n// Estado previo (si existe)\nconst stateRows = $input.first().json;\nlet pending = null;\nlet memory = null;\n\nif (Array.isArray(stateRows) && stateRows.length > 0) {\n  const state = stateRows[0];\n  const ptype = state.pending_type;\n  if (ptype === 'confirmation') {\n    pending = state.pending_action;\n  } else if (ptype === 'clarification') {\n    memory = state.pending_action;\n  }\n}\n\n// Construir el mensaje enriquecido para Claude\nconst userMessageForClaude = [\n  'HOY: ' + today,\n  'USUARIO: ' + userName,\n  'PENDING: ' + (pending ? JSON.stringify(pending) : 'null'),\n  'MEMORY: ' + (memory ? JSON.stringify(memory) : 'null'),\n  'MENSAJE: ' + userText\n].join('\\n');\n\nreturn [{\n  json: {\n    chat_id: chatId,\n    user_text: userText,\n    user_name: userName,\n    today,\n    pending,\n    memory,\n    claude_user_message: userMessageForClaude\n  }\n}];"
+      },
+      "id": "prep-claude",
+      "name": "Prepare Claude Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [760, 220]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-haiku-4-5-20251001\",\n  \"max_tokens\": 700,\n  \"temperature\": 0,\n  \"system\": \"PEGAR_AQUI_SYSTEM_PROMPT_COMPLETO\",\n  \"messages\": [\n    { \"role\": \"user\", \"content\": {{ JSON.stringify($json.claude_user_message) }} }\n  ]\n}",
+        "options": {}
+      },
+      "id": "claude-api",
+      "name": "Claude Haiku",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [980, 220],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ANTHROPIC_CRED_ID",
+          "name": "Anthropic API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parsear la respuesta de Claude\nconst resp = $input.first().json;\nconst rawText = resp.content?.[0]?.text || '';\n\nlet parsed;\ntry {\n  const cleaned = rawText.trim()\n    .replace(/^```json\\s*/, '').replace(/^```\\s*/, '').replace(/\\s*```$/, '');\n  parsed = JSON.parse(cleaned);\n} catch (e) {\n  parsed = { action: 'error', reply: '❌ Error parseando respuesta. Intenta de nuevo.' };\n}\n\nconst ctx = $('Prepare Claude Input').first().json;\n\nreturn [{\n  json: {\n    ...parsed,\n    _chat_id: ctx.chat_id,\n    _user_text: ctx.user_text,\n    _today: ctx.today,\n    _pending: ctx.pending,   // acción que esperaba confirmación\n    _memory: ctx.memory      // memory del ask previo\n  }\n}];"
+      },
+      "id": "parse-claude",
+      "name": "Parse Claude JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, 220]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.action }}",
+        "rules": {
+          "rules": [
+            { "operation": "equal", "value2": "confirm",    "output": 0 },
+            { "operation": "equal", "value2": "confirmed",  "output": 1 },
+            { "operation": "equal", "value2": "cancelled",  "output": 2 },
+            { "operation": "equal", "value2": "ask",        "output": 3 },
+            { "operation": "equal", "value2": "query_cama", "output": 4 },
+            { "operation": "equal", "value2": "list_camas", "output": 5 }
+          ]
+        },
+        "fallbackOutput": 6
+      },
+      "id": "action-switch",
+      "name": "Switch Action",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [1420, 220]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://pzkxbymwvimwnfmqoihj.supabase.co/rest/v1/huerta_bot_state",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal,resolution=merge-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{ $json._chat_id }},\n  \"pending_action\": {{ JSON.stringify($json.payload) }},\n  \"pending_type\": \"confirmation\",\n  \"question\": {{ JSON.stringify($json.reply) }},\n  \"expires_at\": \"{{ new Date(Date.now() + 10*60*1000).toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "save-confirm-state",
+      "name": "Save Confirm State",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1620, -40]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ejecutar la acción del PENDING (ya confirmada por el usuario)\nconst pending = $json._pending;\nif (!pending) {\n  return [{ json: { _chat_id: $json._chat_id, reply: '❌ No había nada pendiente para confirmar.' } }];\n}\nreturn [{ json: { ...pending, _chat_id: $json._chat_id } }];"
+      },
+      "id": "exec-pending",
+      "name": "Execute Pending Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1620, 80]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://pzkxbymwvimwnfmqoihj.supabase.co/rest/v1/huerta_bot_state?chat_id=eq.{{ $json._chat_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Prefer", "value": "return=minimal" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "clear-state-cancelled",
+      "name": "Clear State (cancelled)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1620, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://pzkxbymwvimwnfmqoihj.supabase.co/rest/v1/huerta_bot_state",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal,resolution=merge-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{ $json._chat_id }},\n  \"pending_action\": {{ JSON.stringify($json.memory || {}) }},\n  \"pending_type\": \"clarification\",\n  \"question\": {{ JSON.stringify($json.reply) }},\n  \"expires_at\": \"{{ new Date(Date.now() + 10*60*1000).toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "save-ask-state",
+      "name": "Save Ask State",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1620, 320]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://pzkxbymwvimwnfmqoihj.supabase.co/rest/v1/huerta_camas?cama_id=eq.{{ $json.cama_id }}&select=*",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "query-cama",
+      "name": "Query Cama",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1620, 440]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://pzkxbymwvimwnfmqoihj.supabase.co/rest/v1/huerta_camas?select=cama_id,nombre,grupo,plantas,sensor_asignado&order=orden",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "list-camas",
+      "name": "List Camas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1620, 560]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ejecuta la acción real según payload.type (después de confirmed)\n// Recibe: { type, cama_id, plantas?, sensor_asignado?, bitacora?, _chat_id }\nconst item = $input.first().json;\nconst type = item.type;\n\nlet url, method, body;\nconst headers = {\n  'apikey': 'sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0',\n  'Authorization': 'Bearer sb_publishable_VzKz-KApgtUosdpch3mdVQ_Ojt4pEp0',\n  'Content-Type': 'application/json',\n  'Prefer': 'return=representation'\n};\n\nconst base = 'https://pzkxbymwvimwnfmqoihj.supabase.co/rest/v1/';\n\nif (type === 'update_plantas') {\n  url = base + 'huerta_camas?cama_id=eq.' + encodeURIComponent(item.cama_id);\n  method = 'PATCH';\n  body = { plantas: item.plantas, updated_by: 'telegram' };\n} else if (type === 'add_plantas' || type === 'remove_plantas') {\n  // Necesita leer primero\n  // Para MVP hacemos fetch sync con http.request\n  const getUrl = base + 'huerta_camas?cama_id=eq.' + encodeURIComponent(item.cama_id) + '&select=plantas';\n  const getResp = await this.helpers.httpRequest({ method: 'GET', url: getUrl, headers, json: true });\n  const current = (getResp[0]?.plantas) || [];\n  let newPlantas;\n  if (type === 'add_plantas') {\n    const set = new Set([...current, ...item.plantas]);\n    newPlantas = [...set];\n  } else {\n    newPlantas = current.filter(p => !item.plantas.includes(p));\n  }\n  url = base + 'huerta_camas?cama_id=eq.' + encodeURIComponent(item.cama_id);\n  method = 'PATCH';\n  body = { plantas: newPlantas, updated_by: 'telegram' };\n} else if (type === 'update_sensor') {\n  url = base + 'huerta_camas?cama_id=eq.' + encodeURIComponent(item.cama_id);\n  method = 'PATCH';\n  body = { sensor_asignado: item.sensor_asignado, updated_by: 'telegram' };\n} else if (type === 'add_bitacora') {\n  url = base + 'huerta_bitacora';\n  method = 'POST';\n  const b = item.bitacora;\n  body = {\n    local_id: 'tg_' + item._chat_id + '_' + Date.now(),\n    fecha: b.fecha,\n    cama_id: b.cama_id,\n    tipo: b.tipo,\n    planta_id: b.planta_id || null,\n    cantidad: b.cantidad ?? null,\n    unidad: b.unidad || null,\n    nota: b.nota || null,\n    created_by: 'telegram'\n  };\n}\n\nconst resp = await this.helpers.httpRequest({ method, url, headers, body, json: true });\n\nreturn [{\n  json: {\n    _chat_id: item._chat_id,\n    _executed_type: type,\n    _result: resp,\n    reply: '✅ Listo. Acción ejecutada.'\n  }\n}];"
+      },
+      "id": "execute-action",
+      "name": "Execute Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1820, 80]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Formatea la respuesta final para Telegram.\n// Llega desde distintas ramas con distintos shapes.\nconst item = $input.first().json;\n\nlet reply = item.reply || '';\nlet chat_id = item._chat_id || item.chat_id;\n\n// Caso: query_cama devuelve array de Supabase\nif (Array.isArray(item)) {\n  if (item.length > 1 || (item[0] && item[0].cama_id && item[0].orden !== undefined)) {\n    // list_camas\n    const lines = item.map(c => {\n      const plantas = (Array.isArray(c.plantas) && c.plantas.length)\n        ? c.plantas.join(', ')\n        : '_sin ocupación_';\n      const sensor = c.sensor_asignado ? c.sensor_asignado.replace('soil_', '').toUpperCase() : '—';\n      return '• ' + c.nombre + ' (' + c.grupo + ') · ' + sensor + '\\n  ' + plantas;\n    });\n    reply = '🌿 Camas de la huerta:\\n\\n' + lines.join('\\n');\n  } else if (item.length === 1) {\n    // query_cama\n    const c = item[0];\n    const plantas = (Array.isArray(c.plantas) && c.plantas.length)\n      ? c.plantas.join(', ')\n      : 'sin ocupación';\n    const sensor = c.sensor_asignado ? c.sensor_asignado.replace('soil_', '').toUpperCase() : 'sin sensor';\n    reply = '📍 ' + c.nombre + '\\nGrupo: ' + c.grupo + '\\nSensor: ' + sensor + '\\nPlantas: ' + plantas;\n  } else {\n    reply = '⚠️ No encontré esa cama.';\n  }\n  chat_id = $('Prepare Claude Input').first().json.chat_id;\n}\n\n// Caso: execute-action devuelve reply \"✅ Listo\"\nif (item._executed_type) {\n  const type = item._executed_type;\n  if (type === 'update_plantas' || type === 'add_plantas' || type === 'remove_plantas') {\n    reply = '✅ Plantas actualizadas.';\n  } else if (type === 'update_sensor') {\n    reply = '✅ Sensor actualizado.';\n  } else if (type === 'add_bitacora') {\n    reply = '✅ Entrada de bitácora registrada.';\n  }\n}\n\nif (!chat_id) chat_id = $('Telegram Trigger').first().json.message.chat.id;\nif (!reply) reply = '✅ OK';\n\nreturn [{ json: { chat_id, reply } }];"
+      },
+      "id": "format-reply",
+      "name": "Format Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2020, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ $json.reply }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-reply",
+      "name": "Telegram Reply",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [2220, 300],
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_CRED_ID",
+          "name": "Telegram Huerta Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "text": "⛔ No autorizado. Tu chat_id no está en la whitelist.",
+        "additionalFields": {}
+      },
+      "id": "telegram-unauthorized",
+      "name": "Telegram Unauthorized",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [540, 440],
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_CRED_ID",
+          "name": "Telegram Huerta Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": { "main": [[{ "node": "IF Autorizado", "type": "main", "index": 0 }]] },
+    "IF Autorizado": {
+      "main": [
+        [{ "node": "Get Bot State", "type": "main", "index": 0 }],
+        [{ "node": "Telegram Unauthorized", "type": "main", "index": 0 }]
+      ]
+    },
+    "Get Bot State": { "main": [[{ "node": "Prepare Claude Input", "type": "main", "index": 0 }]] },
+    "Prepare Claude Input": { "main": [[{ "node": "Claude Haiku", "type": "main", "index": 0 }]] },
+    "Claude Haiku": { "main": [[{ "node": "Parse Claude JSON", "type": "main", "index": 0 }]] },
+    "Parse Claude JSON": { "main": [[{ "node": "Switch Action", "type": "main", "index": 0 }]] },
+    "Switch Action": {
+      "main": [
+        [{ "node": "Save Confirm State", "type": "main", "index": 0 }],
+        [{ "node": "Execute Pending Action", "type": "main", "index": 0 }],
+        [{ "node": "Clear State (cancelled)", "type": "main", "index": 0 }],
+        [{ "node": "Save Ask State", "type": "main", "index": 0 }],
+        [{ "node": "Query Cama", "type": "main", "index": 0 }],
+        [{ "node": "List Camas", "type": "main", "index": 0 }],
+        [{ "node": "Format Reply", "type": "main", "index": 0 }]
+      ]
+    },
+    "Save Confirm State":       { "main": [[{ "node": "Format Reply", "type": "main", "index": 0 }]] },
+    "Execute Pending Action":   { "main": [[{ "node": "Execute Action", "type": "main", "index": 0 }]] },
+    "Execute Action":           { "main": [[{ "node": "Format Reply", "type": "main", "index": 0 }]] },
+    "Clear State (cancelled)":  { "main": [[{ "node": "Format Reply", "type": "main", "index": 0 }]] },
+    "Save Ask State":           { "main": [[{ "node": "Format Reply", "type": "main", "index": 0 }]] },
+    "Query Cama":               { "main": [[{ "node": "Format Reply", "type": "main", "index": 0 }]] },
+    "List Camas":               { "main": [[{ "node": "Format Reply", "type": "main", "index": 0 }]] },
+    "Format Reply":             { "main": [[{ "node": "Telegram Reply", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "2",
+  "meta": { "instanceId": "huerta-bot-v2" },
+  "id": "huerta-bot-v2",
+  "tags": []
+}
