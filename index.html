@@ -892,6 +892,109 @@
       flex-shrink: 0;
     }
 
+    /* ─── Compañerismo de Cultivos ─── */
+    .companionship-intro {
+      color: #9aa;
+      font-size: 0.82rem;
+      margin: 0.3rem 0 1rem 0;
+      line-height: 1.4;
+    }
+    .companionship-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+    }
+    .comp-summary-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 0.3rem 0.7rem;
+      color: #d0d0d8;
+    }
+    .comp-summary-pill strong { color: #fff; }
+    .companionship-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+    .comp-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #4ECDC4;
+      border-radius: 8px;
+      padding: 0.75rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .comp-card.success { border-left-color: #90EE90; }
+    .comp-card.danger  { border-left-color: #FF6B6B; background: rgba(255,107,107,0.04); }
+    .comp-card.neutral { border-left-color: #DEB887; }
+    .comp-card.empty   { border-left-color: #555; opacity: 0.6; }
+    .comp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .comp-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: #E8E8F0;
+    }
+    .comp-badge {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .comp-badge.success { background: rgba(144,238,144,0.15); color: #90EE90; }
+    .comp-badge.danger  { background: rgba(255,107,107,0.18); color: #FF6B6B; }
+    .comp-badge.neutral { background: rgba(222,184,135,0.15); color: #DEB887; }
+    .comp-badge.empty   { background: rgba(255,255,255,0.05); color: #888; }
+    .comp-plants {
+      font-size: 0.72rem;
+      color: #aaa;
+      margin-top: 0.15rem;
+    }
+    .comp-section {
+      margin-top: 0.35rem;
+      font-size: 0.72rem;
+    }
+    .comp-section-label {
+      color: #888;
+      font-size: 0.66rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.2rem;
+    }
+    .comp-chip {
+      display: inline-block;
+      background: rgba(144,238,144,0.08);
+      color: #90EE90;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      margin: 0.12rem 0.18rem 0.12rem 0;
+      font-size: 0.68rem;
+      border: 1px solid rgba(144,238,144,0.15);
+    }
+    .comp-chip.danger {
+      background: rgba(255,107,107,0.08);
+      color: #FF6B6B;
+      border-color: rgba(255,107,107,0.2);
+    }
+    .comp-chip.suggest {
+      background: rgba(78,205,196,0.08);
+      color: #4ECDC4;
+      border-color: rgba(78,205,196,0.2);
+    }
+
     /* Beds grid — 6 columns */
     .beds-grid {
       display: grid;
@@ -1923,6 +2026,26 @@
             <div class="greenhouse-dims-label" id="greenhouseDimsLabel">Humedad suelo</div>
             <div class="greenhouse-temp" id="greenhouseTemp" style="margin-top:0.3rem;font-size:0.85rem;color:#4ECDC4">—</div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3b. COMPAÑERISMO DE CULTIVOS ── -->
+    <section id="companionshipSection">
+      <div class="card">
+        <div class="section-title-row" style="margin-bottom:0">
+          <span class="section-icon">🤝</span>
+          <h2 style="margin-bottom:0">Compañerismo de Cultivos</h2>
+        </div>
+        <div class="companionship-intro">
+          Análisis automático de compatibilidad entre las plantas de cada cama.
+          Verde = combinación beneficiosa · Rojo = conflicto (plantas enemigas) · Beige = neutral o monocultivo.
+        </div>
+        <div class="companionship-summary" id="companionshipSummary">
+          <!-- Filled by JS -->
+        </div>
+        <div class="companionship-grid" id="companionshipGrid">
+          <!-- Filled by JS -->
         </div>
       </div>
     </section>
@@ -3614,6 +3737,7 @@
     updateKPI(data);
     updateSoil(data);
     updateBedMap(data);
+    updateCompanionship();
     updateNotifications(data);
     updateClima(data);
     updateRain(data);
@@ -3947,6 +4071,8 @@
     select.value = '';
     populatePlantDropdown(currentEditBedId);
     renderCurrentPlantsList();
+    refreshBedCardsOnly();
+    updateCompanionship();
   }
 
   /**
@@ -3961,6 +4087,148 @@
 
     populatePlantDropdown(currentEditBedId);
     renderCurrentPlantsList();
+    refreshBedCardsOnly();
+    updateCompanionship();
+  }
+
+  /* ──────────────────────────────────────────
+     COMPAÑERISMO DE CULTIVOS
+  ────────────────────────────────────────── */
+
+  /**
+   * Analyze a single bed's plant combination using PLANT_MAP companeras/enemigos.
+   * @param {string[]} plantIds
+   * @returns {{status:string,statusLabel:string,positive:Array,conflicts:Array,missing:string[],plants:Array}}
+   */
+  function analyzeBedCompanionship(plantIds) {
+    const plants = (plantIds || []).map(id => PLANT_MAP[id]).filter(Boolean);
+    if (plants.length === 0) {
+      return { status: 'empty', statusLabel: 'Vacía', positive: [], conflicts: [], missing: [], plants: [] };
+    }
+
+    const positive = [];
+    const conflicts = [];
+
+    for (let i = 0; i < plants.length; i++) {
+      for (let j = i + 1; j < plants.length; j++) {
+        const a = plants[i], b = plants[j];
+        const aName = a.nombre.toLowerCase();
+        const bName = b.nombre.toLowerCase();
+        const aEn = (a.enemigos || []).map(s => s.toLowerCase());
+        const bEn = (b.enemigos || []).map(s => s.toLowerCase());
+        const aCo = (a.companeras || []).map(s => s.toLowerCase());
+        const bCo = (b.companeras || []).map(s => s.toLowerCase());
+
+        const isConflict = aEn.some(e => bName.includes(e)) || bEn.some(e => aName.includes(e));
+        if (isConflict) {
+          conflicts.push([a, b]);
+          continue;
+        }
+        const isPositive = aCo.some(c => bName.includes(c)) || bCo.some(c => aName.includes(c));
+        if (isPositive) positive.push([a, b]);
+      }
+    }
+
+    // Suggested missing companions (keywords from companeras not already present)
+    const allCo = new Set();
+    plants.forEach(p => (p.companeras || []).forEach(c => allCo.add(c.toLowerCase())));
+    const presentText = plants.map(p => p.nombre.toLowerCase()).join(' ');
+    const missing = [...allCo].filter(c => !presentText.includes(c)).slice(0, 4);
+
+    let status, statusLabel;
+    if (conflicts.length > 0) {
+      status = 'danger';
+      statusLabel = 'Conflicto';
+    } else if (positive.length > 0) {
+      status = 'success';
+      statusLabel = 'Óptima';
+    } else if (plants.length === 1) {
+      status = 'neutral';
+      statusLabel = 'Monocultivo';
+    } else {
+      status = 'neutral';
+      statusLabel = 'Neutral';
+    }
+
+    return { status, statusLabel, positive, conflicts, missing, plants };
+  }
+
+  /**
+   * Render the companionship section: summary pills + per-bed cards.
+   */
+  function updateCompanionship() {
+    const grid = document.getElementById('companionshipGrid');
+    const summary = document.getElementById('companionshipSummary');
+    if (!grid || !summary) return;
+
+    grid.innerHTML = '';
+    summary.innerHTML = '';
+
+    const allTargets = [
+      ...BEDS.map(b => ({ id: b.id, name: b.name })),
+      { id: 'invernadero', name: 'Invernadero' },
+    ];
+
+    const counts = { success: 0, danger: 0, neutral: 0, empty: 0 };
+
+    allTargets.forEach(target => {
+      const plantIds = BED_PLANTS[target.id] || [];
+      const analysis = analyzeBedCompanionship(plantIds);
+      counts[analysis.status] = (counts[analysis.status] || 0) + 1;
+
+      const card = document.createElement('div');
+      card.className = `comp-card ${analysis.status}`;
+
+      let html = `
+        <div class="comp-header">
+          <div class="comp-title">${target.name}</div>
+          <div class="comp-badge ${analysis.status}">${analysis.statusLabel}</div>
+        </div>
+      `;
+
+      if (analysis.status === 'empty') {
+        html += `<div style="color:#777;font-size:0.72rem">Sin plantas asignadas.</div>`;
+      } else {
+        html += `<div class="comp-plants">` +
+                analysis.plants.map(p => `${p.emoji} ${p.nombre}`).join(' · ') +
+                `</div>`;
+
+        if (analysis.positive.length > 0) {
+          html += `<div class="comp-section"><div class="comp-section-label">✅ Buenas combinaciones</div>`;
+          analysis.positive.forEach(([a, b]) => {
+            html += `<span class="comp-chip">${a.nombre} + ${b.nombre}</span>`;
+          });
+          html += `</div>`;
+        }
+
+        if (analysis.conflicts.length > 0) {
+          html += `<div class="comp-section"><div class="comp-section-label">🔴 Conflictos</div>`;
+          analysis.conflicts.forEach(([a, b]) => {
+            html += `<span class="comp-chip danger">${a.nombre} ✗ ${b.nombre}</span>`;
+          });
+          html += `</div>`;
+        }
+
+        if (analysis.missing.length > 0 && analysis.status !== 'danger') {
+          html += `<div class="comp-section"><div class="comp-section-label">💡 Compañeras sugeridas</div>`;
+          analysis.missing.forEach(m => {
+            html += `<span class="comp-chip suggest">${m}</span>`;
+          });
+          html += `</div>`;
+        }
+      }
+
+      card.innerHTML = html;
+      grid.appendChild(card);
+    });
+
+    // Summary pills
+    summary.innerHTML = `
+      <div class="comp-summary-pill"><span style="color:#90EE90">●</span> Óptimas <strong>${counts.success || 0}</strong></div>
+      <div class="comp-summary-pill"><span style="color:#FF6B6B">●</span> Conflictos <strong>${counts.danger || 0}</strong></div>
+      <div class="comp-summary-pill"><span style="color:#DEB887">●</span> Neutrales/Monocultivo <strong>${counts.neutral || 0}</strong></div>
+      <div class="comp-summary-pill"><span style="color:#888">●</span> Vacías <strong>${counts.empty || 0}</strong></div>
+    `;
   }
 
   /**
