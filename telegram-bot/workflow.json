@@ -1,5 +1,5 @@
 {
-  "name": "Huerta Bot v2 - Telegram con confirmación",
+  "name": "Huerta Bot v2 - Telegram con Gemini 2.5 Flash",
   "nodes": [
     {
       "parameters": {
@@ -77,39 +77,38 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={{ $credentials.genericApi.apiKey }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "anthropic-version", "value": "2023-06-01" },
             { "name": "content-type", "value": "application/json" }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"claude-haiku-4-5-20251001\",\n  \"max_tokens\": 700,\n  \"temperature\": 0,\n  \"system\": \"PEGAR_AQUI_SYSTEM_PROMPT_COMPLETO\",\n  \"messages\": [\n    { \"role\": \"user\", \"content\": {{ JSON.stringify($json.claude_user_message) }} }\n  ]\n}",
+        "jsonBody": "={\n  \"systemInstruction\": {\n    \"parts\": [{ \"text\": \"PEGAR_AQUI_SYSTEM_PROMPT_COMPLETO\" }]\n  },\n  \"contents\": [\n    {\n      \"role\": \"user\",\n      \"parts\": [{ \"text\": {{ JSON.stringify($json.claude_user_message) }} }]\n    }\n  ],\n  \"generationConfig\": {\n    \"temperature\": 0,\n    \"maxOutputTokens\": 800,\n    \"responseMimeType\": \"application/json\",\n    \"thinkingConfig\": { \"thinkingBudget\": 0 }\n  }\n}",
         "options": {}
       },
-      "id": "claude-api",
-      "name": "Claude Haiku",
+      "id": "gemini-api",
+      "name": "Gemini 2.5 Flash",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [980, 220],
       "credentials": {
         "httpHeaderAuth": {
-          "id": "ANTHROPIC_CRED_ID",
-          "name": "Anthropic API"
+          "id": "GEMINI_CRED_ID",
+          "name": "Gemini API Key"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// Parsear la respuesta de Claude\nconst resp = $input.first().json;\nconst rawText = resp.content?.[0]?.text || '';\n\nlet parsed;\ntry {\n  const cleaned = rawText.trim()\n    .replace(/^```json\\s*/, '').replace(/^```\\s*/, '').replace(/\\s*```$/, '');\n  parsed = JSON.parse(cleaned);\n} catch (e) {\n  parsed = { action: 'error', reply: '❌ Error parseando respuesta. Intenta de nuevo.' };\n}\n\nconst ctx = $('Prepare Claude Input').first().json;\n\nreturn [{\n  json: {\n    ...parsed,\n    _chat_id: ctx.chat_id,\n    _user_text: ctx.user_text,\n    _today: ctx.today,\n    _pending: ctx.pending,   // acción que esperaba confirmación\n    _memory: ctx.memory      // memory del ask previo\n  }\n}];"
+        "jsCode": "// Parsear la respuesta de Gemini (responseMimeType=application/json ya fuerza JSON puro)\nconst resp = $input.first().json;\nconst rawText = resp.candidates?.[0]?.content?.parts?.[0]?.text || '';\n\nlet parsed;\ntry {\n  const cleaned = rawText.trim()\n    .replace(/^```json\\s*/, '').replace(/^```\\s*/, '').replace(/\\s*```$/, '');\n  parsed = JSON.parse(cleaned);\n} catch (e) {\n  parsed = { action: 'error', reply: '❌ Error parseando respuesta del bot. Intenta de nuevo con un comando más simple.' };\n}\n\nconst ctx = $('Prepare Claude Input').first().json;\n\nreturn [{\n  json: {\n    ...parsed,\n    _chat_id: ctx.chat_id,\n    _user_text: ctx.user_text,\n    _today: ctx.today,\n    _pending: ctx.pending,\n    _memory: ctx.memory\n  }\n}];"
       },
-      "id": "parse-claude",
-      "name": "Parse Claude JSON",
+      "id": "parse-gemini",
+      "name": "Parse Gemini JSON",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [1200, 220]
@@ -318,9 +317,9 @@
       ]
     },
     "Get Bot State": { "main": [[{ "node": "Prepare Claude Input", "type": "main", "index": 0 }]] },
-    "Prepare Claude Input": { "main": [[{ "node": "Claude Haiku", "type": "main", "index": 0 }]] },
-    "Claude Haiku": { "main": [[{ "node": "Parse Claude JSON", "type": "main", "index": 0 }]] },
-    "Parse Claude JSON": { "main": [[{ "node": "Switch Action", "type": "main", "index": 0 }]] },
+    "Prepare Claude Input": { "main": [[{ "node": "Gemini 2.5 Flash", "type": "main", "index": 0 }]] },
+    "Gemini 2.5 Flash": { "main": [[{ "node": "Parse Gemini JSON", "type": "main", "index": 0 }]] },
+    "Parse Gemini JSON": { "main": [[{ "node": "Switch Action", "type": "main", "index": 0 }]] },
     "Switch Action": {
       "main": [
         [{ "node": "Save Confirm State", "type": "main", "index": 0 }],

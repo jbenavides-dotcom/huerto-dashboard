@@ -1,6 +1,6 @@
 # System Prompt — Bot Huerta LP&ET (v2 con confirmación)
 
-Para el nodo Claude Haiku en n8n.
+Para el nodo Gemini 2.5 Flash en n8n. El modelo responde siempre con JSON porque usamos `responseMimeType: application/json`.
 
 ---
 
@@ -266,8 +266,40 @@ Tu respuesta es SOLO un objeto JSON. Sin markdown, sin comentarios, sin explicac
 
 ## Notas de implementación
 
-- Modelo: `claude-haiku-4-5-20251001`
-- Temperature: 0
-- Max tokens: 600
+- **Modelo:** `gemini-2.5-flash` (Google AI Studio, tier gratuito)
+- **Temperature:** 0
+- **Max output tokens:** 800
+- **Response MIME type:** `application/json` (fuerza JSON válido, no hace falta parsing de markdown)
+- **Thinking config:** `thinkingBudget: 0` (desactiva razonamiento, respuestas directas, ahorra tokens)
 - El workflow n8n inyecta HOY, USUARIO, PENDING, MEMORY y MENSAJE antes de llamar
 - El workflow guarda PENDING y MEMORY en `huerta_bot_state` con TTL 10 min
+
+## Formato de llamada a Gemini (referencia)
+
+```json
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=API_KEY
+
+{
+  "systemInstruction": { "parts": [{ "text": "<SYSTEM PROMPT COMPLETO>" }] },
+  "contents": [
+    { "role": "user", "parts": [{ "text": "<mensaje del usuario con HOY/PENDING/MEMORY/MENSAJE>" }] }
+  ],
+  "generationConfig": {
+    "temperature": 0,
+    "maxOutputTokens": 800,
+    "responseMimeType": "application/json",
+    "thinkingConfig": { "thinkingBudget": 0 }
+  }
+}
+```
+
+Respuesta esperada:
+```json
+{
+  "candidates": [
+    { "content": { "parts": [{ "text": "<JSON string>" }], "role": "model" }, "finishReason": "STOP" }
+  ]
+}
+```
+
+El `text` contiene el JSON generado por Gemini que luego el workflow parsea.

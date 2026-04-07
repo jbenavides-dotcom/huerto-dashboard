@@ -35,17 +35,32 @@ Antes de importar el workflow, crea 2 credenciales en n8n:
 - **Access Token:** el de apis.json (`8723932539:AAFge0kvNr8Mi7G3VJQCCw97mvPuNQ4k4e4`)
 - Guardar con nombre exacto: **"Telegram Huerta Bot"**
 
-#### b) Anthropic API (para Claude Haiku)
+#### b) Gemini API (Google AI Studio)
 - **Credentials** → **+ New**
-- Buscar **"Header Auth"**
-- **Name:** `x-api-key`
-- **Value:** tu API key de Anthropic (ej: `sk-ant-api03-...`)
-- Guardar con nombre exacto: **"Anthropic API"**
+- Buscar **"Header Auth"** (aunque Gemini usa query param `?key=`, guardamos la key en una credencial para evitar hardcodearla)
+- **Name:** `x-goog-api-key` (dummy, no se usa como header)
+- **Value:** tu API key de Gemini (ej: `AIzaSy...`)
+- Guardar con nombre exacto: **"Gemini API Key"**
 
-Si no tienes API key de Anthropic:
-1. Crear cuenta en https://console.anthropic.com
-2. Ir a **API Keys** → **Create Key**
-3. Cargar $5-10 USD de crédito (dura meses, Claude Haiku es barato: ~$0.001 por mensaje)
+Nota: el nodo HTTP del workflow inyecta la key en el query string del URL usando `{{ $credentials.genericApi.apiKey }}`. Así la key queda fuera del código del workflow.
+
+Si no tienes API key de Gemini:
+1. Ir a https://aistudio.google.com/apikey
+2. Clic en **"Create API key"**
+3. Seleccionar un proyecto de Google Cloud o crear uno nuevo
+4. Copiar la key (empieza con `AIzaSy...`)
+
+**Costo:** Gemini 2.5 Flash tiene tier gratuito (ver https://ai.google.dev/gemini-api/docs/rate-limits):
+- 10 RPM (requests per minute)
+- 250 RPD (requests per day)
+- 250k TPM (tokens per minute)
+
+Para el volumen esperado de la huerta (<50 mensajes/día) el tier gratuito sobra.
+
+⚠️ **Si tu proyecto muestra "quota exceeded"** incluso sin haber usado nada, puede ser que necesites:
+1. Activar la Generative Language API en Google Cloud Console del proyecto
+2. Asegurarte que la región del proyecto soporta el tier gratuito (la mayoría sí)
+3. Esperar unos minutos tras crear la key (propagación)
 
 ### 2. Importar el workflow
 
@@ -56,7 +71,7 @@ Si no tienes API key de Anthropic:
    - **Telegram Trigger** → seleccionar "Telegram Huerta Bot"
    - **Telegram Reply** → seleccionar "Telegram Huerta Bot"
    - **Telegram Unauthorized** → seleccionar "Telegram Huerta Bot"
-   - **Claude Haiku** → seleccionar "Anthropic API"
+   - **Gemini 2.5 Flash** → seleccionar "Gemini API Key"
 
 ### 3. Activar el workflow
 
@@ -107,9 +122,11 @@ Ver `test-examples.md` para la lista completa. Resumen:
 | Planta genérica "lechuga" | lechuga_crespa |
 | Planta genérica "coliflor" | coliflor_blanca |
 | Planta genérica "acelga" | acelga_comun |
-| Modelo Claude | claude-haiku-4-5-20251001 |
+| Modelo LLM | `gemini-2.5-flash` |
 | Temperature | 0 (determinístico) |
-| Max tokens | 600 |
+| Max output tokens | 800 |
+| Thinking budget | 0 (desactivado — respuestas directas) |
+| Response MIME | `application/json` (fuerza JSON válido) |
 
 Para agregar más personas a la whitelist, editar el nodo **IF Autorizado** y añadir condiciones OR con los chat_ids adicionales.
 
@@ -131,11 +148,13 @@ Para agregar más personas a la whitelist, editar el nodo **IF Autorizado** y a�
 ## Costos estimados
 
 - **Telegram:** $0 (gratuito)
-- **Claude Haiku:** ~$0.001 por mensaje (input ~2k tokens del system prompt + output ~200 tokens). Con 1000 mensajes/mes = ~$1 USD
+- **Gemini 2.5 Flash:** $0 mientras caben en el tier gratuito (250 requests/día, ~7500/mes)
 - **n8n:** incluido en el plan actual de jhona.app.n8n.cloud
 - **Supabase:** incluido en el tier gratuito (500 MB, 50k req/mes)
 
-**Total: < $2 USD/mes**
+**Total: $0 USD/mes** (mientras no pasen de 250 mensajes/día al bot)
+
+Si el volumen supera el tier gratuito, Gemini cobra ~$0.0002 por 1k tokens de input y $0.0008 por 1k output. Para 1000 mensajes/mes serían ~$0.50 USD.
 
 ## Próximos pasos
 
