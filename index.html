@@ -933,6 +933,7 @@
       gap: 0.35rem;
     }
     .comp-card.success { border-left-color: #90EE90; }
+    .comp-card.warning { border-left-color: #FFD166; background: rgba(255,209,102,0.04); }
     .comp-card.danger  { border-left-color: #FF6B6B; background: rgba(255,107,107,0.04); }
     .comp-card.neutral { border-left-color: #DEB887; }
     .comp-card.empty   { border-left-color: #555; opacity: 0.6; }
@@ -955,6 +956,7 @@
       white-space: nowrap;
     }
     .comp-badge.success { background: rgba(144,238,144,0.15); color: #90EE90; }
+    .comp-badge.warning { background: rgba(255,209,102,0.18); color: #FFD166; }
     .comp-badge.danger  { background: rgba(255,107,107,0.18); color: #FF6B6B; }
     .comp-badge.neutral { background: rgba(222,184,135,0.15); color: #DEB887; }
     .comp-badge.empty   { background: rgba(255,255,255,0.05); color: #888; }
@@ -989,11 +991,50 @@
       color: #FF6B6B;
       border-color: rgba(255,107,107,0.2);
     }
+    .comp-chip.warning {
+      background: rgba(255,209,102,0.08);
+      color: #FFD166;
+      border-color: rgba(255,209,102,0.2);
+    }
     .comp-chip.suggest {
       background: rgba(78,205,196,0.08);
       color: #4ECDC4;
       border-color: rgba(78,205,196,0.2);
     }
+    .comp-note {
+      margin-top: 0.3rem;
+      font-size: 0.68rem;
+      color: #999;
+      line-height: 1.35;
+    }
+    .comp-rules {
+      background: rgba(78,205,196,0.05);
+      border: 1px solid rgba(78,205,196,0.15);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .comp-rules-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4ECDC4;
+      margin-bottom: 0.4rem;
+    }
+    .comp-rules-list {
+      margin: 0 0 0.5rem 0;
+      padding-left: 1.1rem;
+      color: #c5c5cc;
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+    .comp-rules-list li { margin-bottom: 0.15rem; }
+    .comp-rules-antifun {
+      font-size: 0.75rem;
+      color: #bbb;
+      padding-top: 0.4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .comp-rules-antifun strong { color: #90EE90; }
 
     /* Beds grid — 6 columns */
     .beds-grid {
@@ -2044,6 +2085,9 @@
         <div class="companionship-summary" id="companionshipSummary">
           <!-- Filled by JS -->
         </div>
+        <div class="comp-rules" id="companionshipRules">
+          <!-- Filled once by JS -->
+        </div>
         <div class="companionship-grid" id="companionshipGrid">
           <!-- Filled by JS -->
         </div>
@@ -2490,8 +2534,77 @@
     { id: 'albahaca_invernadero',  nombre: 'Albahaca (Invernadero)',emoji: '🌿', grupo: 'invernadero', dias: '50-70', espaciamiento: 25, humMin: 25, humMax: 45, tempMin: 15, tempMax: 30, companeras: ['tomate'],                          enemigos: ['salvia','ruda'] },
   ];
 
-  /** Quick lookup map: plantId -> plant object */
-  const PLANT_MAP = Object.fromEntries(PLANT_CATALOG.map(p => [p.id, p]));
+  /** Botanical family + bosque de niebla metadata enrichment.
+   *  Fused into PLANT_MAP so every plant object gets: familia, riesgoHongos,
+   *  termofilico, antifungico. Fuente: companion_planting_matrix.json + manual. */
+  const PLANT_ENRICHMENT = {
+    lechuga_batavia:       { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    lechuga_romana:        { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    lechuga_crespa:        { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    lechuga_morada_lisa:   { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    rucula:                { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    espinaca:              { familia: 'amaranthaceae',  riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    acelga_comun:          { familia: 'amaranthaceae',  riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    acelga_roja:           { familia: 'amaranthaceae',  riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    acelga_amarilla:       { familia: 'amaranthaceae',  riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    mizuna_verde:          { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    mizuna_roja:           { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    mostaza_red:           { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    tat_soi:               { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    albahaca:              { familia: 'lamiaceae',      riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
+    albahaca_morada:       { familia: 'lamiaceae',      riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
+    perejil_liso:          { familia: 'apiaceae',       riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    cilantro:              { familia: 'apiaceae',       riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    oregano:               { familia: 'lamiaceae',      riesgoHongos: 'bajo',  termofilico: true,  antifungico: true  },
+    tomillo:               { familia: 'lamiaceae',      riesgoHongos: 'bajo',  termofilico: false, antifungico: true  },
+    cebollin:              { familia: 'amaryllidaceae', riesgoHongos: 'bajo',  termofilico: false, antifungico: true  },
+    menta:                 { familia: 'lamiaceae',      riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    hierbabuena:           { familia: 'lamiaceae',      riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    romero:                { familia: 'lamiaceae',      riesgoHongos: 'bajo',  termofilico: false, antifungico: true  },
+    calendula:             { familia: 'asteraceae',     riesgoHongos: 'bajo',  termofilico: false, antifungico: false },
+    aji_jalapeno:          { familia: 'solanaceae',     riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
+    brocoli:               { familia: 'brassicaceae',   riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    coliflor_blanca:       { familia: 'brassicaceae',   riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    coliflor_verde:        { familia: 'brassicaceae',   riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    repollo_verde:         { familia: 'brassicaceae',   riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    repollo_morado:        { familia: 'brassicaceae',   riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    kale_toscano:          { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    kale_rizado:           { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    cebolla_larga:         { familia: 'amaryllidaceae', riesgoHongos: 'bajo',  termofilico: false, antifungico: false },
+    zanahoria:             { familia: 'apiaceae',       riesgoHongos: 'bajo',  termofilico: false, antifungico: false },
+    remolacha:             { familia: 'amaranthaceae',  riesgoHongos: 'bajo',  termofilico: false, antifungico: false },
+    tomate_san_marzano:    { familia: 'solanaceae',     riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
+    tomate_cherry:         { familia: 'solanaceae',     riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
+    tomate_chonto:         { familia: 'solanaceae',     riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
+    albahaca_invernadero:  { familia: 'lamiaceae',      riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
+  };
+
+  /** Labels legibles de familias botánicas */
+  const FAMILIA_LABELS = {
+    asteraceae:     'Asteráceas (compuestas)',
+    brassicaceae:   'Brassicáceas (coles)',
+    amaranthaceae:  'Amarantáceas',
+    lamiaceae:      'Lamiáceas (aromáticas)',
+    apiaceae:       'Apiáceas (umbelíferas)',
+    amaryllidaceae: 'Amarilidáceas (aliáceas)',
+    solanaceae:     'Solanáceas',
+  };
+
+  /** Reglas del bosque de niebla (fuente: companion_planting_matrix.json) */
+  const BOSQUE_NIEBLA_REGLAS = [
+    'Alta humedad ambiental (70-98%): favorecer plantas con buena circulación de aire para evitar hongos.',
+    'Temperaturas frescas (12-24°C): priorizar cultivos de clima frío; evitar termófilos sin protección.',
+    'Neblina frecuente: las aromáticas mediterráneas (romero, orégano, tomillo) actúan como antifúngicos naturales.',
+    'Suelo húmedo natural: brásicas y hojas agradecen, pero los tomates necesitan el invernadero.',
+    'Altitud 1780 msnm: ciclos de crecimiento un 20-30% más lentos que en tierras bajas.',
+  ];
+
+  const ANTIFUNGICOS_IDS = ['tomillo','oregano','romero','cebollin'];
+
+  /** Quick lookup map: plantId -> plant object (enriched with PLANT_ENRICHMENT) */
+  const PLANT_MAP = Object.fromEntries(
+    PLANT_CATALOG.map(p => [p.id, { ...p, ...(PLANT_ENRICHMENT[p.id] || {}) }])
+  );
 
   /* ──────────────────────────────────────────
      DEFAULT BED PLANT ASSIGNMENTS
@@ -4096,14 +4209,25 @@
   ────────────────────────────────────────── */
 
   /**
-   * Analyze a single bed's plant combination using PLANT_MAP companeras/enemigos.
+   * Analyze a single bed's plant combination. Returns a rich diagnostic with:
+   * - positive/conflict pairs (compañeras/enemigos substring match on nombre)
+   * - family duplicates (mismo familia botánica → competencia y plagas compartidas)
+   * - termofilicos (plantas que sufren por temperatura en Zipacón)
+   * - riesgo de hongos del bosque de niebla
+   * - sugerencia de antifúngico natural si hay plantas con riesgo alto sin aromática
+   * - compañeras sugeridas faltantes
    * @param {string[]} plantIds
-   * @returns {{status:string,statusLabel:string,positive:Array,conflicts:Array,missing:string[],plants:Array}}
+   * @returns {object}
    */
   function analyzeBedCompanionship(plantIds) {
     const plants = (plantIds || []).map(id => PLANT_MAP[id]).filter(Boolean);
     if (plants.length === 0) {
-      return { status: 'empty', statusLabel: 'Vacía', positive: [], conflicts: [], missing: [], plants: [] };
+      return {
+        status: 'empty', statusLabel: 'Vacía',
+        positive: [], conflicts: [], familyDupes: [],
+        termofilicos: [], needsAntifungico: false, riesgoAlto: false,
+        missing: [], plants: [],
+      };
     }
 
     const positive = [];
@@ -4129,16 +4253,40 @@
       }
     }
 
-    // Suggested missing companions (keywords from companeras not already present)
+    // Familia duplicada (>= 2 plantas de la misma familia)
+    const famGroups = {};
+    plants.forEach(p => {
+      if (!p.familia) return;
+      (famGroups[p.familia] = famGroups[p.familia] || []).push(p);
+    });
+    const familyDupes = Object.entries(famGroups)
+      .filter(([_, list]) => list.length >= 2)
+      .map(([fam, list]) => ({ familia: fam, label: FAMILIA_LABELS[fam] || fam, plants: list }));
+
+    // Termofilicos
+    const termofilicos = plants.filter(p => p.termofilico);
+
+    // Riesgo de hongos (algo tiene riesgo alto)
+    const riesgoAlto = plants.some(p => p.riesgoHongos === 'alto');
+
+    // ¿Tiene antifúngico natural en la cama?
+    const hasAntifungico = plants.some(p => p.antifungico);
+    const needsAntifungico = riesgoAlto && !hasAntifungico;
+
+    // Suggested missing companions
     const allCo = new Set();
     plants.forEach(p => (p.companeras || []).forEach(c => allCo.add(c.toLowerCase())));
     const presentText = plants.map(p => p.nombre.toLowerCase()).join(' ');
     const missing = [...allCo].filter(c => !presentText.includes(c)).slice(0, 4);
 
+    // Status determination: danger > warning > success > neutral
     let status, statusLabel;
     if (conflicts.length > 0) {
       status = 'danger';
       statusLabel = 'Conflicto';
+    } else if (termofilicos.length > 0 || familyDupes.length > 0) {
+      status = 'warning';
+      statusLabel = familyDupes.length > 0 ? 'Familia duplicada' : 'Termófilo en niebla';
     } else if (positive.length > 0) {
       status = 'success';
       statusLabel = 'Óptima';
@@ -4150,26 +4298,51 @@
       statusLabel = 'Neutral';
     }
 
-    return { status, statusLabel, positive, conflicts, missing, plants };
+    return {
+      status, statusLabel,
+      positive, conflicts, familyDupes,
+      termofilicos, needsAntifungico, riesgoAlto,
+      missing, plants,
+    };
   }
 
   /**
-   * Render the companionship section: summary pills + per-bed cards.
+   * Render the companionship section: summary pills + per-bed cards + bosque de niebla rules.
    */
   function updateCompanionship() {
     const grid = document.getElementById('companionshipGrid');
     const summary = document.getElementById('companionshipSummary');
+    const rulesBox = document.getElementById('companionshipRules');
     if (!grid || !summary) return;
 
     grid.innerHTML = '';
     summary.innerHTML = '';
+
+    // Reglas del bosque de niebla (una sola vez)
+    if (rulesBox && !rulesBox.dataset.rendered) {
+      const antifList = ANTIFUNGICOS_IDS
+        .map(id => PLANT_MAP[id])
+        .filter(Boolean)
+        .map(p => `${p.emoji} ${p.nombre}`)
+        .join(' · ');
+      rulesBox.innerHTML = `
+        <div class="comp-rules-title">🌫️ Reglas del Bosque de Niebla — Zipacón 1,780 msnm</div>
+        <ul class="comp-rules-list">
+          ${BOSQUE_NIEBLA_REGLAS.map(r => `<li>${r}</li>`).join('')}
+        </ul>
+        <div class="comp-rules-antifun">
+          <strong>Antifúngicos naturales recomendados:</strong> ${antifList}
+        </div>
+      `;
+      rulesBox.dataset.rendered = '1';
+    }
 
     const allTargets = [
       ...BEDS.map(b => ({ id: b.id, name: b.name })),
       { id: 'invernadero', name: 'Invernadero' },
     ];
 
-    const counts = { success: 0, danger: 0, neutral: 0, empty: 0 };
+    const counts = { success: 0, warning: 0, danger: 0, neutral: 0, empty: 0 };
 
     allTargets.forEach(target => {
       const plantIds = BED_PLANTS[target.id] || [];
@@ -4189,10 +4362,42 @@
       if (analysis.status === 'empty') {
         html += `<div style="color:#777;font-size:0.72rem">Sin plantas asignadas.</div>`;
       } else {
+        // Lista de plantas con familia mini
         html += `<div class="comp-plants">` +
                 analysis.plants.map(p => `${p.emoji} ${p.nombre}`).join(' · ') +
                 `</div>`;
 
+        // Conflictos (rojo, prioridad máxima)
+        if (analysis.conflicts.length > 0) {
+          html += `<div class="comp-section"><div class="comp-section-label">🔴 Conflictos (plantas enemigas)</div>`;
+          analysis.conflicts.forEach(([a, b]) => {
+            html += `<span class="comp-chip danger">${a.nombre} ✗ ${b.nombre}</span>`;
+          });
+          html += `</div>`;
+        }
+
+        // Familia duplicada
+        if (analysis.familyDupes.length > 0) {
+          html += `<div class="comp-section"><div class="comp-section-label">⚠️ Misma familia botánica</div>`;
+          analysis.familyDupes.forEach(dup => {
+            const names = dup.plants.map(p => p.nombre).join(' + ');
+            html += `<span class="comp-chip warning">${dup.label}: ${names}</span>`;
+          });
+          html += `<div class="comp-note">Compiten por los mismos nutrientes y atraen las mismas plagas. Evitar en rotación.</div>`;
+          html += `</div>`;
+        }
+
+        // Termófilos en bosque de niebla
+        if (analysis.termofilicos.length > 0) {
+          html += `<div class="comp-section"><div class="comp-section-label">🌡️ Termófilos (sufren en niebla)</div>`;
+          analysis.termofilicos.forEach(p => {
+            html += `<span class="comp-chip warning">${p.emoji} ${p.nombre} · óptimo ${p.tempMin}-${p.tempMax}°C</span>`;
+          });
+          html += `<div class="comp-note">Zipacón 12-22°C exterior. Considerar invernadero o ubicación soleada.</div>`;
+          html += `</div>`;
+        }
+
+        // Buenas combinaciones
         if (analysis.positive.length > 0) {
           html += `<div class="comp-section"><div class="comp-section-label">✅ Buenas combinaciones</div>`;
           analysis.positive.forEach(([a, b]) => {
@@ -4201,14 +4406,14 @@
           html += `</div>`;
         }
 
-        if (analysis.conflicts.length > 0) {
-          html += `<div class="comp-section"><div class="comp-section-label">🔴 Conflictos</div>`;
-          analysis.conflicts.forEach(([a, b]) => {
-            html += `<span class="comp-chip danger">${a.nombre} ✗ ${b.nombre}</span>`;
-          });
+        // Riesgo alto de hongos sin antifúngico
+        if (analysis.needsAntifungico) {
+          html += `<div class="comp-section"><div class="comp-section-label">🦠 Riesgo alto de hongos</div>`;
+          html += `<div class="comp-note">Sin aromática antifúngica en la cama. Añadir <strong>tomillo, orégano o cebollín</strong> cerca para proteger.</div>`;
           html += `</div>`;
         }
 
+        // Compañeras sugeridas faltantes (solo si no hay conflicto grave)
         if (analysis.missing.length > 0 && analysis.status !== 'danger') {
           html += `<div class="comp-section"><div class="comp-section-label">💡 Compañeras sugeridas</div>`;
           analysis.missing.forEach(m => {
@@ -4225,8 +4430,9 @@
     // Summary pills
     summary.innerHTML = `
       <div class="comp-summary-pill"><span style="color:#90EE90">●</span> Óptimas <strong>${counts.success || 0}</strong></div>
+      <div class="comp-summary-pill"><span style="color:#FFD166">●</span> Advertencias <strong>${counts.warning || 0}</strong></div>
       <div class="comp-summary-pill"><span style="color:#FF6B6B">●</span> Conflictos <strong>${counts.danger || 0}</strong></div>
-      <div class="comp-summary-pill"><span style="color:#DEB887">●</span> Neutrales/Monocultivo <strong>${counts.neutral || 0}</strong></div>
+      <div class="comp-summary-pill"><span style="color:#DEB887">●</span> Neutrales <strong>${counts.neutral || 0}</strong></div>
       <div class="comp-summary-pill"><span style="color:#888">●</span> Vacías <strong>${counts.empty || 0}</strong></div>
     `;
   }
