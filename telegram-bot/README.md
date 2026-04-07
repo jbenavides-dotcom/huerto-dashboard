@@ -32,7 +32,7 @@ Antes de importar el workflow, crea 2 credenciales en n8n:
 #### a) Telegram API (bot @HuertaInteligentebot)
 - Menú izquierdo → **Credentials** → **+ New**
 - Buscar **"Telegram API"**
-- **Access Token:** el de apis.json (`8723932539:AAFge0kvNr8Mi7G3VJQCCw97mvPuNQ4k4e4`)
+- **Access Token:** ver `memory/key-apis/apis.json` → `telegram.bot_token` (NUNCA pegar el token en archivos del repo)
 - Guardar con nombre exacto: **"Telegram Huerta Bot"**
 
 #### b) Gemini API (Google AI Studio)
