@@ -15,10 +15,26 @@
     "temp_min": 10,
     "temp_max": 24,
     "luz": "4-6 horas sol, tolera sombra parcial. Ideal en bosque de niebla con luz filtrada.",
-    "plagas": ["babosas", "caracoles", "pulgones", "mildiu", "botrytis"],
+    "plagas": [
+      "babosas",
+      "caracoles",
+      "pulgones",
+      "mildiu",
+      "botrytis"
+    ],
     "cosecha": "Cortar hojas externas progresivamente o cabeza completa cuando esté firme. Cosechar en la mañana.",
-    "companeras": ["zanahoria", "remolacha", "cebolla", "cebollín", "rúcula", "espinaca"],
-    "enemigos": ["perejil", "apio"],
+    "companeras": [
+      "zanahoria",
+      "remolacha",
+      "cebolla",
+      "cebollín",
+      "rúcula",
+      "espinaca"
+    ],
+    "enemigos": [
+      "perejil",
+      "apio"
+    ],
     "tips_bosque_niebla": "Riesgo alto de babosas y caracoles por la humedad constante. Usar trampas de cerveza o ceniza alrededor. Buen drenaje esencial para evitar pudrición de raíz. Aprovechar la niebla como riego natural; reducir riego manual. Cosechar temprano para evitar que las hojas estén mojadas mucho tiempo."
   },
   {
@@ -37,10 +53,25 @@
     "temp_min": 10,
     "temp_max": 24,
     "luz": "4-6 horas sol, tolera sombra parcial.",
-    "plagas": ["babosas", "caracoles", "pulgones", "mildiu", "sclerotinia"],
+    "plagas": [
+      "babosas",
+      "caracoles",
+      "pulgones",
+      "mildiu",
+      "sclerotinia"
+    ],
     "cosecha": "Cortar hojas externas o esperar a que forme cogollo compacto. Cortar a 2 cm del suelo para posible rebrote.",
-    "companeras": ["zanahoria", "remolacha", "cebolla", "rábano", "fresa"],
-    "enemigos": ["perejil", "apio"],
+    "companeras": [
+      "zanahoria",
+      "remolacha",
+      "cebolla",
+      "rábano",
+      "fresa"
+    ],
+    "enemigos": [
+      "perejil",
+      "apio"
+    ],
     "tips_bosque_niebla": "Más resistente al frío que la Batavia. Vigilar pudrición basal por exceso de humedad. Elevar camas 15-20 cm para mejorar drenaje. La niebla frecuente reduce necesidad de riego pero aumenta riesgo de hongos foliares."
   },
   {
@@ -59,10 +90,24 @@
     "temp_min": 10,
     "temp_max": 24,
     "luz": "4-6 horas sol, buena tolerancia a sombra parcial.",
-    "plagas": ["babosas", "caracoles", "pulgones", "mildiu", "trips"],
+    "plagas": [
+      "babosas",
+      "caracoles",
+      "pulgones",
+      "mildiu",
+      "trips"
+    ],
     "cosecha": "Tipo 'cortar y volver a crecer': cortar hojas externas dejando el centro para que siga produciendo.",
-    "companeras": ["zanahoria", "remolacha", "cebolla", "rúcula", "espinaca"],
-    "enemigos": ["perejil"],
+    "companeras": [
+      "zanahoria",
+      "remolacha",
+      "cebolla",
+      "rúcula",
+      "espinaca"
+    ],
+    "enemigos": [
+      "perejil"
+    ],
     "tips_bosque_niebla": "La más rápida de las lechugas. Sus hojas rizadas atrapan humedad, lo que puede favorecer hongos. Espaciar bien para ventilación. Ideal para cosecha escalonada tipo baby leaf."
   },
   {
@@ -81,10 +126,24 @@
     "temp_min": 8,
     "temp_max": 22,
     "luz": "3-5 horas sol. Tolera muy bien sombra parcial; en sombra las hojas son menos picantes.",
-    "plagas": ["pulguillas", "babosas", "caracoles", "hongos por exceso de humedad", "mildiu"],
+    "plagas": [
+      "pulguillas",
+      "babosas",
+      "caracoles",
+      "hongos por exceso de humedad",
+      "mildiu"
+    ],
     "cosecha": "Cortar hojas externas a 3-5 cm del suelo cuando tengan 10-15 cm. Rebrota varias veces.",
-    "companeras": ["lechuga", "espinaca", "zanahoria", "tomate", "cebolla"],
-    "enemigos": ["otras brasicáceas en exceso (compiten por nutrientes)"],
+    "companeras": [
+      "lechuga",
+      "espinaca",
+      "zanahoria",
+      "tomate",
+      "cebolla"
+    ],
+    "enemigos": [
+      "otras brasicáceas en exceso (compiten por nutrientes)"
+    ],
     "tips_bosque_niebla": "MUY susceptible a hongos por exceso de humedad. Drenaje impecable obligatorio. Camas elevadas recomendadas. Nunca regar por aspersión. El clima fresco de niebla le da sabor más suave y menos amargo. Sembrar escalonado cada 15 días para cosecha continua."
   },
   {
@@ -103,10 +162,27 @@
     "temp_min": 5,
     "temp_max": 20,
     "luz": "3-5 horas sol. Excelente tolerancia a sombra parcial. Evitar sol directo fuerte.",
-    "plagas": ["mildiu (Peronospora spinaciae)", "babosas", "caracoles", "mosca de la remolacha", "pulgones"],
+    "plagas": [
+      "mildiu (Peronospora spinaciae)",
+      "babosas",
+      "caracoles",
+      "mosca de la remolacha",
+      "pulgones"
+    ],
     "cosecha": "Cortar hojas externas cuando tengan 8-10 cm. Dejar el centro para rebrote. Cosecha continua por 2-3 meses.",
-    "companeras": ["lechuga", "rúcula", "brócoli", "coliflor", "repollo", "cebolla", "fresa"],
-    "enemigos": ["acelga", "remolacha (misma familia, compiten y comparten plagas)"],
+    "companeras": [
+      "lechuga",
+      "rúcula",
+      "brócoli",
+      "coliflor",
+      "repollo",
+      "cebolla",
+      "fresa"
+    ],
+    "enemigos": [
+      "acelga",
+      "remolacha (misma familia, compiten y comparten plagas)"
+    ],
     "tips_bosque_niebla": "PLANTA ESTRELLA para bosque de niebla. Ama el frío y la humedad. A 1780m con 12-24°C se dará perfecta. Cuidado con mildiu en periodos de niebla constante: aplicar cola de caballo como fungicida preventivo. No florece fácilmente en días cortos, lo cual es ventaja."
   },
   {
@@ -125,10 +201,26 @@
     "temp_min": 6,
     "temp_max": 27,
     "luz": "4-6 horas sol. Tolera sombra parcial, especialmente en clima cálido.",
-    "plagas": ["pulgones", "mosca de la remolacha", "caracoles", "babosas", "cercospora"],
+    "plagas": [
+      "pulgones",
+      "mosca de la remolacha",
+      "caracoles",
+      "babosas",
+      "cercospora"
+    ],
     "cosecha": "Cortar hojas externas con tallo desde la base cuando tengan 20-25 cm. Producción continua por varios meses.",
-    "companeras": ["zanahoria", "rábano", "lechuga", "repollo", "cebolla", "judías"],
-    "enemigos": ["espinaca", "remolacha (misma familia)"],
+    "companeras": [
+      "zanahoria",
+      "rábano",
+      "lechuga",
+      "repollo",
+      "cebolla",
+      "judías"
+    ],
+    "enemigos": [
+      "espinaca",
+      "remolacha (misma familia)"
+    ],
     "tips_bosque_niebla": "Muy resistente y productiva en bosque de niebla. Tolera frío mejor que muchas hortalizas. Puede producir hojas durante 6+ meses con cosecha continua. Cuidado con cercospora en alta humedad: eliminar hojas afectadas inmediatamente."
   },
   {
@@ -147,10 +239,25 @@
     "temp_min": 6,
     "temp_max": 27,
     "luz": "4-6 horas sol. Tolera sombra parcial. Color rojo más intenso con algo de sol directo.",
-    "plagas": ["pulgones", "mosca de la remolacha", "caracoles", "babosas", "cercospora"],
+    "plagas": [
+      "pulgones",
+      "mosca de la remolacha",
+      "caracoles",
+      "babosas",
+      "cercospora"
+    ],
     "cosecha": "Cortar hojas externas con tallo desde la base. Los tallos rojos son más decorativos y sabrosos cuando jóvenes.",
-    "companeras": ["zanahoria", "rábano", "lechuga", "repollo", "cebolla"],
-    "enemigos": ["espinaca", "remolacha"],
+    "companeras": [
+      "zanahoria",
+      "rábano",
+      "lechuga",
+      "repollo",
+      "cebolla"
+    ],
+    "enemigos": [
+      "espinaca",
+      "remolacha"
+    ],
     "tips_bosque_niebla": "Mismas condiciones que acelga común. El frío intensifica el color rojo del tallo. Excelente planta ornamental-comestible para el huerto. Más lenta en arrancar que la verde pero igual de productiva."
   },
   {
@@ -169,10 +276,25 @@
     "temp_min": 6,
     "temp_max": 27,
     "luz": "4-6 horas sol. Tolera sombra parcial.",
-    "plagas": ["pulgones", "mosca de la remolacha", "caracoles", "babosas", "cercospora"],
+    "plagas": [
+      "pulgones",
+      "mosca de la remolacha",
+      "caracoles",
+      "babosas",
+      "cercospora"
+    ],
     "cosecha": "Cortar hojas externas con tallo desde la base. Tallos amarillos más tiernos que los blancos.",
-    "companeras": ["zanahoria", "rábano", "lechuga", "repollo", "cebolla"],
-    "enemigos": ["espinaca", "remolacha"],
+    "companeras": [
+      "zanahoria",
+      "rábano",
+      "lechuga",
+      "repollo",
+      "cebolla"
+    ],
+    "enemigos": [
+      "espinaca",
+      "remolacha"
+    ],
     "tips_bosque_niebla": "Mismas condiciones que las otras acelgas. El tallo amarillo dorado resalta bien en el huerto. Todas las acelgas de colores comparten los mismos requerimientos. Combinar las tres variedades (blanca, roja, amarilla) para huerto visualmente atractivo."
   },
   {
@@ -191,10 +313,26 @@
     "temp_min": 7,
     "temp_max": 23,
     "luz": "3-5 horas sol. Excelente en sombra parcial. Más tierna con menos sol.",
-    "plagas": ["pulguillas", "babosas", "caracoles", "oruga de la col", "mildiu"],
+    "plagas": [
+      "pulguillas",
+      "babosas",
+      "caracoles",
+      "oruga de la col",
+      "mildiu"
+    ],
     "cosecha": "Cortar hojas externas cuando tengan 5+ cm. Rebrota rápidamente. Baby leaf a los 21 días, tamaño completo a los 40.",
-    "companeras": ["lechuga", "espinaca", "tatsoi", "mostaza", "cebolla", "perejil"],
-    "enemigos": ["papa", "fresa"],
+    "companeras": [
+      "lechuga",
+      "espinaca",
+      "tatsoi",
+      "mostaza",
+      "cebolla",
+      "perejil"
+    ],
+    "enemigos": [
+      "papa",
+      "fresa"
+    ],
     "tips_bosque_niebla": "IDEAL para bosque de niebla. Ama el frío y produce hojas más sabrosas con temperaturas bajas. Crecimiento ultra rápido. El clima fresco de Zipacón (12-24°C) está perfecto para mizuna. Sembrar escalonado cada 2 semanas. Cosecha tipo 'cut and come again' permite producción continua."
   },
   {
@@ -213,10 +351,25 @@
     "temp_min": 7,
     "temp_max": 23,
     "luz": "3-5 horas sol. Tolera sombra parcial. Algo más de sol intensifica el color rojo.",
-    "plagas": ["pulguillas", "babosas", "caracoles", "oruga de la col", "mildiu"],
+    "plagas": [
+      "pulguillas",
+      "babosas",
+      "caracoles",
+      "oruga de la col",
+      "mildiu"
+    ],
     "cosecha": "Igual que mizuna verde. Cortar hojas externas. El color rojo es más atractivo en ensaladas mixtas.",
-    "companeras": ["lechuga", "espinaca", "tatsoi", "mostaza", "cebolla"],
-    "enemigos": ["papa", "fresa"],
+    "companeras": [
+      "lechuga",
+      "espinaca",
+      "tatsoi",
+      "mostaza",
+      "cebolla"
+    ],
+    "enemigos": [
+      "papa",
+      "fresa"
+    ],
     "tips_bosque_niebla": "Mismas condiciones que mizuna verde. El frío intensifica la pigmentación roja/púrpura. Mezclar con mizuna verde para contraste visual en ensaladas. Puede ser ligeramente más lenta que la verde en germinar."
   },
   {
@@ -235,10 +388,25 @@
     "temp_min": 7,
     "temp_max": 24,
     "luz": "3-5 horas sol. Tolera sombra parcial bien.",
-    "plagas": ["pulguillas", "oruga de la col", "babosas", "caracoles", "pulgones"],
+    "plagas": [
+      "pulguillas",
+      "oruga de la col",
+      "babosas",
+      "caracoles",
+      "pulgones"
+    ],
     "cosecha": "Baby leaf a 21 días, tamaño completo a 45 días. Cortar hojas a 8-15 cm. Rebrota para segundo y tercer corte cada 5-14 días.",
-    "companeras": ["lechuga", "mizuna", "tatsoi", "espinaca", "cebolla"],
-    "enemigos": ["papa", "fresa"],
+    "companeras": [
+      "lechuga",
+      "mizuna",
+      "tatsoi",
+      "espinaca",
+      "cebolla"
+    ],
+    "enemigos": [
+      "papa",
+      "fresa"
+    ],
     "tips_bosque_niebla": "Excelente para bosque de niebla. Las hojas grandes púrpura-rojizas son decorativas y picantes. El frío suaviza el sabor picante. Controlar pulguillas con cubiertas de tela o ceniza. Hojas grandes pueden acumular agua de niebla: vigilar hongos foliares."
   },
   {
@@ -257,10 +425,25 @@
     "temp_min": 4,
     "temp_max": 24,
     "luz": "4-6 horas sol. Tolera sombra parcial.",
-    "plagas": ["pulguillas", "oruga de la col (mariposa blanca)", "babosas", "caracoles", "pulgones"],
+    "plagas": [
+      "pulguillas",
+      "oruga de la col (mariposa blanca)",
+      "babosas",
+      "caracoles",
+      "pulgones"
+    ],
     "cosecha": "Baby leaf a 21 días, roseta completa a 45-50 días. Cortar hojas externas o roseta entera. Hojas en forma de cuchara, tiernas y suaves.",
-    "companeras": ["mizuna", "lechuga", "espinaca", "perejil", "repollo", "cebolla"],
-    "enemigos": ["papa"],
+    "companeras": [
+      "mizuna",
+      "lechuga",
+      "espinaca",
+      "perejil",
+      "repollo",
+      "cebolla"
+    ],
+    "enemigos": [
+      "papa"
+    ],
     "tips_bosque_niebla": "CAMPEONA del frío: soporta hasta -10°C. Perfecta para Zipacón. Forma rosetas compactas pegadas al suelo que resisten niebla y lluvia. Las hojas gruesas tipo cuchara son menos susceptibles a hongos que las hojas finas. Sabor suave, ideal para ensaladas y salteados."
   },
   {
@@ -279,10 +462,25 @@
     "temp_min": 15,
     "temp_max": 30,
     "luz": "6-8 horas sol. Necesita buena luz. En bosque de niebla REQUIERE invernadero o sitio protegido.",
-    "plagas": ["caracoles", "babosas", "mildiu (Peronospora belbahrii)", "fusarium", "pulgones", "araña roja"],
+    "plagas": [
+      "caracoles",
+      "babosas",
+      "mildiu (Peronospora belbahrii)",
+      "fusarium",
+      "pulgones",
+      "araña roja"
+    ],
     "cosecha": "Pinzar puntas regularmente cuando tenga 15+ cm. Cortar siempre por encima de un par de hojas para estimular ramificación. Nunca dejar florecer.",
-    "companeras": ["tomate (mejora sabor y repele plagas)", "pimiento", "orégano"],
-    "enemigos": ["ruda", "salvia", "tomillo (prefiere condiciones opuestas)"],
+    "companeras": [
+      "tomate (mejora sabor y repele plagas)",
+      "pimiento",
+      "orégano"
+    ],
+    "enemigos": [
+      "ruda",
+      "salvia",
+      "tomillo (prefiere condiciones opuestas)"
+    ],
     "tips_bosque_niebla": "PLANTA MÁS DIFÍCIL en bosque de niebla. Necesita calor y sol que el bosque no ofrece naturalmente. Los 10 en invernadero van bien; los 8 de exterior necesitan el punto más soleado y protegido. Mildiu es el enemigo #1 en alta humedad. Aplicar bicarbonato de sodio preventivo. Si la temp baja de 12°C, la planta sufre. Considerar cubierta plástica tipo mini-invernadero."
   },
   {
@@ -301,10 +499,23 @@
     "temp_min": 14,
     "temp_max": 30,
     "luz": "6-8 horas sol. Necesita buena luz para mantener color púrpura intenso.",
-    "plagas": ["caracoles", "babosas", "mildiu", "fusarium", "pulgones"],
+    "plagas": [
+      "caracoles",
+      "babosas",
+      "mildiu",
+      "fusarium",
+      "pulgones"
+    ],
     "cosecha": "Pinzar puntas cuando tenga 15+ cm. Más lenta que la verde. Cortar por encima de nudos para ramificación.",
-    "companeras": ["tomate", "pimiento", "orégano"],
-    "enemigos": ["ruda", "salvia"],
+    "companeras": [
+      "tomate",
+      "pimiento",
+      "orégano"
+    ],
+    "enemigos": [
+      "ruda",
+      "salvia"
+    ],
     "tips_bosque_niebla": "Ligeramente más resistente al frío que la albahaca verde, pero igual de susceptible a hongos. Proteger del frío y la humedad excesiva. Ubicar en invernadero preferiblemente. El color púrpura se intensifica con buena luz solar."
   },
   {
@@ -323,10 +534,26 @@
     "temp_min": 8,
     "temp_max": 25,
     "luz": "4-6 horas sol. Tolera sombra parcial muy bien.",
-    "plagas": ["pulgones", "mosca de la zanahoria", "babosas", "septoria", "cercospora"],
+    "plagas": [
+      "pulgones",
+      "mosca de la zanahoria",
+      "babosas",
+      "septoria",
+      "cercospora"
+    ],
     "cosecha": "Cortar tallos exteriores desde la base cuando tengan 15+ cm. Dejar el centro para rebrote. Producción continua por meses.",
-    "companeras": ["tomate", "espinaca", "rúcula", "zanahoria", "cebolla", "rosa"],
-    "enemigos": ["lechuga (alelopatía)", "menta (invasiva)"],
+    "companeras": [
+      "tomate",
+      "espinaca",
+      "rúcula",
+      "zanahoria",
+      "cebolla",
+      "rosa"
+    ],
+    "enemigos": [
+      "lechuga (alelopatía)",
+      "menta (invasiva)"
+    ],
     "tips_bosque_niebla": "Buena adaptación al bosque de niebla. Tolera frío y sombra. Germinación muy lenta (2-4 semanas), tener paciencia. Riesgo de septoria en hojas con humedad prolongada. No dejar hojas mojadas al atardecer. Cortar hojas amarillentas para prevenir propagación de hongos."
   },
   {
@@ -345,10 +572,24 @@
     "temp_min": 10,
     "temp_max": 25,
     "luz": "4-5 horas sol. Tolera sombra parcial. Menos sol retrasa la floración (ventaja).",
-    "plagas": ["pulgones", "mildiu", "bacteriosis", "babosas"],
+    "plagas": [
+      "pulgones",
+      "mildiu",
+      "bacteriosis",
+      "babosas"
+    ],
     "cosecha": "Cortar hojas externas cuando tengan 10-15 cm. Si sube a flor, cosechar semillas (coriandro). Ciclo corto.",
-    "companeras": ["tomate", "espinaca", "zanahoria", "cebolla", "brócoli"],
-    "enemigos": ["hinojo", "eneldo (hibridan)"],
+    "companeras": [
+      "tomate",
+      "espinaca",
+      "zanahoria",
+      "cebolla",
+      "brócoli"
+    ],
+    "enemigos": [
+      "hinojo",
+      "eneldo (hibridan)"
+    ],
     "tips_bosque_niebla": "Buena adaptación al frío moderado de Zipacón. La sombra parcial del bosque retrasa la floración, lo cual es ideal. Sembrar escalonado cada 3 semanas para cosecha continua. En alta humedad, vigilar mildiu. La variedad hoja ancha produce más follaje antes de florecer."
   },
   {
@@ -367,10 +608,22 @@
     "temp_min": 8,
     "temp_max": 28,
     "luz": "6-8 horas sol. Necesita buena exposición solar para desarrollar aceites esenciales.",
-    "plagas": ["pulgones", "araña roja", "pudrición radicular por exceso de humedad"],
+    "plagas": [
+      "pulgones",
+      "araña roja",
+      "pudrición radicular por exceso de humedad"
+    ],
     "cosecha": "Cortar ramas cuando la planta tenga 15+ cm, idealmente antes o durante floración. Más aroma al secar.",
-    "companeras": ["tomate", "pimiento", "albahaca", "zanahoria", "brócoli"],
-    "enemigos": ["menta (invasiva, compite)"],
+    "companeras": [
+      "tomate",
+      "pimiento",
+      "albahaca",
+      "zanahoria",
+      "brócoli"
+    ],
+    "enemigos": [
+      "menta (invasiva, compite)"
+    ],
     "tips_bosque_niebla": "ATENCIÓN: planta mediterránea que prefiere clima seco. En bosque de niebla necesita el sitio con mejor drenaje y más sol. Camas elevadas con sustrato arenoso. Agregar perlita o arena al suelo. Si la humedad es constante >70%, considerar cultivo en maceta bajo techo parcial. Menos aromático en climas húmedos."
   },
   {
@@ -389,10 +642,23 @@
     "temp_min": 5,
     "temp_max": 28,
     "luz": "6-8 horas sol. Necesita sol pleno para buen aroma.",
-    "plagas": ["pudrición radicular", "hongos por exceso de humedad", "pulgones (raro)"],
+    "plagas": [
+      "pudrición radicular",
+      "hongos por exceso de humedad",
+      "pulgones (raro)"
+    ],
     "cosecha": "Cortar ramas con tijera dejando 5 cm de tallo. Mejor aroma en floración. Se puede cosechar todo el año.",
-    "companeras": ["romero", "salvia", "orégano", "tomate", "repollo", "brócoli"],
-    "enemigos": ["albahaca (necesidades opuestas de agua)"],
+    "companeras": [
+      "romero",
+      "salvia",
+      "orégano",
+      "tomate",
+      "repollo",
+      "brócoli"
+    ],
+    "enemigos": [
+      "albahaca (necesidades opuestas de agua)"
+    ],
     "tips_bosque_niebla": "PLANTA DE RIESGO en bosque de niebla. Necesita suelo muy bien drenado, casi arenoso. Mezclar sustrato con 50% arena o perlita. Cama elevada obligatoria. Ubicar en el punto más soleado y ventilado. Si la raíz se encharca, muerte segura. Considerar cultivo en maceta de barro (transpira mejor)."
   },
   {
@@ -411,10 +677,24 @@
     "temp_min": 5,
     "temp_max": 25,
     "luz": "4-6 horas sol. Tolera sombra parcial.",
-    "plagas": ["trips", "mosca de la cebolla", "mildiu", "roya"],
+    "plagas": [
+      "trips",
+      "mosca de la cebolla",
+      "mildiu",
+      "roya"
+    ],
     "cosecha": "Cortar hojas a 3-5 cm del suelo cuando tengan 15+ cm. Rebrota rápidamente. Cosecha continua.",
-    "companeras": ["zanahoria (repele mosca)", "tomate", "lechuga", "remolacha", "fresa"],
-    "enemigos": ["judías", "guisantes"],
+    "companeras": [
+      "zanahoria (repele mosca)",
+      "tomate",
+      "lechuga",
+      "remolacha",
+      "fresa"
+    ],
+    "enemigos": [
+      "judías",
+      "guisantes"
+    ],
     "tips_bosque_niebla": "Excelente adaptación al bosque de niebla. Tolera frío y humedad. Planta perenne que produce año tras año. Las flores púrpura atraen polinizadores. Repele pulgones y mosca de la zanahoria, ideal como borde protector del huerto."
   },
   {
@@ -433,10 +713,21 @@
     "temp_min": 5,
     "temp_max": 25,
     "luz": "3-5 horas sol. Tolera muy bien sombra parcial. Crece bien en bosque.",
-    "plagas": ["roya", "oídio", "pulgones", "araña roja (raro en humedad alta)"],
+    "plagas": [
+      "roya",
+      "oídio",
+      "pulgones",
+      "araña roja (raro en humedad alta)"
+    ],
     "cosecha": "Cortar tallos a 5 cm del suelo antes de floración para máximo aroma. Rebrota agresivamente.",
-    "companeras": ["tomate", "repollo", "brócoli (repele polilla de la col)"],
-    "enemigos": ["TODO: es invasiva. Plantar SIEMPRE en maceta o contenedor aislado"],
+    "companeras": [
+      "tomate",
+      "repollo",
+      "brócoli (repele polilla de la col)"
+    ],
+    "enemigos": [
+      "TODO: es invasiva. Plantar SIEMPRE en maceta o contenedor aislado"
+    ],
     "tips_bosque_niebla": "PLANTA PERFECTA para bosque de niebla. Ama el frío, la humedad y la sombra. ADVERTENCIA CRÍTICA: es extremadamente invasiva. NUNCA plantar directamente en tierra. Usar maceta enterrada o contenedor sin fondo con barrera. Puede colonizar todo el huerto en una temporada si no se controla."
   },
   {
@@ -455,10 +746,24 @@
     "temp_min": 5,
     "temp_max": 30,
     "luz": "6-8 horas sol pleno. Necesita máxima exposición solar.",
-    "plagas": ["pudrición radicular", "oídio en exceso de humedad", "cochinillas"],
+    "plagas": [
+      "pudrición radicular",
+      "oídio en exceso de humedad",
+      "cochinillas"
+    ],
     "cosecha": "Cortar ramitas de 10-15 cm. Planta perenne, produce durante años. Más aroma en floración.",
-    "companeras": ["salvia", "tomillo", "orégano", "zanahoria", "repollo", "brócoli"],
-    "enemigos": ["albahaca", "pepino"],
+    "companeras": [
+      "salvia",
+      "tomillo",
+      "orégano",
+      "zanahoria",
+      "repollo",
+      "brócoli"
+    ],
+    "enemigos": [
+      "albahaca",
+      "pepino"
+    ],
     "tips_bosque_niebla": "PLANTA DIFÍCIL en bosque de niebla. Necesita sol pleno y suelo seco que el bosque no ofrece. Solución: maceta grande con sustrato muy drenante (50% arena/perlita). Ubicar bajo alero o techo parcial que proteja de lluvia constante pero deje pasar sol. Si está en bolsa (como indicado), mantener la bolsa elevada para drenaje perfecto."
   },
   {
@@ -477,10 +782,33 @@
     "temp_min": 5,
     "temp_max": 24,
     "luz": "4-6 horas sol. Tolera sombra parcial ligera.",
-    "plagas": ["oruga de la col (Pieris brassicae)", "pulgón ceroso", "babosas", "caracoles", "mildiu", "hernia de la col (Plasmodiophora)", "mosca de la col"],
+    "plagas": [
+      "oruga de la col (Pieris brassicae)",
+      "pulgón ceroso",
+      "babosas",
+      "caracoles",
+      "mildiu",
+      "hernia de la col (Plasmodiophora)",
+      "mosca de la col"
+    ],
     "cosecha": "Cortar cabeza central cuando los brotes estén firmes y compactos, ANTES de que las flores amarillas se abran. Después brotan cabezas laterales más pequeñas.",
-    "companeras": ["cebolla", "cebollín", "lechuga", "espinaca", "remolacha", "zanahoria", "menta", "romero", "tomillo", "eneldo"],
-    "enemigos": ["tomate", "fresa", "otras brassicas muy cerca (comparten plagas)"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "lechuga",
+      "espinaca",
+      "remolacha",
+      "zanahoria",
+      "menta",
+      "romero",
+      "tomillo",
+      "eneldo"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa",
+      "otras brassicas muy cerca (comparten plagas)"
+    ],
     "tips_bosque_niebla": "EXCELENTE para bosque de niebla. La temperatura 16-18°C de Zipacón es ideal para formar cabezas compactas. Vigilar oruga de la col: inspeccionar envés de hojas y usar Bt (Bacillus thuringiensis) si es necesario. La humedad alta favorece hernia de la col: rotar cultivo, no repetir brassicas en mismo sitio por 3 años. Agregar cal al suelo si pH < 6.5."
   },
   {
@@ -499,10 +827,28 @@
     "temp_min": 8,
     "temp_max": 22,
     "luz": "4-6 horas sol. Tolera sombra parcial ligera. Atar hojas sobre la cabeza para blanquear.",
-    "plagas": ["oruga de la col", "pulgón ceroso", "mildiu", "hernia de la col", "babosas", "podredumbre negra"],
+    "plagas": [
+      "oruga de la col",
+      "pulgón ceroso",
+      "mildiu",
+      "hernia de la col",
+      "babosas",
+      "podredumbre negra"
+    ],
     "cosecha": "Cortar cuando la cabeza (pella) esté compacta, blanca y firme, antes de que se separen los floretes. Atar hojas superiores sobre la pella 1 semana antes para blanquear.",
-    "companeras": ["cebolla", "cebollín", "apio", "lechuga", "espinaca", "remolacha"],
-    "enemigos": ["tomate", "fresa", "pepino"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "apio",
+      "lechuga",
+      "espinaca",
+      "remolacha"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa",
+      "pepino"
+    ],
     "tips_bosque_niebla": "Más exigente que el brócoli. Necesita temperatura muy estable (15-20°C ideal). Las fluctuaciones causan 'arroz' (cabeza granulosa). La humedad constante del bosque de niebla es buena pero vigilar pudrición de cabeza. Atar hojas para proteger pella de lluvia directa. Exige suelo rico en boro: aplicar bórax (1g/10L agua) una vez."
   },
   {
@@ -521,10 +867,26 @@
     "temp_min": 8,
     "temp_max": 22,
     "luz": "4-6 horas sol. Tolera sombra parcial. No necesita blanqueo (ya es verde).",
-    "plagas": ["oruga de la col", "pulgón ceroso", "mildiu", "hernia de la col", "babosas"],
+    "plagas": [
+      "oruga de la col",
+      "pulgón ceroso",
+      "mildiu",
+      "hernia de la col",
+      "babosas"
+    ],
     "cosecha": "Cortar cuando la cabeza esté compacta y los floretes firmes. No necesita atar hojas como la blanca.",
-    "companeras": ["cebolla", "cebollín", "apio", "lechuga", "espinaca", "remolacha"],
-    "enemigos": ["tomate", "fresa"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "apio",
+      "lechuga",
+      "espinaca",
+      "remolacha"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa"
+    ],
     "tips_bosque_niebla": "Ventaja sobre la blanca: no necesita blanqueo, más fácil en bosque de niebla donde la lluvia dificulta mantener hojas atadas. Sabor ligeramente más suave. Mismos cuidados generales que coliflor blanca."
   },
   {
@@ -543,10 +905,26 @@
     "temp_min": 8,
     "temp_max": 22,
     "luz": "4-6 horas sol. Tolera sombra parcial ligera.",
-    "plagas": ["oruga de la col", "pulgón ceroso", "mildiu", "hernia de la col", "babosas"],
+    "plagas": [
+      "oruga de la col",
+      "pulgón ceroso",
+      "mildiu",
+      "hernia de la col",
+      "babosas"
+    ],
     "cosecha": "Cortar cuando la cabeza esté compacta y firme.",
-    "companeras": ["cebolla", "cebollín", "apio", "lechuga", "espinaca", "remolacha"],
-    "enemigos": ["tomate", "fresa"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "apio",
+      "lechuga",
+      "espinaca",
+      "remolacha"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa"
+    ],
     "tips_bosque_niebla": "Plantas de respaldo: trasplantar cuando alguna coliflor principal falle. Mantener en macetas individuales hasta que se necesiten. Si no se usan como respaldo, plantar con 50 cm de espacio como las demás."
   },
   {
@@ -565,10 +943,29 @@
     "temp_min": 5,
     "temp_max": 24,
     "luz": "4-6 horas sol. Tolera sombra parcial.",
-    "plagas": ["oruga de la col", "babosas", "caracoles", "pulgón ceroso", "hernia de la col", "alternaria"],
+    "plagas": [
+      "oruga de la col",
+      "babosas",
+      "caracoles",
+      "pulgón ceroso",
+      "hernia de la col",
+      "alternaria"
+    ],
     "cosecha": "Cortar cabeza completa cuando esté firme y compacta. Dejar el tallo: puede brotar mini-repollos laterales.",
-    "companeras": ["cebolla", "cebollín", "lechuga", "remolacha", "hierbas aromáticas (repelen plagas)", "tomillo", "menta"],
-    "enemigos": ["tomate", "fresa", "vid"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "lechuga",
+      "remolacha",
+      "hierbas aromáticas (repelen plagas)",
+      "tomillo",
+      "menta"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa",
+      "vid"
+    ],
     "tips_bosque_niebla": "Excelente adaptación. El frío hace que las cabezas sean más dulces y crujientes. La humedad constante es buena pero vigilar babosas: instalar trampas de cerveza. Rotar con leguminosas. La hernia de la col es el mayor riesgo en suelo húmedo: mantener pH > 6.5 con cal."
   },
   {
@@ -587,10 +984,26 @@
     "temp_min": 5,
     "temp_max": 24,
     "luz": "4-6 horas sol. Algo más de sol intensifica el color morado.",
-    "plagas": ["oruga de la col", "babosas", "caracoles", "pulgón ceroso", "hernia de la col"],
+    "plagas": [
+      "oruga de la col",
+      "babosas",
+      "caracoles",
+      "pulgón ceroso",
+      "hernia de la col"
+    ],
     "cosecha": "Cortar cabeza completa cuando esté firme. Tarda más que el verde en formar cabeza compacta.",
-    "companeras": ["cebolla", "cebollín", "lechuga", "remolacha", "tomillo", "romero"],
-    "enemigos": ["tomate", "fresa"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "lechuga",
+      "remolacha",
+      "tomillo",
+      "romero"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa"
+    ],
     "tips_bosque_niebla": "Más lento que el verde pero más resistente a plagas (las antocianinas tienen efecto repelente). El frío intensifica el color morado. Excelente para el huerto por su valor ornamental y nutricional. Mismas precauciones que repollo verde."
   },
   {
@@ -609,10 +1022,26 @@
     "temp_min": 4,
     "temp_max": 24,
     "luz": "4-6 horas sol. Tolera sombra parcial.",
-    "plagas": ["oruga de la col", "pulgón ceroso", "mosca blanca", "babosas", "mildiu"],
+    "plagas": [
+      "oruga de la col",
+      "pulgón ceroso",
+      "mosca blanca",
+      "babosas",
+      "mildiu"
+    ],
     "cosecha": "Cosechar hojas inferiores primero, dejando las superiores para crecimiento. Recolectar cuando hojas tengan 20-30 cm. NUNCA cosechar más de 1/3 de la planta a la vez.",
-    "companeras": ["cebolla", "cebollín", "remolacha", "lechuga", "hierbas aromáticas", "papa"],
-    "enemigos": ["tomate", "fresa"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "remolacha",
+      "lechuga",
+      "hierbas aromáticas",
+      "papa"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa"
+    ],
     "tips_bosque_niebla": "EXCELENTE para bosque de niebla. Las hojas verde oscuro arrugadas (tipo dinosaurio) son más resistentes a hongos que las rizadas. El frío mejora dramáticamente el sabor: las heladas convierten almidón en azúcar. Planta productiva por 6-12 meses con cosecha continua. Una de las mejores opciones para Zipacón."
   },
   {
@@ -631,10 +1060,25 @@
     "temp_min": 4,
     "temp_max": 24,
     "luz": "4-6 horas sol. Tolera sombra parcial.",
-    "plagas": ["oruga de la col", "pulgón ceroso", "mosca blanca", "babosas", "mildiu"],
+    "plagas": [
+      "oruga de la col",
+      "pulgón ceroso",
+      "mosca blanca",
+      "babosas",
+      "mildiu"
+    ],
     "cosecha": "Cosechar hojas inferiores cuando tengan 20+ cm. Producción continua por meses. El frío mejora el sabor.",
-    "companeras": ["cebolla", "cebollín", "remolacha", "lechuga", "hierbas aromáticas"],
-    "enemigos": ["tomate", "fresa"],
+    "companeras": [
+      "cebolla",
+      "cebollín",
+      "remolacha",
+      "lechuga",
+      "hierbas aromáticas"
+    ],
+    "enemigos": [
+      "tomate",
+      "fresa"
+    ],
     "tips_bosque_niebla": "Similar al toscano pero con hojas más rizadas que pueden atrapar agua de niebla. Vigilar un poco más los hongos foliares. Sacudir plantas suavemente después de lluvias para eliminar agua acumulada. Igual de productivo y resistente al frío que el toscano."
   },
   {
@@ -653,10 +1097,27 @@
     "temp_min": 5,
     "temp_max": 25,
     "luz": "4-6 horas sol. Tolera sombra parcial ligera.",
-    "plagas": ["trips", "mosca de la cebolla", "mildiu", "roya", "pudrición blanca"],
+    "plagas": [
+      "trips",
+      "mosca de la cebolla",
+      "mildiu",
+      "roya",
+      "pudrición blanca"
+    ],
     "cosecha": "Primera cosecha a los 4-6 meses. Arrancar la planta completa o cortar hojas verdes dejando el bulbo para rebrote. Cosechas posteriores cada 3-4 meses.",
-    "companeras": ["zanahoria (repele mosca mutua)", "lechuga", "remolacha", "tomate", "fresa", "brócoli"],
-    "enemigos": ["judías", "guisantes", "habas"],
+    "companeras": [
+      "zanahoria (repele mosca mutua)",
+      "lechuga",
+      "remolacha",
+      "tomate",
+      "fresa",
+      "brócoli"
+    ],
+    "enemigos": [
+      "judías",
+      "guisantes",
+      "habas"
+    ],
     "tips_bosque_niebla": "Muy buena adaptación a clima frío húmedo de Cundinamarca. Es un cultivo tradicional de la región andina colombiana. Aporcar (amontonar tierra) alrededor del tallo para blanquear la parte blanca. La humedad alta puede favorecer roya: aplicar cola de caballo como preventivo. Perenne, puede producir por años."
   },
   {
@@ -675,10 +1136,28 @@
     "temp_min": 7,
     "temp_max": 24,
     "luz": "4-6 horas sol. Tolera sombra parcial ligera.",
-    "plagas": ["mosca de la zanahoria", "pulgones", "nematodos", "alternaria", "babosas (plántulas)"],
+    "plagas": [
+      "mosca de la zanahoria",
+      "pulgones",
+      "nematodos",
+      "alternaria",
+      "babosas (plántulas)"
+    ],
     "cosecha": "Extraer cuando la parte superior de la raíz asome sobre el suelo y tenga 2+ cm de diámetro. En clima frío se vuelven más dulces. Aflojar tierra antes de jalar.",
-    "companeras": ["cebolla (repele mosca de zanahoria)", "cebollín", "lechuga", "tomate", "romero", "salvia", "puerro"],
-    "enemigos": ["eneldo", "hinojo", "apio"],
+    "companeras": [
+      "cebolla (repele mosca de zanahoria)",
+      "cebollín",
+      "lechuga",
+      "tomate",
+      "romero",
+      "salvia",
+      "puerro"
+    ],
+    "enemigos": [
+      "eneldo",
+      "hinojo",
+      "apio"
+    ],
     "tips_bosque_niebla": "El clima frío de Zipacón produce zanahorias más dulces y jugosas. Suelo debe estar profundamente suelto (30+ cm) sin piedras ni terrones para raíces rectas. Si el suelo es arcilloso, hacer cama elevada con sustrato suelto. Cundinamarca es zona productora de zanahoria: las condiciones son ideales. Cubrir semillas con vermiculita para evitar costra superficial con la lluvia."
   },
   {
@@ -697,10 +1176,26 @@
     "temp_min": 8,
     "temp_max": 24,
     "luz": "4-6 horas sol. Tolera sombra parcial bien.",
-    "plagas": ["mosca de la remolacha (minador)", "cercospora", "pulgones", "babosas"],
+    "plagas": [
+      "mosca de la remolacha (minador)",
+      "cercospora",
+      "pulgones",
+      "babosas"
+    ],
     "cosecha": "Extraer cuando la raíz tenga 5-8 cm de diámetro, visible sobre el suelo. Las hojas también son comestibles (como acelga). No dejar demasiado tiempo: se vuelve leñosa.",
-    "companeras": ["lechuga", "cebolla", "cebollín", "repollo", "brócoli", "coliflor"],
-    "enemigos": ["espinaca", "acelga (misma familia, comparten plagas)", "judía trepadora"],
+    "companeras": [
+      "lechuga",
+      "cebolla",
+      "cebollín",
+      "repollo",
+      "brócoli",
+      "coliflor"
+    ],
+    "enemigos": [
+      "espinaca",
+      "acelga (misma familia, comparten plagas)",
+      "judía trepadora"
+    ],
     "tips_bosque_niebla": "Buena adaptación al clima frío. Las hojas jóvenes son excelentes en ensalada (bonus del cultivo). Vigilar cercospora en alta humedad: manchas circulares con borde rojizo. Eliminar hojas infectadas inmediatamente. Suelo suelto y sin piedras para raíces bien formadas."
   },
   {
@@ -719,10 +1214,31 @@
     "temp_min": 15,
     "temp_max": 30,
     "luz": "6-8 horas sol mínimo. REQUIERE invernadero en bosque de niebla.",
-    "plagas": ["tizón tardío (Phytophthora)", "tizón temprano (Alternaria)", "botrytis", "mosca blanca", "ácaros", "pulgones", "trips", "Fusarium"],
+    "plagas": [
+      "tizón tardío (Phytophthora)",
+      "tizón temprano (Alternaria)",
+      "botrytis",
+      "mosca blanca",
+      "ácaros",
+      "pulgones",
+      "trips",
+      "Fusarium"
+    ],
     "cosecha": "Frutos alargados tipo pera. Cosechar cuando estén completamente rojos y firmes. Variedad indeterminada: crece hasta 1.5-2m, produce durante meses. Ideal para salsas.",
-    "companeras": ["albahaca (mejora sabor y repele plagas)", "cebollín", "zanahoria", "perejil", "espinaca"],
-    "enemigos": ["brócoli", "coliflor", "repollo", "hinojo", "papa (comparten plagas)"],
+    "companeras": [
+      "albahaca (mejora sabor y repele plagas)",
+      "cebollín",
+      "zanahoria",
+      "perejil",
+      "espinaca"
+    ],
+    "enemigos": [
+      "brócoli",
+      "coliflor",
+      "repollo",
+      "hinojo",
+      "papa (comparten plagas)"
+    ],
     "tips_bosque_niebla": "INVERNADERO OBLIGATORIO a 1780m con niebla. Sin invernadero, tizón tardío destruye el cultivo en días. Ventilación crucial: abrir laterales del invernadero en horas secas. Tutorar con hilo hasta 2m. Podar chupones semanalmente. Eliminar hojas inferiores para ventilación. Aplicar cobre preventivo cada 2 semanas. Riego por goteo NUNCA por aspersión."
   },
   {
@@ -741,10 +1257,29 @@
     "temp_min": 14,
     "temp_max": 30,
     "luz": "6-8 horas sol. REQUIERE invernadero en bosque de niebla.",
-    "plagas": ["tizón tardío", "tizón temprano", "botrytis", "mosca blanca", "trips", "pulgones", "rajado de frutos"],
+    "plagas": [
+      "tizón tardío",
+      "tizón temprano",
+      "botrytis",
+      "mosca blanca",
+      "trips",
+      "pulgones",
+      "rajado de frutos"
+    ],
     "cosecha": "Cosechar cuando estén completamente rojos. Se desprenden fácilmente del racimo. Producción abundante y continua. Más precoz que San Marzano.",
-    "companeras": ["albahaca", "cebollín", "zanahoria", "perejil"],
-    "enemigos": ["brócoli", "coliflor", "repollo", "papa", "hinojo"],
+    "companeras": [
+      "albahaca",
+      "cebollín",
+      "zanahoria",
+      "perejil"
+    ],
+    "enemigos": [
+      "brócoli",
+      "coliflor",
+      "repollo",
+      "papa",
+      "hinojo"
+    ],
     "tips_bosque_niebla": "El más fácil de los tomates para invernadero en altitud. Más tolerante al frío y más resistente a enfermedades que otras variedades. Producción muy abundante. Mismo manejo de invernadero que San Marzano. El rajado de frutos ocurre por riego irregular: mantener constancia. Variedad indeterminada: tutorar bien."
   },
   {
@@ -763,10 +1298,173 @@
     "temp_min": 15,
     "temp_max": 30,
     "luz": "6-8 horas sol. REQUIERE invernadero en bosque de niebla.",
-    "plagas": ["tizón tardío", "tizón temprano", "Fusarium", "mosca blanca", "trips", "pulgones", "botrytis"],
+    "plagas": [
+      "tizón tardío",
+      "tizón temprano",
+      "Fusarium",
+      "mosca blanca",
+      "trips",
+      "pulgones",
+      "botrytis"
+    ],
     "cosecha": "Fruto redondo-ovalado, tipo ensalada. Cosechar pintón o rojo según uso. El tomate más popular en Colombia para consumo fresco.",
-    "companeras": ["albahaca", "cebollín", "zanahoria", "perejil", "espinaca"],
-    "enemigos": ["brócoli", "coliflor", "repollo", "papa"],
+    "companeras": [
+      "albahaca",
+      "cebollín",
+      "zanahoria",
+      "perejil",
+      "espinaca"
+    ],
+    "enemigos": [
+      "brócoli",
+      "coliflor",
+      "repollo",
+      "papa"
+    ],
     "tips_bosque_niebla": "Variedad colombiana adaptada a condiciones andinas, pero igual necesita invernadero a 1780m con niebla constante. Es el cultivo de tomate más común bajo invernadero en Boyacá y Cundinamarca. Manejo igual que San Marzano. Indeterminado: puede alcanzar 2m+ con buen tutorado. En invernadero a esta altitud, rendimiento esperado menor que en zonas más cálidas pero calidad es excelente."
+  },
+  {
+    "id": "lechuga_morada_lisa",
+    "nombre": "Lechuga Morada Lisa",
+    "nombre_cientifico": "Lactuca sativa var. capitata (red butterhead)",
+    "grupo": "hojas",
+    "emoji": "🥬",
+    "cantidad": 0,
+    "dias_cosecha": "45-60",
+    "espaciamiento_cm": 25,
+    "profundidad_cm": "0.5-1",
+    "riego": "Moderado, 2-3 veces/semana. Bosque de niebla: regar solo si el suelo baja de 30%. La pigmentación morada (antocianinas) aumenta con luz filtrada y estrés hídrico leve.",
+    "humedad_suelo_min": 30,
+    "humedad_suelo_max": 50,
+    "temp_min": 10,
+    "temp_max": 22,
+    "luz": "4-6 horas sol, tolera sombra parcial. Ideal en bosque de niebla.",
+    "plagas": [
+      "babosas",
+      "caracoles",
+      "pulgones",
+      "mildiu",
+      "botrytis"
+    ],
+    "cosecha": "Cortar hojas externas o cabeza completa cuando esté firme. Cosechar en la mañana con rocío aún presente.",
+    "companeras": [
+      "zanahoria",
+      "remolacha",
+      "cebolla",
+      "cebollín",
+      "rúcula"
+    ],
+    "enemigos": [
+      "perejil",
+      "apio"
+    ],
+    "tips_bosque_niebla": "Riesgo alto de babosas y caracoles por humedad constante. Usar ceniza o trampas de cerveza. El color morado es más intenso con temperaturas frescas (12-18°C) típicas de Zipacón."
+  },
+  {
+    "id": "calendula",
+    "nombre": "Caléndula",
+    "nombre_cientifico": "Calendula officinalis",
+    "grupo": "hierbas",
+    "emoji": "🌼",
+    "cantidad": 0,
+    "dias_cosecha": "50-70",
+    "espaciamiento_cm": 30,
+    "profundidad_cm": "1",
+    "riego": "Bajo a moderado. Tolera sequía una vez establecida. Regar cuando el suelo esté seco al tacto los primeros 3 cm.",
+    "humedad_suelo_min": 25,
+    "humedad_suelo_max": 45,
+    "temp_min": 8,
+    "temp_max": 25,
+    "luz": "Pleno sol a sombra parcial. En bosque de niebla crece bien con luz filtrada.",
+    "plagas": [
+      "pulgones",
+      "ácaros",
+      "mildiu"
+    ],
+    "cosecha": "Flores enteras cuando abran completamente. Cosechar temprano en la mañana. Secado a la sombra para uso medicinal.",
+    "companeras": [
+      "tomate",
+      "lechuga",
+      "zanahoria",
+      "repollo",
+      "brócoli",
+      "coliflor"
+    ],
+    "enemigos": [],
+    "tips_bosque_niebla": "Excelente planta compañera: repele pulgones, nemátodos y atrae polinizadores. Útil en camas con brásicas y solanáceas. Floración continua si se cosechan las flores marchitas. Tolera bien la neblina constante."
+  },
+  {
+    "id": "aji_jalapeno",
+    "nombre": "Ají Jalapeño",
+    "nombre_cientifico": "Capsicum annuum var. annuum",
+    "grupo": "brasicas",
+    "emoji": "🌶️",
+    "cantidad": 0,
+    "dias_cosecha": "70-90",
+    "espaciamiento_cm": 45,
+    "profundidad_cm": "0.5-1",
+    "riego": "Moderado pero constante. No encharcar. En bosque de niebla reducir riego — la alta humedad ambiental es suficiente. Estrés hídrico leve aumenta la capsaicina (picante).",
+    "humedad_suelo_min": 25,
+    "humedad_suelo_max": 40,
+    "temp_min": 15,
+    "temp_max": 30,
+    "luz": "Pleno sol (6+ horas). Puede sufrir en sombra permanente. Considerar ubicación soleada dentro del bosque de niebla.",
+    "plagas": [
+      "pulgones",
+      "ácaros",
+      "trips",
+      "mosca blanca",
+      "antracnosis",
+      "mildiu"
+    ],
+    "cosecha": "Frutos verdes (más picantes) o rojos maduros (más dulces). Cortar con tijera para no dañar la planta.",
+    "companeras": [
+      "tomate",
+      "albahaca",
+      "zanahoria",
+      "cebolla",
+      "caléndula"
+    ],
+    "enemigos": [
+      "hinojo",
+      "repollo",
+      "brócoli",
+      "coliflor"
+    ],
+    "tips_bosque_niebla": "Cultivo marginal en Zipacón por baja temperatura (óptimo 20-28°C). Considerar invernadero o microclima soleado. La humedad alta favorece hongos: mejorar ventilación y evitar mojar las hojas. Madura más lento que en clima cálido."
+  },
+  {
+    "id": "hierbabuena",
+    "nombre": "Hierbabuena",
+    "nombre_cientifico": "Mentha spicata",
+    "grupo": "hierbas",
+    "emoji": "🌿",
+    "cantidad": 0,
+    "dias_cosecha": "60-90 (perenne)",
+    "espaciamiento_cm": 30,
+    "profundidad_cm": "0.5",
+    "riego": "Alto y constante. Prefiere suelo siempre húmedo pero con drenaje. En bosque de niebla es ideal.",
+    "humedad_suelo_min": 35,
+    "humedad_suelo_max": 55,
+    "temp_min": 10,
+    "temp_max": 25,
+    "luz": "Sombra parcial a pleno sol. Excelente en bosque de niebla con luz filtrada.",
+    "plagas": [
+      "pulgones",
+      "oruga",
+      "roya",
+      "mildiu"
+    ],
+    "cosecha": "Cortar tallos por encima de un par de hojas. Cosechar antes de la floración para máximo sabor. Perenne — rebrota continuamente.",
+    "companeras": [
+      "repollo",
+      "tomate",
+      "zanahoria"
+    ],
+    "enemigos": [
+      "perejil",
+      "manzanilla"
+    ],
+    "tips_bosque_niebla": "Crece muy bien en Zipacón por la humedad constante. Se propaga por estolones — plantar en maceta enterrada o zona delimitada para evitar invasión. Diferente de menta (Mentha piperita): hojas más suaves y sabor más dulce. Repele hormigas y pulgones de otras plantas."
   }
 ]

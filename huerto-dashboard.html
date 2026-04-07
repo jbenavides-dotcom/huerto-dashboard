@@ -2651,20 +2651,21 @@
     rotacion: { optMin: 25, optMax: 40, alert: 22, critical: 18, label: 'Rotación' },
   };
 
-  /** Full bed definitions — impares = derecha, pares = izquierda. */
+  /** Full bed definitions — impares = derecha, pares = izquierda.
+   *  Actualizado 2026-04-07 con siembra real reportada por Jhon Huerta. */
   const BEDS = [
-    { id: 'cama1',  name: 'Cama 1',  group: 'hojas',    crops: ['🥬 Lechuga'],                                sensor: 'soil_ch2', hasSensor: true },
-    { id: 'cama2',  name: 'Cama 2',  group: 'hojas',    crops: ['🥗 Rúcula', '🥬 Espinaca'],                  sensor: 'soil_ch5', hasSensor: true },
-    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Acelga'],                                 sensor: 'soil_ch1', hasSensor: true },
-    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Espinaca', '🌿 Mostaza'],                 sensor: 'soil_ch3', hasSensor: true },
-    { id: 'cama5',  name: 'Cama 5',  group: 'hierbas',  crops: ['🌿 Albahaca', '🌿 Cilantro', '🌿 Perejil'],  sensor: 'soil_ch1' },
-    { id: 'cama6',  name: 'Cama 6',  group: 'hierbas',  crops: ['🌿 Cebollín', '🌿 Orégano', '🌿 Tomillo'],   sensor: 'soil_ch3' },
-    { id: 'cama7',  name: 'Cama 7',  group: 'brasicas',  crops: ['🥦 Brócoli'],                                sensor: 'soil_ch1' },
-    { id: 'cama8',  name: 'Cama 8',  group: 'brasicas',  crops: ['🥦 Coliflor'],                               sensor: 'soil_ch3' },
-    { id: 'cama9',  name: 'Cama 9',  group: 'brasicas',  crops: ['🥬 Repollo'],                                sensor: 'soil_ch3' },
-    { id: 'cama10', name: 'Cama 10', group: 'brasicas',  crops: ['🥬 Kale'],                                   sensor: 'soil_ch5' },
-    { id: 'cama11', name: 'Cama 11', group: 'brasicas',  crops: ['🥦 Brócoli', '🥦 Coliflor'],                 sensor: 'soil_ch5' },
-    { id: 'cama12', name: 'Cama 12', group: 'rotacion',  crops: ['🔄 Rotación'],                               sensor: 'soil_ch5' },
+    { id: 'cama1',  name: 'Cama 1',  group: 'brasicas', crops: ['🥬 Repollo morado', '🥦 Coliflor', '🌿 Cebollín'],        sensor: 'soil_ch2', hasSensor: true },
+    { id: 'cama2',  name: 'Cama 2',  group: 'hierbas',  crops: ['🥕 Zanahoria', '🌿 Perejil liso'],                         sensor: 'soil_ch5', hasSensor: true },
+    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Lechuga crespa', '🥬 Lechuga morada lisa'],             sensor: 'soil_ch1', hasSensor: true },
+    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Acelga', '🌼 Caléndula'],                                sensor: 'soil_ch3', hasSensor: true },
+    { id: 'cama5',  name: 'Cama 5',  group: 'brasicas', crops: ['🌼 Caléndula', '🌶️ Ají jalapeño', '🥬 Repollo morado'],     sensor: 'soil_ch1' },
+    { id: 'cama6',  name: 'Cama 6',  group: 'brasicas', crops: ['🥬 Repollo morado'],                                       sensor: 'soil_ch3' },
+    { id: 'cama7',  name: 'Cama 7',  group: 'hierbas',  crops: ['🌿 Cebolla larga', '🌿 Hierbabuena'],                      sensor: 'soil_ch1' },
+    { id: 'cama8',  name: 'Cama 8',  group: 'hierbas',  crops: ['🌿 Tomillo'],                                              sensor: 'soil_ch3' },
+    { id: 'cama9',  name: 'Cama 9',  group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch3' },
+    { id: 'cama10', name: 'Cama 10', group: 'brasicas', crops: ['🟣 Remolacha', '🥦 Coliflor', '🥬 Repollo morado'],        sensor: 'soil_ch5' },
+    { id: 'cama11', name: 'Cama 11', group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch5' },
+    { id: 'cama12', name: 'Cama 12', group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch5' },
   ];
 
   /** Group display labels. */
