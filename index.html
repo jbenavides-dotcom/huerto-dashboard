@@ -2369,24 +2369,26 @@
   /* ──────────────────────────────────────────
      DEFAULT BED PLANT ASSIGNMENTS
   ────────────────────────────────────────── */
+  // Siembra real reportada por Jhon Huerta el 2026-04-07
   const DEFAULT_BED_PLANTS = {
-    cama1:       ['lechuga_batavia', 'lechuga_romana', 'lechuga_crespa'],
-    cama2:       ['rucula', 'espinaca'],
-    cama3:       ['acelga_comun', 'acelga_roja', 'acelga_amarilla'],
-    cama4:       ['mizuna_verde', 'mizuna_roja', 'mostaza_red'],
-    cama5:       ['albahaca', 'cilantro', 'perejil_liso'],
-    cama6:       ['cebollin', 'oregano', 'tomillo'],
-    cama7:       ['brocoli'],
-    cama8:       ['coliflor_blanca', 'coliflor_verde'],
-    cama9:       ['repollo_verde', 'repollo_morado'],
-    cama10:      ['kale_toscano', 'kale_rizado'],
-    cama11:      ['brocoli', 'coliflor_blanca'],
-    cama12:      ['cebolla_larga', 'zanahoria', 'remolacha'],
+    cama1:       ['repollo_morado', 'coliflor_blanca', 'cebollin'],
+    cama2:       ['zanahoria', 'perejil_liso'],
+    cama3:       ['lechuga_crespa_verde', 'lechuga_morada_lisa'],
+    cama4:       ['acelga_comun', 'calendula'],
+    cama5:       ['calendula', 'aji_jalapeno', 'repollo_morado'],
+    cama6:       ['repollo_morado'],
+    cama7:       ['cebolla_larga', 'hierbabuena'],
+    cama8:       ['tomillo'],
+    cama9:       [],
+    cama10:      ['remolacha', 'coliflor_blanca', 'repollo_morado'],
+    cama11:      [],
+    cama12:      [],
     invernadero: ['tomate_san_marzano', 'tomate_cherry', 'tomate_chonto'],
   };
 
-  /** localStorage key for plant assignments */
-  const LS_KEY = 'huerta_bed_plants';
+  /** localStorage key for plant assignments — bumped to v2 on 2026-04-07
+   *  to force-reset stale plant data saved before the real-planting update. */
+  const LS_KEY = 'huerta_bed_plants_v2';
 
   /** localStorage keys for sensor assignment system */
   const LS_SENSOR_ASSIGNMENTS = 'huerta_sensor_assignments';
