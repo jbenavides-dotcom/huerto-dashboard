@@ -6,6 +6,11 @@ env/
 # Environment variables (local)
 .env
 
+# Scripts con tokens/credenciales hardcoded — NO commitear
+scripts/build_n8n_workflow.py
+secrets.json
+**/credentials.json
+
 # Python cache
 __pycache__/
 *.py[cod]
