@@ -2325,6 +2325,7 @@
     { id: 'lechuga_batavia',   nombre: 'Lechuga Batavia',   emoji: '🥬', grupo: 'hojas',       dias: '40-55',   espaciamiento: 25, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
     { id: 'lechuga_romana',    nombre: 'Lechuga Romana',    emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 30, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
     { id: 'lechuga_crespa',    nombre: 'Lechuga Crespa',    emoji: '🥬', grupo: 'hojas',       dias: '35-50',   espaciamiento: 25, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
+    { id: 'lechuga_morada_lisa', nombre: 'Lechuga Morada Lisa', emoji: '🥬', grupo: 'hojas',    dias: '45-60',   espaciamiento: 25, humMin: 30, humMax: 50, tempMin: 10, tempMax: 22, companeras: ['zanahoria','remolacha','cebolla','cebollin'], enemigos: ['perejil','apio'] },
     { id: 'rucula',            nombre: 'Rúcula',            emoji: '🥗', grupo: 'hojas',       dias: '25-35',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 22, companeras: ['lechuga','espinaca','zanahoria'],  enemigos: ['brassicas'] },
     { id: 'espinaca',          nombre: 'Espinaca',          emoji: '🥬', grupo: 'hojas',       dias: '35-50',   espaciamiento: 15, humMin: 35, humMax: 55, tempMin: 5,  tempMax: 22, companeras: ['lechuga','acelga','remolacha'],    enemigos: ['girasol'] },
     { id: 'acelga_comun',      nombre: 'Acelga Común',      emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 25, humMin: 35, humMax: 55, tempMin: 8,  tempMax: 24, companeras: ['lechuga','cebolla','zanahoria'],   enemigos: ['maiz'] },
@@ -2343,7 +2344,10 @@
     { id: 'tomillo',           nombre: 'Tomillo',           emoji: '🌿', grupo: 'aromaticas',  dias: '80-100',  espaciamiento: 25, humMin: 20, humMax: 35, tempMin: 8,  tempMax: 28, companeras: ['repollo','fresa','zanahoria'],    enemigos: [] },
     { id: 'cebollin',          nombre: 'Cebollín',          emoji: '🌿', grupo: 'aromaticas',  dias: '60-80',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 25, companeras: ['zanahoria','tomate','lechuga'],   enemigos: ['frijol','arveja'] },
     { id: 'menta',             nombre: 'Menta',             emoji: '🌿', grupo: 'aromaticas',  dias: '60-90',   espaciamiento: 30, humMin: 35, humMax: 60, tempMin: 5,  tempMax: 25, companeras: ['tomate','repollo'],               enemigos: ['manzanilla'] },
+    { id: 'hierbabuena',       nombre: 'Hierbabuena',       emoji: '🌿', grupo: 'aromaticas',  dias: '60-90',   espaciamiento: 30, humMin: 35, humMax: 55, tempMin: 10, tempMax: 25, companeras: ['repollo','tomate','zanahoria'],   enemigos: ['perejil','manzanilla'] },
     { id: 'romero',            nombre: 'Romero',            emoji: '🌿', grupo: 'aromaticas',  dias: '120-180', espaciamiento: 40, humMin: 15, humMax: 35, tempMin: 8,  tempMax: 30, companeras: ['repollo','zanahoria','frijol'],   enemigos: [] },
+    { id: 'calendula',         nombre: 'Caléndula',         emoji: '🌼', grupo: 'aromaticas',  dias: '50-70',   espaciamiento: 30, humMin: 25, humMax: 45, tempMin: 8,  tempMax: 25, companeras: ['tomate','lechuga','zanahoria','repollo','brocoli','coliflor'], enemigos: [] },
+    { id: 'aji_jalapeno',      nombre: 'Ají Jalapeño',      emoji: '🌶️', grupo: 'aromaticas',  dias: '70-90',   espaciamiento: 45, humMin: 25, humMax: 40, tempMin: 15, tempMax: 30, companeras: ['tomate','albahaca','zanahoria','cebolla','calendula'], enemigos: ['hinojo','repollo','brocoli','coliflor'] },
     // BRÁSICAS
     { id: 'brocoli',           nombre: 'Brócoli',           emoji: '🥦', grupo: 'brasicas',    dias: '60-80',   espaciamiento: 40, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['cebolla','menta','romero'],       enemigos: ['tomate','fresa'] },
     { id: 'coliflor_blanca',   nombre: 'Coliflor Blanca',   emoji: '🥦', grupo: 'brasicas',    dias: '70-90',   espaciamiento: 45, humMin: 30, humMax: 50, tempMin: 10, tempMax: 22, companeras: ['cebolla','apio','menta'],         enemigos: ['tomate','fresa'] },
@@ -2373,7 +2377,7 @@
   const DEFAULT_BED_PLANTS = {
     cama1:       ['repollo_morado', 'coliflor_blanca', 'cebollin'],
     cama2:       ['zanahoria', 'perejil_liso'],
-    cama3:       ['lechuga_crespa_verde', 'lechuga_morada_lisa'],
+    cama3:       ['lechuga_crespa', 'lechuga_morada_lisa'],
     cama4:       ['acelga_comun', 'calendula'],
     cama5:       ['calendula', 'aji_jalapeno', 'repollo_morado'],
     cama6:       ['repollo_morado'],
