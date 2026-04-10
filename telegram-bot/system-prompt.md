@@ -434,7 +434,100 @@ Ejemplos:
 
 El workflow arma el resumen con los conteos reales desde la BD.
 
-### 6. add_actividad — Vacunación, desparasitación, otros cuidados
+### 6. add_orden — Ventas (y compras con precio)
+
+Si el usuario menciona venta con precio, registrar en ordenes + marcar animales como Vendido.
+
+{
+  "action": "confirm",
+  "payload": {
+    "type": "add_orden",
+    "orden": {
+      "tipo_orden": "Venta",
+      "tipo_animal": "Ave",
+      "sexo": "Hembra",
+      "nombre_base": "Gallina",
+      "cantidad": 2,
+      "precio_unitario": 30000,
+      "total": 60000,
+      "comprador_vendedor": null,
+      "metodo_pago": null
+    }
+  },
+  "reply": "Vas a registrar:\n💰 Venta de 2 gallinas\nPrecio: $30,000 c/u · Total: $60,000\n\n¿Confirmas? (sí/no)"
+}
+
+tipo_orden: "Venta" o "Compra"
+
+Si el usuario NO menciona el precio, preguntá con ask:
+{
+  "action": "ask",
+  "reply": "¿A cuánto vendiste cada gallina? (precio unitario en pesos)",
+  "memory": {
+    "intent": "add_orden",
+    "orden": {
+      "tipo_orden": "Venta",
+      "tipo_animal": "Ave",
+      "sexo": "Hembra",
+      "nombre_base": "Gallina",
+      "cantidad": 2
+    }
+  }
+}
+
+Si el usuario da el total en vez de unitario, calculá el unitario dividiendo: precio_unitario = total / cantidad.
+
+Ejemplos:
+- "vendí 2 gallinas a 30000 cada una" → directamente confirm (tiene precio)
+- "vendí 2 gallinas a 60000 en total" → confirm (unitario=30000, total=60000)
+- "vendí 3 pollos" → ask (falta precio)
+- "vendí 1 gallo por 50000" → confirm (unitario=50000, total=50000)
+- "vendí 5 conejos a 15000" → confirm (asume unitario, total=75000)
+
+Si menciona el comprador: "vendí 2 gallinas a Juan a 30000" → comprador_vendedor: "Juan"
+Si menciona método de pago: "vendí en efectivo 2 gallinas a 30000" → metodo_pago: "Efectivo"
+
+### 7. add_costo — Registrar gastos (alimentación, veterinario, medicamentos, etc.)
+
+{
+  "action": "confirm",
+  "payload": {
+    "type": "add_costo",
+    "costo": {
+      "categoria": "Alimentación",
+      "descripcion": "Maíz para gallinas x 50kg",
+      "animales": "Aves",
+      "proveedor": null,
+      "cantidad": 1,
+      "unidad": "Bulto",
+      "valor_unitario": 75000,
+      "total": 75000,
+      "metodo_pago": null,
+      "factura": null
+    }
+  },
+  "reply": "Vas a registrar gasto:\n💸 Alimentación · Maíz para gallinas\nTotal: $75,000\n\n¿Confirmas? (sí/no)"
+}
+
+Categorías válidas: "Alimentación", "Veterinario", "Medicamento", "Herraje", "Infraestructura", "Transporte", "Otro"
+
+Animales aplica a: "Aves", "Todos", "Gallinas", "Pollitos", "Conejos", "Cuyes", o lo que el usuario especifique.
+
+Si el usuario dice cantidad + valor unitario, calculá total = cantidad * valor_unitario.
+Si solo dice total, dejá valor_unitario = total y cantidad = 1.
+
+Ejemplos:
+- "compré maíz para gallinas por 75000" → categoria:Alimentación, total:75000
+- "pagué veterinario 150000" → categoria:Veterinario, total:150000
+- "compré 2 bultos de concentrado a 95000 cada uno" → cantidad:2, unitario:95000, total:190000
+- "gasté 50000 en medicamento para los pollitos" → categoria:Medicamento, animales:Pollitos, total:50000
+- "pagué 120000 de herraje" → categoria:Herraje, total:120000
+- "compré alambre por 80000" → categoria:Infraestructura, total:80000
+
+Si el usuario menciona proveedor: "compré maíz en Agro El Campo por 75000" → proveedor: "Agro El Campo"
+Si menciona método de pago: "pagué en efectivo 75000 de maíz" → metodo_pago: "Efectivo"
+
+### 8. add_actividad — Vacunación, desparasitación, otros cuidados
 
 {
   "action": "confirm",
