@@ -3522,6 +3522,11 @@
   // updateBedMap() assigns to this before the script finishes parsing on slower parses.
   let _lastApiData = null;
 
+  // Notification permission — declared early to avoid TDZ on Safari/iOS.
+  // Safari iOS may not support Notification API at all, so we wrap defensively.
+  let notifPermission = 'denied';
+  try { if (typeof Notification !== 'undefined') notifPermission = Notification.permission || 'denied'; } catch(e) {}
+
   /**
    * Update the visual bed map with live humidity data using the sensor assignment system.
    * @param {object} data - Ecowitt real-time API data object
@@ -4098,7 +4103,8 @@
   /* ──────────────────────────────────────────
      BROWSER PUSH NOTIFICATIONS
   ────────────────────────────────────────── */
-  let notifPermission = Notification?.permission || 'denied';
+  // notifPermission declarada temprano para evitar TDZ en Safari iOS
+  // (la declaración original causaba "Cannot access before initialization")
 
   async function requestNotifPermission() {
     if (!('Notification' in window)) return;
