@@ -191,6 +191,43 @@ perdí 1 pollo
 
 El bot marca **los últimos N activos** del tipo indicado y registra la acción en actividades con la fecha.
 
+## Ventas
+
+### Con precio (directo)
+```
+vendí 2 gallinas a 30000 cada una
+vendí 1 gallo por 50000
+vendí 5 pollos a 60000 en total
+```
+
+### Sin precio (te pregunta)
+```
+vendí 2 gallinas
+```
+El bot responde: `¿A cuánto vendiste cada gallina?` → respondés el precio → confirma.
+
+Si mencionás el comprador o forma de pago:
+```
+vendí 2 gallinas a Juan a 30000 cada una
+vendí en efectivo 1 gallo por 50000
+```
+
+## Gastos
+
+```
+compré maíz para gallinas por 75000
+pagué veterinario 150000
+compré 2 bultos de concentrado a 95000 cada uno
+gasté 50000 en medicamento para los pollitos
+```
+
+Si mencionás el proveedor:
+```
+compré maíz en Agro El Campo por 75000
+```
+
+Categorías que el bot reconoce: Alimentación, Veterinario, Medicamento, Herraje, Infraestructura, Transporte, Otro.
+
 ## Huevos
 
 ### Sin decir cuántos rotos (te pregunta)
@@ -221,11 +258,10 @@ revisión veterinaria de los conejos
 
 # 🚫 Lo que el bot NO hace (todavía)
 
-- No maneja animales grandes con nombre (vacas, caballos, cerdos individuales con nombre)
-- No registra ventas con monto (`vendí X a $Y`) — solo marca vendido
-- No maneja costos (alimentación, veterinario)
-- No hace reportes semanales/mensuales (cosechas, producción de huevos, etc.)
-- No modifica el dashboard visual (pero sí la base de datos que lo alimenta)
+- No maneja animales grandes con nombre individual (vacas, caballos, cerdos)
+- No hace reportes semanales/mensuales automáticos (próximamente)
+- No maneja módulos productivos avanzados (BSF, truchas, lombrices — próximamente)
+- No modifica el dashboard visual directamente (pero sí la base de datos que lo alimenta)
 
 ---
 
