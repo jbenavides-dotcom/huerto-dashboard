@@ -544,6 +544,7 @@
           { key: 'aromaticas', label: 'Aromáticas' },
           { key: 'brasicas',   label: 'Brásicas' },
           { key: 'raices',     label: 'Raíces' },
+          { key: 'frutos',     label: 'Frutos' },
         ];
 
     const currentIds = BED_PLANTS[bedId] || [];
@@ -569,7 +570,7 @@
       select.appendChild(optgroup);
     });
 
-    // Disable add button if already at max 3
+    // Disable add button if already at the per-bed limit
     updateAddButtonState();
   }
 
@@ -605,7 +606,7 @@
   function updateAddButtonState() {
     const addBtn = document.getElementById('plantAddBtn');
     const plantIds = BED_PLANTS[currentEditBedId] || [];
-    addBtn.disabled = plantIds.length >= 3;
+    addBtn.disabled = plantIds.length >= MAX_PLANTS_PER_BED;
   }
 
   /**
@@ -618,7 +619,7 @@
     if (!plantId) return;
 
     const currentIds = BED_PLANTS[currentEditBedId] || [];
-    if (currentIds.length >= 3) return;
+    if (currentIds.length >= MAX_PLANTS_PER_BED) return;
     if (currentIds.includes(plantId)) return;
 
     BED_PLANTS[currentEditBedId] = [...currentIds, plantId];

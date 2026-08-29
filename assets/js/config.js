@@ -20,6 +20,7 @@
     { id: 'lechuga_romana',    nombre: 'Lechuga Romana',    emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 30, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
     { id: 'lechuga_crespa',    nombre: 'Lechuga Crespa',    emoji: '🥬', grupo: 'hojas',       dias: '35-50',   espaciamiento: 25, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
     { id: 'lechuga_morada_lisa', nombre: 'Lechuga Morada Lisa', emoji: '🥬', grupo: 'hojas',    dias: '45-60',   espaciamiento: 25, humMin: 30, humMax: 50, tempMin: 10, tempMax: 22, companeras: ['zanahoria','remolacha','cebolla','cebollin'], enemigos: ['perejil','apio'] },
+    { id: 'lechuga_orejona',   nombre: 'Lechuga Orejona',   emoji: '🥬', grupo: 'hojas',       dias: '55-70',   espaciamiento: 30, humMin: 30, humMax: 50, tempMin: 10, tempMax: 24, companeras: ['zanahoria','remolacha','cebolla'], enemigos: ['perejil','apio'] },
     { id: 'rucula',            nombre: 'Rúcula',            emoji: '🥗', grupo: 'hojas',       dias: '25-35',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 22, companeras: ['lechuga','espinaca','zanahoria'],  enemigos: ['brassicas'] },
     { id: 'espinaca',          nombre: 'Espinaca',          emoji: '🥬', grupo: 'hojas',       dias: '35-50',   espaciamiento: 15, humMin: 35, humMax: 55, tempMin: 5,  tempMax: 22, companeras: ['lechuga','acelga','remolacha'],    enemigos: ['girasol'] },
     { id: 'acelga_comun',      nombre: 'Acelga Común',      emoji: '🥬', grupo: 'hojas',       dias: '50-65',   espaciamiento: 25, humMin: 35, humMax: 55, tempMin: 8,  tempMax: 24, companeras: ['lechuga','cebolla','zanahoria'],   enemigos: ['maiz'] },
@@ -33,6 +34,7 @@
     { id: 'albahaca',          nombre: 'Albahaca',          emoji: '🌿', grupo: 'aromaticas',  dias: '50-70',   espaciamiento: 25, humMin: 25, humMax: 45, tempMin: 15, tempMax: 30, companeras: ['tomate','pimiento'],              enemigos: ['salvia','ruda'] },
     { id: 'albahaca_morada',   nombre: 'Albahaca Morada',   emoji: '🌿', grupo: 'aromaticas',  dias: '50-70',   espaciamiento: 25, humMin: 25, humMax: 45, tempMin: 15, tempMax: 30, companeras: ['tomate','pimiento'],              enemigos: ['salvia','ruda'] },
     { id: 'perejil_liso',      nombre: 'Perejil Liso',      emoji: '🌿', grupo: 'aromaticas',  dias: '60-80',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 25, companeras: ['tomate','zanahoria'],             enemigos: ['lechuga'] },
+    { id: 'perejil_crespo',    nombre: 'Perejil Crespo',    emoji: '🌿', grupo: 'aromaticas',  dias: '60-80',   espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 25, companeras: ['tomate','zanahoria'],             enemigos: ['lechuga'] },
     { id: 'cilantro',          nombre: 'Cilantro',          emoji: '🌿', grupo: 'aromaticas',  dias: '40-55',   espaciamiento: 10, humMin: 30, humMax: 50, tempMin: 10, tempMax: 25, companeras: ['tomate','espinaca'],              enemigos: ['hinojo'] },
     { id: 'oregano',           nombre: 'Orégano',           emoji: '🌿', grupo: 'aromaticas',  dias: '80-100',  espaciamiento: 30, humMin: 20, humMax: 40, tempMin: 10, tempMax: 30, companeras: ['tomate','pimiento','albahaca'],   enemigos: [] },
     { id: 'tomillo',           nombre: 'Tomillo',           emoji: '🌿', grupo: 'aromaticas',  dias: '80-100',  espaciamiento: 25, humMin: 20, humMax: 35, tempMin: 8,  tempMax: 28, companeras: ['repollo','fresa','zanahoria'],    enemigos: [] },
@@ -54,6 +56,11 @@
     { id: 'cebolla_larga',     nombre: 'Cebolla Larga',     emoji: '🧅', grupo: 'raices',      dias: '90-120',  espaciamiento: 10, humMin: 25, humMax: 45, tempMin: 10, tempMax: 25, companeras: ['zanahoria','lechuga','remolacha'],enemigos: ['frijol','arveja'] },
     { id: 'zanahoria',         nombre: 'Zanahoria',         emoji: '🥕', grupo: 'raices',      dias: '70-90',   espaciamiento: 5,  humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['cebolla','lechuga','tomate'],     enemigos: ['eneldo'] },
     { id: 'remolacha',         nombre: 'Remolacha',         emoji: '🥕', grupo: 'raices',      dias: '55-70',   espaciamiento: 10, humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['lechuga','cebolla','repollo'],    enemigos: ['frijol'] },
+    { id: 'puerro',            nombre: 'Puerro',            emoji: '🧅', grupo: 'raices',      dias: '110-140', espaciamiento: 15, humMin: 30, humMax: 50, tempMin: 7,  tempMax: 24, companeras: ['zanahoria','lechuga','remolacha'],enemigos: ['frijol','arveja'] },
+    { id: 'rabano',            nombre: 'Rábano',            emoji: '🥕', grupo: 'raices',      dias: '25-35',   espaciamiento: 5,  humMin: 30, humMax: 50, tempMin: 8,  tempMax: 24, companeras: ['lechuga','zanahoria','espinaca'], enemigos: ['hisopo'] },
+    // FRUTOS
+    { id: 'pimenton',          nombre: 'Pimentón',          emoji: '🫑', grupo: 'frutos',      dias: '80-100',  espaciamiento: 45, humMin: 25, humMax: 40, tempMin: 15, tempMax: 30, companeras: ['albahaca','calendula','cebolla','zanahoria'], enemigos: ['hinojo','brocoli','repollo'] },
+    { id: 'calabacin',         nombre: 'Calabacín',         emoji: '🥒', grupo: 'frutos',      dias: '45-60',   espaciamiento: 60, humMin: 35, humMax: 55, tempMin: 15, tempMax: 30, companeras: ['calendula','albahaca','cebollin'], enemigos: ['papa'] },
     // INVERNADERO
     { id: 'tomate_san_marzano',    nombre: 'Tomate San Marzano',    emoji: '🍅', grupo: 'invernadero', dias: '75-90', espaciamiento: 50, humMin: 20, humMax: 35, tempMin: 18, tempMax: 30, companeras: ['albahaca','cebollin','zanahoria'], enemigos: ['brocoli','repollo'] },
     { id: 'tomate_cherry',         nombre: 'Tomate Cherry',         emoji: '🍅', grupo: 'invernadero', dias: '60-75', espaciamiento: 40, humMin: 20, humMax: 35, tempMin: 18, tempMax: 32, companeras: ['albahaca','cebollin','zanahoria'], enemigos: ['brocoli','repollo'] },
@@ -69,6 +76,7 @@
     lechuga_romana:        { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
     lechuga_crespa:        { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
     lechuga_morada_lisa:   { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
+    lechuga_orejona:       { familia: 'asteraceae',     riesgoHongos: 'alto',  termofilico: false, antifungico: false },
     rucula:                { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
     espinaca:              { familia: 'amaranthaceae',  riesgoHongos: 'alto',  termofilico: false, antifungico: false },
     acelga_comun:          { familia: 'amaranthaceae',  riesgoHongos: 'alto',  termofilico: false, antifungico: false },
@@ -81,6 +89,7 @@
     albahaca:              { familia: 'lamiaceae',      riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
     albahaca_morada:       { familia: 'lamiaceae',      riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
     perejil_liso:          { familia: 'apiaceae',       riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    perejil_crespo:        { familia: 'apiaceae',       riesgoHongos: 'medio', termofilico: false, antifungico: false },
     cilantro:              { familia: 'apiaceae',       riesgoHongos: 'medio', termofilico: false, antifungico: false },
     oregano:               { familia: 'lamiaceae',      riesgoHongos: 'bajo',  termofilico: true,  antifungico: true  },
     tomillo:               { familia: 'lamiaceae',      riesgoHongos: 'bajo',  termofilico: false, antifungico: true  },
@@ -100,6 +109,10 @@
     cebolla_larga:         { familia: 'amaryllidaceae', riesgoHongos: 'bajo',  termofilico: false, antifungico: false },
     zanahoria:             { familia: 'apiaceae',       riesgoHongos: 'bajo',  termofilico: false, antifungico: false },
     remolacha:             { familia: 'amaranthaceae',  riesgoHongos: 'bajo',  termofilico: false, antifungico: false },
+    puerro:                { familia: 'amaryllidaceae', riesgoHongos: 'bajo',  termofilico: false, antifungico: true  },
+    rabano:                { familia: 'brassicaceae',   riesgoHongos: 'medio', termofilico: false, antifungico: false },
+    pimenton:              { familia: 'solanaceae',     riesgoHongos: 'medio', termofilico: true,  antifungico: false },
+    calabacin:             { familia: 'cucurbitaceae',  riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
     tomate_san_marzano:    { familia: 'solanaceae',     riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
     tomate_cherry:         { familia: 'solanaceae',     riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
     tomate_chonto:         { familia: 'solanaceae',     riesgoHongos: 'alto',  termofilico: true,  antifungico: false },
@@ -136,26 +149,27 @@
   /* ──────────────────────────────────────────
      DEFAULT BED PLANT ASSIGNMENTS
   ────────────────────────────────────────── */
-  // Siembra real reportada por Jhon Huerta el 2026-04-07
+  // Siembra real reportada por Jhon Huerta el 2026-08-29 (WhatsApp).
+  // Reemplaza el reporte del 2026-04-07.
   var DEFAULT_BED_PLANTS = {
-    cama1:       ['repollo_morado', 'coliflor_blanca', 'cebollin'],
-    cama2:       ['zanahoria', 'perejil_liso'],
-    cama3:       ['lechuga_crespa', 'lechuga_morada_lisa'],
-    cama4:       ['acelga_comun', 'calendula'],
-    cama5:       ['calendula', 'aji_jalapeno', 'repollo_morado'],
-    cama6:       ['repollo_morado'],
-    cama7:       ['cebolla_larga', 'hierbabuena'],
-    cama8:       ['tomillo'],
-    cama9:       [],
-    cama10:      ['remolacha', 'coliflor_blanca', 'repollo_morado'],
-    cama11:      [],
-    cama12:      [],
+    cama1:       ['pimenton', 'cebollin', 'cebolla_larga', 'puerro'],
+    cama2:       ['coliflor_blanca', 'calabacin'],
+    cama3:       ['cebollin', 'brocoli', 'espinaca'],
+    cama4:       ['calendula', 'lechuga_romana'],
+    cama5:       ['pimenton'],
+    cama6:       ['lechuga_crespa', 'calendula', 'albahaca_morada'],
+    cama7:       ['cebolla_larga', 'menta'],
+    cama8:       ['perejil_crespo', 'coliflor_blanca', 'pimenton'],
+    cama9:       ['calabacin', 'pimenton'],
+    cama10:      ['brocoli', 'perejil_crespo'],
+    cama11:      ['mizuna_roja', 'cilantro', 'rucula', 'lechuga_orejona', 'albahaca_morada', 'espinaca'],
+    cama12:      ['rabano', 'pimenton', 'calendula', 'kale_rizado'],
     invernadero: ['tomate_san_marzano', 'tomate_cherry', 'tomate_chonto'],
   };
 
-  /** localStorage key for plant assignments — bumped to v2 on 2026-04-07
-   *  to force-reset stale plant data saved before the real-planting update. */
-  var LS_KEY = 'huerta_bed_plants_v2';
+  /** localStorage key for plant assignments — bumped to v3 on 2026-08-29
+   *  to force-reset the April planting saved in browsers before this update. */
+  var LS_KEY = 'huerta_bed_plants_v3';
 
   /** localStorage keys for sensor assignment system */
   var LS_SENSOR_ASSIGNMENTS = 'huerta_sensor_assignments';
@@ -213,6 +227,9 @@
   };
 
   /** Crop-specific moisture thresholds (separate from cloud-forest bars above). */
+  /** Máximo de plantas asignables a una cama desde el modal de edición. */
+  var MAX_PLANTS_PER_BED = 6;
+
   var CROP_THRESHOLDS = {
     hojas:    { optMin: 30, optMax: 45, alert: 28, critical: 22, label: 'Hojas' },
     hierbas:  { optMin: 30, optMax: 45, alert: 28, critical: 22, label: 'Hierbas' },
@@ -224,18 +241,18 @@
   /** Full bed definitions — impares = derecha, pares = izquierda.
    *  Actualizado 2026-04-07 con siembra real reportada por Jhon Huerta. */
   var BEDS = [
-    { id: 'cama1',  name: 'Cama 1',  group: 'brasicas', crops: ['🥬 Repollo morado', '🥦 Coliflor', '🌿 Cebollín'],        sensor: 'soil_ch2', hasSensor: true },
-    { id: 'cama2',  name: 'Cama 2',  group: 'hierbas',  crops: ['🥕 Zanahoria', '🌿 Perejil liso'],                         sensor: 'soil_ch5', hasSensor: true },
-    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Lechuga crespa', '🥬 Lechuga morada lisa'],             sensor: 'soil_ch1', hasSensor: true },
-    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Acelga', '🌼 Caléndula'],                                sensor: 'soil_ch3', hasSensor: true },
-    { id: 'cama5',  name: 'Cama 5',  group: 'brasicas', crops: ['🌼 Caléndula', '🌶️ Ají jalapeño', '🥬 Repollo morado'],     sensor: 'soil_ch1' },
-    { id: 'cama6',  name: 'Cama 6',  group: 'brasicas', crops: ['🥬 Repollo morado'],                                       sensor: 'soil_ch3' },
-    { id: 'cama7',  name: 'Cama 7',  group: 'hierbas',  crops: ['🌿 Cebolla larga', '🌿 Hierbabuena'],                      sensor: 'soil_ch1' },
-    { id: 'cama8',  name: 'Cama 8',  group: 'hierbas',  crops: ['🌿 Tomillo'],                                              sensor: 'soil_ch3' },
-    { id: 'cama9',  name: 'Cama 9',  group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch3' },
-    { id: 'cama10', name: 'Cama 10', group: 'brasicas', crops: ['🟣 Remolacha', '🥦 Coliflor', '🥬 Repollo morado'],        sensor: 'soil_ch5' },
-    { id: 'cama11', name: 'Cama 11', group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch5' },
-    { id: 'cama12', name: 'Cama 12', group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch5' },
+    { id: 'cama1',  name: 'Cama 1',  group: 'hierbas',  crops: ['🫑 Pimentón', '🌿 Cebollín', '🧅 Cebolla larga', '🧅 Puerro'],        sensor: 'soil_ch2', hasSensor: true },
+    { id: 'cama2',  name: 'Cama 2',  group: 'hojas',    crops: ['🥦 Coliflor blanca', '🥒 Calabacín'],                                 sensor: 'soil_ch5', hasSensor: true },
+    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🌿 Cebollín', '🥦 Brócoli', '🥬 Espinaca'],                            sensor: 'soil_ch1', hasSensor: true },
+    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🌼 Caléndula', '🥬 Lechuga romana'],                                   sensor: 'soil_ch3', hasSensor: true },
+    { id: 'cama5',  name: 'Cama 5',  group: 'hierbas',  crops: ['🫑 Pimentón'],                                                         sensor: 'soil_ch1' },
+    { id: 'cama6',  name: 'Cama 6',  group: 'hojas',    crops: ['🥬 Lechuga crespa', '🌼 Caléndula', '🌿 Albahaca morada'],             sensor: 'soil_ch3' },
+    { id: 'cama7',  name: 'Cama 7',  group: 'hierbas',  crops: ['🧅 Cebolla larga', '🌿 Menta'],                                        sensor: 'soil_ch1' },
+    { id: 'cama8',  name: 'Cama 8',  group: 'hierbas',  crops: ['🌿 Perejil crespo', '🥦 Coliflor blanca', '🫑 Pimentón'],              sensor: 'soil_ch3' },
+    { id: 'cama9',  name: 'Cama 9',  group: 'hojas',    crops: ['🥒 Calabacín', '🫑 Pimentón'],                                         sensor: 'soil_ch3' },
+    { id: 'cama10', name: 'Cama 10', group: 'hierbas',  crops: ['🥦 Brócoli', '🌿 Perejil crespo'],                                     sensor: 'soil_ch5' },
+    { id: 'cama11', name: 'Cama 11', group: 'hojas',    crops: ['🥬 Mizuna morada', '🌿 Cilantro', '🥗 Rúcula', '🥬 Lechuga orejona', '🌿 Albahaca morada', '🥬 Espinaca'], sensor: 'soil_ch5' },
+    { id: 'cama12', name: 'Cama 12', group: 'hojas',    crops: ['🥕 Rábano', '🫑 Pimentón', '🌼 Caléndula', '🥬 Col rizada'],           sensor: 'soil_ch5' },
   ];
 
   /** Group display labels. */
