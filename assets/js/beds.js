@@ -1,20 +1,25 @@
 'use strict';
 
 /** Default physical sensor placement */
+  // La cama 11 llega a 6 cultivos (siembra real 29-ago-2026).
+  const MAX_CULTIVOS_POR_CAMA = 6;
+
   const DEFAULT_SENSOR_ASSIGNMENTS = {
+    // Canales verificados fisicamente en la huerta el 24-ago-2026.
+    // Fuente de verdad: config/huerta_config.json (campo canal_ecowitt).
     cama1:       'soil_ch2',
-    cama2:       'soil_ch5',
-    cama3:       'soil_ch1',
-    cama4:       'soil_ch3',
-    cama5:       null,
+    cama2:       'soil_ch4',
+    cama3:       'soil_ch5',
+    cama4:       null,
+    cama5:       'soil_ch3',
     cama6:       null,
     cama7:       null,
-    cama8:       null,
+    cama8:       null,   // WH51-4 reubicado
     cama9:       null,
     cama10:      null,
-    cama11:      null,
+    cama11:      null,   // WH51-5 reubicado
     cama12:      null,
-    invernadero: 'soil_ch4',
+    invernadero: 'soil_ch1',
   };
 
   /**
@@ -570,7 +575,7 @@
       select.appendChild(optgroup);
     });
 
-    // Disable add button if already at the per-bed limit
+    // Disable add button if already at max
     updateAddButtonState();
   }
 
@@ -606,7 +611,7 @@
   function updateAddButtonState() {
     const addBtn = document.getElementById('plantAddBtn');
     const plantIds = BED_PLANTS[currentEditBedId] || [];
-    addBtn.disabled = plantIds.length >= MAX_PLANTS_PER_BED;
+    addBtn.disabled = plantIds.length >= MAX_CULTIVOS_POR_CAMA;
   }
 
   /**
@@ -619,7 +624,7 @@
     if (!plantId) return;
 
     const currentIds = BED_PLANTS[currentEditBedId] || [];
-    if (currentIds.length >= MAX_PLANTS_PER_BED) return;
+    if (currentIds.length >= MAX_CULTIVOS_POR_CAMA) return;
     if (currentIds.includes(plantId)) return;
 
     BED_PLANTS[currentEditBedId] = [...currentIds, plantId];

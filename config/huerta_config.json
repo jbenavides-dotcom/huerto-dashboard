@@ -4,189 +4,301 @@
     "ubicacion": "Zipacon, Cundinamarca",
     "ultima_modificacion": "2026-02-17",
     "version": "3.0",
-    "nota": "Rediseno a 12 camas nuevas (3m x 0.4m x 1m) con presupuesto real"
+    "nota": "Rediseno a 12 camas nuevas (3m x 0.4m x 1m) con presupuesto real",
+    "siembra_actualizada": "2026-08-29",
+    "siembra_fuente": "Reporte de Jhon Huerta por WhatsApp, 29-ago-2026",
+    "nota_catalogo": "Pimenton, calabacin, puerro, rabano, lechuga orejona, perejil crespo y mizuna morada no tienen ficha en data/plantas_guia.json (39 plantas). El Asistente de Cultivo no dara recomendaciones para ellos hasta ampliarlo."
   },
   "zonas": [
     {
       "id": "cama1",
       "nombre": "Cama 1",
       "tipo": "cama",
-      "grupo": "hojas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "hierbas",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 0,
       "y": 0,
-      "cultivos": ["lechuga"],
+      "cultivos": [
+        "pimenton",
+        "albahaca",
+        "cebollin",
+        "cebolla_larga",
+        "puerro"
+      ],
       "sensor": "WH51-1",
-      "color": "#90EE90"
+      "color": "#90EE90",
+      "canal_ecowitt": "CH2",
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "pimenton",
+        "puerro"
+      ]
     },
     {
       "id": "cama2",
       "nombre": "Cama 2",
       "tipo": "cama",
-      "grupo": "hojas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "brasicas",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 2,
       "y": 0,
-      "cultivos": ["rucula", "espinaca"],
-      "sensor": null,
-      "color": "#90EE90"
+      "cultivos": [
+        "coliflor",
+        "calabacin"
+      ],
+      "sensor": "WH51",
+      "color": "#90EE90",
+      "canal_ecowitt": "CH4",
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "calabacin"
+      ]
     },
     {
       "id": "cama3",
       "nombre": "Cama 3",
       "tipo": "cama",
-      "grupo": "hojas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "brasicas",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 4,
       "y": 0,
-      "cultivos": ["acelga"],
+      "cultivos": [
+        "cebollin",
+        "brocoli",
+        "espinaca"
+      ],
       "sensor": "WH51-2",
-      "color": "#98FB98"
+      "color": "#98FB98",
+      "canal_ecowitt": "CH5",
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama4",
       "nombre": "Cama 4",
       "tipo": "cama",
       "grupo": "hojas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 6,
       "y": 0,
-      "cultivos": ["espinaca", "mostaza"],
+      "cultivos": [
+        "calendula",
+        "lechuga_romana"
+      ],
       "sensor": null,
-      "color": "#98FB98"
+      "color": "#98FB98",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama5",
       "nombre": "Cama 5",
       "tipo": "cama",
-      "grupo": "hierbas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "frutos",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 8,
       "y": 0,
-      "cultivos": ["albahaca", "cilantro", "perejil"],
+      "cultivos": [
+        "pimenton"
+      ],
       "sensor": "WH51-3",
-      "color": "#32CD32"
+      "color": "#32CD32",
+      "canal_ecowitt": "CH3",
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "pimenton"
+      ]
     },
     {
       "id": "cama6",
       "nombre": "Cama 6",
       "tipo": "cama",
-      "grupo": "hierbas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "hojas",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 10,
       "y": 0,
-      "cultivos": ["cebollin", "oregano", "tomillo"],
+      "cultivos": [
+        "lechuga",
+        "calendula",
+        "albahaca_morada"
+      ],
       "sensor": null,
-      "color": "#32CD32"
+      "color": "#32CD32",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama7",
       "nombre": "Cama 7",
       "tipo": "cama",
-      "grupo": "brasicas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "hierbas",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 0,
       "y": 6,
-      "cultivos": ["brocoli"],
+      "cultivos": [
+        "cebolla_larga",
+        "menta"
+      ],
       "sensor": null,
-      "color": "#228B22"
+      "color": "#228B22",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama8",
       "nombre": "Cama 8",
       "tipo": "cama",
       "grupo": "brasicas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 2,
       "y": 6,
-      "cultivos": ["coliflor"],
+      "cultivos": [
+        "perejil_crespo",
+        "coliflor",
+        "pimenton"
+      ],
       "sensor": "WH51-4",
-      "color": "#228B22"
+      "color": "#228B22",
+      "canal_ecowitt": null,
+      "canal_confirmado": "sin sensor (se reubicaron)",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "perejil_crespo",
+        "pimenton"
+      ]
     },
     {
       "id": "cama9",
       "nombre": "Cama 9",
       "tipo": "cama",
-      "grupo": "brasicas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "frutos",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 4,
       "y": 6,
-      "cultivos": ["repollo"],
+      "cultivos": [
+        "calabacin",
+        "pimenton"
+      ],
       "sensor": null,
-      "color": "#228B22"
+      "color": "#228B22",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "calabacin",
+        "pimenton"
+      ]
     },
     {
       "id": "cama10",
       "nombre": "Cama 10",
       "tipo": "cama",
       "grupo": "brasicas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 6,
       "y": 6,
-      "cultivos": ["kale"],
+      "cultivos": [
+        "brocoli",
+        "perejil_crespo"
+      ],
       "sensor": null,
-      "color": "#228B22"
+      "color": "#228B22",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "perejil_crespo"
+      ]
     },
     {
       "id": "cama11",
       "nombre": "Cama 11",
       "tipo": "cama",
-      "grupo": "brasicas",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "hojas",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 8,
       "y": 6,
-      "cultivos": ["brocoli", "coliflor"],
+      "cultivos": [
+        "mizuna_morada",
+        "cilantro",
+        "rucula",
+        "lechuga_orejona",
+        "albahaca_morada",
+        "espinaca"
+      ],
       "sensor": "WH51-5",
-      "color": "#228B22"
+      "color": "#228B22",
+      "canal_ecowitt": null,
+      "canal_confirmado": "sin sensor (se reubicaron)",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "mizuna_morada",
+        "lechuga_orejona"
+      ]
     },
     {
       "id": "cama12",
       "nombre": "Cama 12",
       "tipo": "cama",
-      "grupo": "rotacion",
-      "ancho": 0.40,
-      "largo": 3.00,
-      "alto": 1.00,
+      "grupo": "brasicas",
+      "ancho": 0.4,
+      "largo": 3.0,
+      "alto": 1.0,
       "x": 10,
       "y": 6,
-      "cultivos": ["rotacion"],
+      "cultivos": [
+        "rabano",
+        "pimenton",
+        "calendula",
+        "col_rizada"
+      ],
       "sensor": null,
-      "color": "#DEB887"
+      "color": "#DEB887",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "rabano",
+        "pimenton"
+      ]
     },
     {
       "id": "invernadero",
       "nombre": "Invernadero",
       "tipo": "invernadero",
-      "ancho": 5.60,
+      "ancho": 5.6,
       "largo": 5.99,
-      "alto": 2.60,
+      "alto": 2.6,
       "x": 0,
       "y": 14,
-      "cultivos": ["tomate", "albahaca"],
-      "sensor": ["WH51-6", "WH51-7", "WH31"],
-      "color": "#87CEEB"
+      "cultivos": [
+        "tomate",
+        "albahaca"
+      ],
+      "sensor": [
+        "WH51-6",
+        "WH51-7",
+        "WH31"
+      ],
+      "color": "#87CEEB",
+      "canal_ecowitt": "CH1",
+      "canal_confirmado": "2026-08-24 en campo (tomates)"
     },
     {
       "id": "tour",
@@ -196,7 +308,9 @@
       "largo": 11,
       "x": 14,
       "y": 14,
-      "cultivos": ["medicinales"],
+      "cultivos": [
+        "medicinales"
+      ],
       "sensor": null,
       "color": "#FFD700"
     }
@@ -220,6 +334,14 @@
         "WH51-6": "Invernadero tomate CENTRO, 15-20cm",
         "WH51-7": "Invernadero tomate BORDE, 15-20cm",
         "WH51-8": "Movil / diagnostico, variable"
+      },
+      "mapeo_canales_ecowitt": {
+        "_nota": "El canal CHn de Ecowitt es la verdad operativa. La nomenclatura WH51-n del plan original NO coincide. Mapa cerrado el 24-ago-2026 con Jhonatan en campo.",
+        "CH1": "Invernadero - TOMATES     (confirmado 24-ago-2026)",
+        "CH2": "Cama 1  - lechuga         (confirmado 24-ago-2026)",
+        "CH3": "Cama 5  - hierbas         (confirmado 24-ago-2026)",
+        "CH4": "Cama 2  - rucula/espinaca (confirmado 24-ago-2026)",
+        "CH5": "Cama 3  - acelga          (confirmado 24-ago-2026)"
       }
     },
     "aire_exterior": {
@@ -271,7 +393,7 @@
       "mesh": 50,
       "color": "blanco",
       "material": "PE estabilizado UV",
-      "ancho_m": 2.20,
+      "ancho_m": 2.2,
       "cantidad_camas_m": 55,
       "cantidad_invernadero_m": 25
     },
@@ -279,7 +401,10 @@
       "porcentaje": "30-35%",
       "color": "negra",
       "cantidad_m": 25,
-      "solo_para": ["hojas", "hierbas"]
+      "solo_para": [
+        "hojas",
+        "hierbas"
+      ]
     },
     "estructura_pvc": {
       "diametro": "3/4 pulgada",
@@ -318,22 +443,69 @@
     "huerta_12_camas": {
       "subtotal": 3411201,
       "items": {
-        "tablas_3m": {"cantidad": 72, "precio_unit": 23000, "en_stock": 44, "a_comprar": 28, "total": 644000},
-        "geotextil_rollo": {"cantidad": 20, "precio_unit": 12900, "total": 258000},
-        "estacas_madera": {"cantidad": 144, "precio_unit": 2100, "total": 302400},
-        "merulex_inmunizante": {"cantidad": 2, "precio_unit": 190900, "total": 381800},
-        "tubo_pvc_3_4": {"cantidad": 18, "precio_unit": 10600, "total": 190800},
-        "malla_control_insectos": {"cantidad": 1, "medida": "3m x 100m", "total": 1532601},
-        "tees_pvc_1": {"cantidad": 24, "precio_unit": 2150, "total": 51600},
-        "puntillas": {"cantidad": 4, "precio_unit": 5000, "total": 20000},
-        "amarres_plasticos": {"cantidad": 3, "precio_unit": 10000, "total": 30000}
+        "tablas_3m": {
+          "cantidad": 72,
+          "precio_unit": 23000,
+          "en_stock": 44,
+          "a_comprar": 28,
+          "total": 644000
+        },
+        "geotextil_rollo": {
+          "cantidad": 20,
+          "precio_unit": 12900,
+          "total": 258000
+        },
+        "estacas_madera": {
+          "cantidad": 144,
+          "precio_unit": 2100,
+          "total": 302400
+        },
+        "merulex_inmunizante": {
+          "cantidad": 2,
+          "precio_unit": 190900,
+          "total": 381800
+        },
+        "tubo_pvc_3_4": {
+          "cantidad": 18,
+          "precio_unit": 10600,
+          "total": 190800
+        },
+        "malla_control_insectos": {
+          "cantidad": 1,
+          "medida": "3m x 100m",
+          "total": 1532601
+        },
+        "tees_pvc_1": {
+          "cantidad": 24,
+          "precio_unit": 2150,
+          "total": 51600
+        },
+        "puntillas": {
+          "cantidad": 4,
+          "precio_unit": 5000,
+          "total": 20000
+        },
+        "amarres_plasticos": {
+          "cantidad": 3,
+          "precio_unit": 10000,
+          "total": 30000
+        }
       }
     },
     "encerramiento_huerta": {
       "subtotal": 591000,
       "items": {
-        "malla_gallinero_1_5m": {"cantidad": 3, "metros": 36, "precio_unit": 185000, "total": 555000},
-        "grapas_kilo": {"cantidad": 3, "precio_unit": 12000, "total": 36000}
+        "malla_gallinero_1_5m": {
+          "cantidad": 3,
+          "metros": 36,
+          "precio_unit": 185000,
+          "total": 555000
+        },
+        "grapas_kilo": {
+          "cantidad": 3,
+          "precio_unit": 12000,
+          "total": 36000
+        }
       }
     },
     "camas_algas_lombricompost": {
@@ -341,41 +513,116 @@
       "dimensiones": "5.5m x 0.7m x 1m",
       "cantidad": 2,
       "items": {
-        "cemento_bulto": {"cantidad": 2, "precio_unit": 35000, "total": 70000},
-        "arena_gris_lonas": {"cantidad": 4, "precio_unit": 12000, "total": 48000},
-        "impermeabilizante_galon": {"cantidad": 1, "precio_unit": 90000, "total": 90000},
-        "balde_mezcla": {"cantidad": 1, "precio_unit": 6000, "total": 6000},
-        "tapon_desague": {"cantidad": 2, "precio_unit": 30000, "total": 60000}
+        "cemento_bulto": {
+          "cantidad": 2,
+          "precio_unit": 35000,
+          "total": 70000
+        },
+        "arena_gris_lonas": {
+          "cantidad": 4,
+          "precio_unit": 12000,
+          "total": 48000
+        },
+        "impermeabilizante_galon": {
+          "cantidad": 1,
+          "precio_unit": 90000,
+          "total": 90000
+        },
+        "balde_mezcla": {
+          "cantidad": 1,
+          "precio_unit": 6000,
+          "total": 6000
+        },
+        "tapon_desague": {
+          "cantidad": 2,
+          "precio_unit": 30000,
+          "total": 60000
+        }
       }
     },
     "gallinero": {
       "subtotal": 852000,
       "dimensiones": "6m x 3m = 18m2",
       "items": {
-        "estiba_plastica_60x60": {"cantidad": 50, "precio_unit": 16000, "total": 800000},
-        "postes": {"en_existencia": true, "total": 0},
-        "malla_gallinera": {"en_existencia": true, "total": 0},
-        "grapas": {"en_existencia": true, "total": 0},
-        "amarres": {"cantidad": 50, "precio_unit": 500, "total": 25000},
-        "soldadura_kilo": {"cantidad": 1, "precio_unit": 27000, "total": 27000}
+        "estiba_plastica_60x60": {
+          "cantidad": 50,
+          "precio_unit": 16000,
+          "total": 800000
+        },
+        "postes": {
+          "en_existencia": true,
+          "total": 0
+        },
+        "malla_gallinera": {
+          "en_existencia": true,
+          "total": 0
+        },
+        "grapas": {
+          "en_existencia": true,
+          "total": 0
+        },
+        "amarres": {
+          "cantidad": 50,
+          "precio_unit": 500,
+          "total": 25000
+        },
+        "soldadura_kilo": {
+          "cantidad": 1,
+          "precio_unit": 27000,
+          "total": 27000
+        }
       }
     },
     "logistica": {
       "transporte": 580000,
-      "mano_obra_jornales": {"cantidad": 10, "precio_unit": 110000, "total": 1100000},
+      "mano_obra_jornales": {
+        "cantidad": 10,
+        "precio_unit": 110000,
+        "total": 1100000
+      },
       "subtotal": 1680000
     },
     "total_infraestructura": 6808201,
     "mantenimiento_bodega": {
       "subtotal": 4991800,
       "items": {
-        "sika_transparente_16kg": {"cantidad": 1, "total": 609900, "nota": "Sellar pared contra montana"},
-        "pintura_exterior_5gl": {"cantidad": 1, "total": 485900, "nota": "Fachada, plataformas, beneficio"},
-        "pintura_epoxica_3_75gl": {"cantidad": 3, "precio_unit": 779900, "total": 2339700, "nota": "Paredes internas bodega"},
-        "disolvente_xilol": {"cantidad": 3, "precio_unit": 38900, "total": 116700},
-        "catalizador_epoxica": {"cantidad": 3, "precio_unit": 169900, "total": 509700},
-        "pintura_superlavable_5gl": {"cantidad": 2, "precio_unit": 369900, "total": 739800, "nota": "Sala despasille y beneficio"},
-        "mano_obra_jornales": {"cantidad": 10, "precio_unit": 80000, "total": 800000}
+        "sika_transparente_16kg": {
+          "cantidad": 1,
+          "total": 609900,
+          "nota": "Sellar pared contra montana"
+        },
+        "pintura_exterior_5gl": {
+          "cantidad": 1,
+          "total": 485900,
+          "nota": "Fachada, plataformas, beneficio"
+        },
+        "pintura_epoxica_3_75gl": {
+          "cantidad": 3,
+          "precio_unit": 779900,
+          "total": 2339700,
+          "nota": "Paredes internas bodega"
+        },
+        "disolvente_xilol": {
+          "cantidad": 3,
+          "precio_unit": 38900,
+          "total": 116700
+        },
+        "catalizador_epoxica": {
+          "cantidad": 3,
+          "precio_unit": 169900,
+          "total": 509700
+        },
+        "pintura_superlavable_5gl": {
+          "cantidad": 2,
+          "precio_unit": 369900,
+          "total": 739800,
+          "nota": "Sala despasille y beneficio"
+        },
+        "mano_obra_jornales": {
+          "cantidad": 10,
+          "precio_unit": 80000,
+          "total": 800000
+        }
       }
     },
     "total_general": 11800001,
