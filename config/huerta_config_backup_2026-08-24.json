@@ -1,0 +1,384 @@
+{
+  "metadata": {
+    "nombre": "Huerta LPET",
+    "ubicacion": "Zipacon, Cundinamarca",
+    "ultima_modificacion": "2026-02-17",
+    "version": "3.0",
+    "nota": "Rediseno a 12 camas nuevas (3m x 0.4m x 1m) con presupuesto real"
+  },
+  "zonas": [
+    {
+      "id": "cama1",
+      "nombre": "Cama 1",
+      "tipo": "cama",
+      "grupo": "hojas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 0,
+      "y": 0,
+      "cultivos": ["lechuga"],
+      "sensor": "WH51-1",
+      "color": "#90EE90"
+    },
+    {
+      "id": "cama2",
+      "nombre": "Cama 2",
+      "tipo": "cama",
+      "grupo": "hojas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 2,
+      "y": 0,
+      "cultivos": ["rucula", "espinaca"],
+      "sensor": null,
+      "color": "#90EE90"
+    },
+    {
+      "id": "cama3",
+      "nombre": "Cama 3",
+      "tipo": "cama",
+      "grupo": "hojas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 4,
+      "y": 0,
+      "cultivos": ["acelga"],
+      "sensor": "WH51-2",
+      "color": "#98FB98"
+    },
+    {
+      "id": "cama4",
+      "nombre": "Cama 4",
+      "tipo": "cama",
+      "grupo": "hojas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 6,
+      "y": 0,
+      "cultivos": ["espinaca", "mostaza"],
+      "sensor": null,
+      "color": "#98FB98"
+    },
+    {
+      "id": "cama5",
+      "nombre": "Cama 5",
+      "tipo": "cama",
+      "grupo": "hierbas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 8,
+      "y": 0,
+      "cultivos": ["albahaca", "cilantro", "perejil"],
+      "sensor": "WH51-3",
+      "color": "#32CD32"
+    },
+    {
+      "id": "cama6",
+      "nombre": "Cama 6",
+      "tipo": "cama",
+      "grupo": "hierbas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 10,
+      "y": 0,
+      "cultivos": ["cebollin", "oregano", "tomillo"],
+      "sensor": null,
+      "color": "#32CD32"
+    },
+    {
+      "id": "cama7",
+      "nombre": "Cama 7",
+      "tipo": "cama",
+      "grupo": "brasicas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 0,
+      "y": 6,
+      "cultivos": ["brocoli"],
+      "sensor": null,
+      "color": "#228B22"
+    },
+    {
+      "id": "cama8",
+      "nombre": "Cama 8",
+      "tipo": "cama",
+      "grupo": "brasicas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 2,
+      "y": 6,
+      "cultivos": ["coliflor"],
+      "sensor": "WH51-4",
+      "color": "#228B22"
+    },
+    {
+      "id": "cama9",
+      "nombre": "Cama 9",
+      "tipo": "cama",
+      "grupo": "brasicas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 4,
+      "y": 6,
+      "cultivos": ["repollo"],
+      "sensor": null,
+      "color": "#228B22"
+    },
+    {
+      "id": "cama10",
+      "nombre": "Cama 10",
+      "tipo": "cama",
+      "grupo": "brasicas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 6,
+      "y": 6,
+      "cultivos": ["kale"],
+      "sensor": null,
+      "color": "#228B22"
+    },
+    {
+      "id": "cama11",
+      "nombre": "Cama 11",
+      "tipo": "cama",
+      "grupo": "brasicas",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 8,
+      "y": 6,
+      "cultivos": ["brocoli", "coliflor"],
+      "sensor": "WH51-5",
+      "color": "#228B22"
+    },
+    {
+      "id": "cama12",
+      "nombre": "Cama 12",
+      "tipo": "cama",
+      "grupo": "rotacion",
+      "ancho": 0.40,
+      "largo": 3.00,
+      "alto": 1.00,
+      "x": 10,
+      "y": 6,
+      "cultivos": ["rotacion"],
+      "sensor": null,
+      "color": "#DEB887"
+    },
+    {
+      "id": "invernadero",
+      "nombre": "Invernadero",
+      "tipo": "invernadero",
+      "ancho": 5.60,
+      "largo": 5.99,
+      "alto": 2.60,
+      "x": 0,
+      "y": 14,
+      "cultivos": ["tomate", "albahaca"],
+      "sensor": ["WH51-6", "WH51-7", "WH31"],
+      "color": "#87CEEB"
+    },
+    {
+      "id": "tour",
+      "nombre": "Tour Bienestar",
+      "tipo": "tour",
+      "ancho": 8,
+      "largo": 11,
+      "x": 14,
+      "y": 14,
+      "cultivos": ["medicinales"],
+      "sensor": null,
+      "color": "#FFD700"
+    }
+  ],
+  "sensores": {
+    "ecosistema": "Ecowitt",
+    "gateway": {
+      "modelo": "GW1100",
+      "cantidad": 1,
+      "funcion": "Hub WiFi central, conecta todo al iPad"
+    },
+    "suelo": {
+      "modelo": "WH51",
+      "cantidad": 8,
+      "distribucion": {
+        "WH51-1": "Cama 1 - hojas (promedio), 7-10cm",
+        "WH51-2": "Cama 3 - hojas (mas sol), 7-10cm",
+        "WH51-3": "Cama 5 - hierbas, 7-10cm",
+        "WH51-4": "Cama 8 - brasicas (promedio), 12-15cm",
+        "WH51-5": "Cama 11 - brasicas (zona critica), 12-15cm",
+        "WH51-6": "Invernadero tomate CENTRO, 15-20cm",
+        "WH51-7": "Invernadero tomate BORDE, 15-20cm",
+        "WH51-8": "Movil / diagnostico, variable"
+      }
+    },
+    "aire_exterior": {
+      "modelo": "WN32 (WH32)",
+      "cantidad": 1,
+      "ubicacion": "Sombra ligera, 1.5m del suelo"
+    },
+    "aire_invernadero": {
+      "modelo": "WH31",
+      "cantidad": 1,
+      "ubicacion": "1.5-1.8m altura, no pegado al plastico"
+    },
+    "pluviometro": {
+      "modelo": "WH40BH",
+      "cantidad": 1,
+      "ubicacion": "Zona abierta sin obstrucciones"
+    }
+  },
+  "umbrales_riego": {
+    "hojas_hierbas": {
+      "optimo_min": 30,
+      "optimo_max": 45,
+      "aviso": 28,
+      "critico": 22,
+      "profundidad_sensor_cm": "7-10"
+    },
+    "brasicas": {
+      "optimo_min": 25,
+      "optimo_max": 40,
+      "aviso": 22,
+      "critico": 18,
+      "profundidad_sensor_cm": "12-15"
+    },
+    "tomate": {
+      "optimo_min": 20,
+      "optimo_max": 30,
+      "aviso": 18,
+      "critico": 15,
+      "profundidad_sensor_cm": "15-20"
+    },
+    "humedad_aire_invernadero": {
+      "ventilar": 80,
+      "abrir_obligatorio": 85,
+      "temp_ventilar_c": 32
+    }
+  },
+  "proteccion": {
+    "malla_anti_insectos": {
+      "mesh": 50,
+      "color": "blanco",
+      "material": "PE estabilizado UV",
+      "ancho_m": 2.20,
+      "cantidad_camas_m": 55,
+      "cantidad_invernadero_m": 25
+    },
+    "malla_sombra": {
+      "porcentaje": "30-35%",
+      "color": "negra",
+      "cantidad_m": 25,
+      "solo_para": ["hojas", "hierbas"]
+    },
+    "estructura_pvc": {
+      "diametro": "3/4 pulgada",
+      "cantidad_m": 80,
+      "arcos_por_cama": 3,
+      "sistema": "Un lado fijo, otro con bisagra abrible"
+    },
+    "geotextil": {
+      "tipo": "agricola/paisajismo permeable",
+      "cantidad_m2": "45-50",
+      "funcion": "Forrar interior camas de madera"
+    },
+    "sellado_inferior": "Enterrar malla 10-15cm o mulch negro perimetral"
+  },
+  "animales": {
+    "gallinas": {
+      "cantidad": 25,
+      "produccion_huevos_dia": 0.7
+    },
+    "conejos": {
+      "cantidad": 12
+    }
+  },
+  "costos": {
+    "operario_mensual_cop": 800000,
+    "insumos_mensual_cop": 200000
+  },
+  "precios_venta": {
+    "huevo_cop": 800,
+    "lechuga_kg_cop": 8000,
+    "tomate_kg_cop": 6000
+  },
+  "presupuesto_real": {
+    "fecha_cotizacion": "2026-02-17",
+    "moneda": "COP",
+    "huerta_12_camas": {
+      "subtotal": 3411201,
+      "items": {
+        "tablas_3m": {"cantidad": 72, "precio_unit": 23000, "en_stock": 44, "a_comprar": 28, "total": 644000},
+        "geotextil_rollo": {"cantidad": 20, "precio_unit": 12900, "total": 258000},
+        "estacas_madera": {"cantidad": 144, "precio_unit": 2100, "total": 302400},
+        "merulex_inmunizante": {"cantidad": 2, "precio_unit": 190900, "total": 381800},
+        "tubo_pvc_3_4": {"cantidad": 18, "precio_unit": 10600, "total": 190800},
+        "malla_control_insectos": {"cantidad": 1, "medida": "3m x 100m", "total": 1532601},
+        "tees_pvc_1": {"cantidad": 24, "precio_unit": 2150, "total": 51600},
+        "puntillas": {"cantidad": 4, "precio_unit": 5000, "total": 20000},
+        "amarres_plasticos": {"cantidad": 3, "precio_unit": 10000, "total": 30000}
+      }
+    },
+    "encerramiento_huerta": {
+      "subtotal": 591000,
+      "items": {
+        "malla_gallinero_1_5m": {"cantidad": 3, "metros": 36, "precio_unit": 185000, "total": 555000},
+        "grapas_kilo": {"cantidad": 3, "precio_unit": 12000, "total": 36000}
+      }
+    },
+    "camas_algas_lombricompost": {
+      "subtotal": 274000,
+      "dimensiones": "5.5m x 0.7m x 1m",
+      "cantidad": 2,
+      "items": {
+        "cemento_bulto": {"cantidad": 2, "precio_unit": 35000, "total": 70000},
+        "arena_gris_lonas": {"cantidad": 4, "precio_unit": 12000, "total": 48000},
+        "impermeabilizante_galon": {"cantidad": 1, "precio_unit": 90000, "total": 90000},
+        "balde_mezcla": {"cantidad": 1, "precio_unit": 6000, "total": 6000},
+        "tapon_desague": {"cantidad": 2, "precio_unit": 30000, "total": 60000}
+      }
+    },
+    "gallinero": {
+      "subtotal": 852000,
+      "dimensiones": "6m x 3m = 18m2",
+      "items": {
+        "estiba_plastica_60x60": {"cantidad": 50, "precio_unit": 16000, "total": 800000},
+        "postes": {"en_existencia": true, "total": 0},
+        "malla_gallinera": {"en_existencia": true, "total": 0},
+        "grapas": {"en_existencia": true, "total": 0},
+        "amarres": {"cantidad": 50, "precio_unit": 500, "total": 25000},
+        "soldadura_kilo": {"cantidad": 1, "precio_unit": 27000, "total": 27000}
+      }
+    },
+    "logistica": {
+      "transporte": 580000,
+      "mano_obra_jornales": {"cantidad": 10, "precio_unit": 110000, "total": 1100000},
+      "subtotal": 1680000
+    },
+    "total_infraestructura": 6808201,
+    "mantenimiento_bodega": {
+      "subtotal": 4991800,
+      "items": {
+        "sika_transparente_16kg": {"cantidad": 1, "total": 609900, "nota": "Sellar pared contra montana"},
+        "pintura_exterior_5gl": {"cantidad": 1, "total": 485900, "nota": "Fachada, plataformas, beneficio"},
+        "pintura_epoxica_3_75gl": {"cantidad": 3, "precio_unit": 779900, "total": 2339700, "nota": "Paredes internas bodega"},
+        "disolvente_xilol": {"cantidad": 3, "precio_unit": 38900, "total": 116700},
+        "catalizador_epoxica": {"cantidad": 3, "precio_unit": 169900, "total": 509700},
+        "pintura_superlavable_5gl": {"cantidad": 2, "precio_unit": 369900, "total": 739800, "nota": "Sala despasille y beneficio"},
+        "mano_obra_jornales": {"cantidad": 10, "precio_unit": 80000, "total": 800000}
+      }
+    },
+    "total_general": 11800001,
+    "total_usd_aprox": 2950
+  }
+}
