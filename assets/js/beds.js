@@ -549,6 +549,7 @@
           { key: 'aromaticas', label: 'Aromáticas' },
           { key: 'brasicas',   label: 'Brásicas' },
           { key: 'raices',     label: 'Raíces' },
+          { key: 'frutos',     label: 'Frutos' },
         ];
 
     const currentIds = BED_PLANTS[bedId] || [];
