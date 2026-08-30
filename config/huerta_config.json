@@ -4,63 +4,82 @@
     "ubicacion": "Zipacon, Cundinamarca",
     "ultima_modificacion": "2026-02-17",
     "version": "3.0",
-    "nota": "Rediseno a 12 camas nuevas (3m x 0.4m x 1m) con presupuesto real"
+    "nota": "Rediseno a 12 camas nuevas (3m x 0.4m x 1m) con presupuesto real",
+    "siembra_actualizada": "2026-08-29",
+    "siembra_fuente": "Reporte de Jhon Huerta por WhatsApp, 29-ago-2026",
+    "nota_catalogo": "Pimenton, calabacin, puerro, rabano, lechuga orejona, perejil crespo y mizuna morada no tienen ficha en data/plantas_guia.json (39 plantas). El Asistente de Cultivo no dara recomendaciones para ellos hasta ampliarlo."
   },
   "zonas": [
     {
       "id": "cama1",
       "nombre": "Cama 1",
       "tipo": "cama",
-      "grupo": "hojas",
+      "grupo": "hierbas",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 0,
       "y": 0,
       "cultivos": [
-        "lechuga"
+        "pimenton",
+        "albahaca",
+        "cebollin",
+        "cebolla_larga",
+        "puerro"
       ],
       "sensor": "WH51-1",
       "color": "#90EE90",
       "canal_ecowitt": "CH2",
-      "canal_confirmado": "2026-08-24 en campo"
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "pimenton",
+        "puerro"
+      ]
     },
     {
       "id": "cama2",
       "nombre": "Cama 2",
       "tipo": "cama",
-      "grupo": "hojas",
+      "grupo": "brasicas",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 2,
       "y": 0,
       "cultivos": [
-        "rucula",
-        "espinaca"
+        "coliflor",
+        "calabacin"
       ],
       "sensor": "WH51",
       "color": "#90EE90",
       "canal_ecowitt": "CH4",
-      "canal_confirmado": "2026-08-24 en campo"
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "calabacin"
+      ]
     },
     {
       "id": "cama3",
       "nombre": "Cama 3",
       "tipo": "cama",
-      "grupo": "hojas",
+      "grupo": "brasicas",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 4,
       "y": 0,
       "cultivos": [
-        "acelga"
+        "cebollin",
+        "brocoli",
+        "espinaca"
       ],
       "sensor": "WH51-2",
       "color": "#98FB98",
       "canal_ecowitt": "CH5",
-      "canal_confirmado": "2026-08-24 en campo"
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama4",
@@ -73,65 +92,71 @@
       "x": 6,
       "y": 0,
       "cultivos": [
-        "espinaca",
-        "mostaza"
+        "calendula",
+        "lechuga_romana"
       ],
       "sensor": null,
-      "color": "#98FB98"
+      "color": "#98FB98",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama5",
       "nombre": "Cama 5",
       "tipo": "cama",
-      "grupo": "hierbas",
+      "grupo": "frutos",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 8,
       "y": 0,
       "cultivos": [
-        "albahaca",
-        "cilantro",
-        "perejil"
+        "pimenton"
       ],
       "sensor": "WH51-3",
       "color": "#32CD32",
       "canal_ecowitt": "CH3",
-      "canal_confirmado": "2026-08-24 en campo"
+      "canal_confirmado": "2026-08-24 en campo",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "pimenton"
+      ]
     },
     {
       "id": "cama6",
       "nombre": "Cama 6",
       "tipo": "cama",
-      "grupo": "hierbas",
+      "grupo": "hojas",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 10,
       "y": 0,
       "cultivos": [
-        "cebollin",
-        "oregano",
-        "tomillo"
+        "lechuga",
+        "calendula",
+        "albahaca_morada"
       ],
       "sensor": null,
-      "color": "#32CD32"
+      "color": "#32CD32",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama7",
       "nombre": "Cama 7",
       "tipo": "cama",
-      "grupo": "brasicas",
+      "grupo": "hierbas",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 0,
       "y": 6,
       "cultivos": [
-        "brocoli"
+        "cebolla_larga",
+        "menta"
       ],
       "sensor": null,
-      "color": "#228B22"
+      "color": "#228B22",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)"
     },
     {
       "id": "cama8",
@@ -144,28 +169,41 @@
       "x": 2,
       "y": 6,
       "cultivos": [
-        "coliflor"
+        "perejil_crespo",
+        "coliflor",
+        "pimenton"
       ],
       "sensor": "WH51-4",
       "color": "#228B22",
       "canal_ecowitt": null,
-      "canal_confirmado": "sin sensor (se reubicaron)"
+      "canal_confirmado": "sin sensor (se reubicaron)",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "perejil_crespo",
+        "pimenton"
+      ]
     },
     {
       "id": "cama9",
       "nombre": "Cama 9",
       "tipo": "cama",
-      "grupo": "brasicas",
+      "grupo": "frutos",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 4,
       "y": 6,
       "cultivos": [
-        "repollo"
+        "calabacin",
+        "pimenton"
       ],
       "sensor": null,
-      "color": "#228B22"
+      "color": "#228B22",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "calabacin",
+        "pimenton"
+      ]
     },
     {
       "id": "cama10",
@@ -178,45 +216,67 @@
       "x": 6,
       "y": 6,
       "cultivos": [
-        "kale"
+        "brocoli",
+        "perejil_crespo"
       ],
       "sensor": null,
-      "color": "#228B22"
+      "color": "#228B22",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "perejil_crespo"
+      ]
     },
     {
       "id": "cama11",
       "nombre": "Cama 11",
       "tipo": "cama",
-      "grupo": "brasicas",
+      "grupo": "hojas",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 8,
       "y": 6,
       "cultivos": [
-        "brocoli",
-        "coliflor"
+        "mizuna_morada",
+        "cilantro",
+        "rucula",
+        "lechuga_orejona",
+        "albahaca_morada",
+        "espinaca"
       ],
       "sensor": "WH51-5",
       "color": "#228B22",
       "canal_ecowitt": null,
-      "canal_confirmado": "sin sensor (se reubicaron)"
+      "canal_confirmado": "sin sensor (se reubicaron)",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "mizuna_morada",
+        "lechuga_orejona"
+      ]
     },
     {
       "id": "cama12",
       "nombre": "Cama 12",
       "tipo": "cama",
-      "grupo": "rotacion",
+      "grupo": "brasicas",
       "ancho": 0.4,
       "largo": 3.0,
       "alto": 1.0,
       "x": 10,
       "y": 6,
       "cultivos": [
-        "rotacion"
+        "rabano",
+        "pimenton",
+        "calendula",
+        "col_rizada"
       ],
       "sensor": null,
-      "color": "#DEB887"
+      "color": "#DEB887",
+      "siembra_confirmada": "2026-08-29 (reporte Jhon Huerta)",
+      "cultivos_sin_ficha": [
+        "rabano",
+        "pimenton"
+      ]
     },
     {
       "id": "invernadero",

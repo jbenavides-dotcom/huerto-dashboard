@@ -158,7 +158,7 @@
   var LS_KEY = 'huerta_bed_plants_v2';
 
   /** localStorage keys for sensor assignment system */
-  var LS_SENSOR_ASSIGNMENTS = 'huerta_sensor_assignments';
+  var LS_SENSOR_ASSIGNMENTS = 'huerta_sensor_assignments_v2';
   var LS_BED_READINGS        = 'huerta_bed_readings';
 
   /* ──────────────────────────────────────────
@@ -219,23 +219,25 @@
     brasicas: { optMin: 25, optMax: 40, alert: 22, critical: 18, label: 'Brásicas' },
     tomate:   { optMin: 20, optMax: 30, alert: 18, critical: 15, label: 'Tomate' },
     rotacion: { optMin: 25, optMax: 40, alert: 22, critical: 18, label: 'Rotación' },
+    frutos:   { optMin: 20, optMax: 30, alert: 18, critical: 15, label: 'Frutos' },
   };
 
   /** Full bed definitions — impares = derecha, pares = izquierda.
-   *  Actualizado 2026-04-07 con siembra real reportada por Jhon Huerta. */
+   *  Actualizado 2026-08-29 con siembra real reportada por Jhon Huerta.
+   *  Canales Ecowitt confirmados en campo el 24-ago-2026 (ver config/huerta_config.json). */
   var BEDS = [
-    { id: 'cama1',  name: 'Cama 1',  group: 'brasicas', crops: ['🥬 Repollo morado', '🥦 Coliflor', '🌿 Cebollín'],        sensor: 'soil_ch2', hasSensor: true },
-    { id: 'cama2',  name: 'Cama 2',  group: 'hierbas',  crops: ['🥕 Zanahoria', '🌿 Perejil liso'],                         sensor: 'soil_ch5', hasSensor: true },
-    { id: 'cama3',  name: 'Cama 3',  group: 'hojas',    crops: ['🥬 Lechuga crespa', '🥬 Lechuga morada lisa'],             sensor: 'soil_ch1', hasSensor: true },
-    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🥬 Acelga', '🌼 Caléndula'],                                sensor: 'soil_ch3', hasSensor: true },
-    { id: 'cama5',  name: 'Cama 5',  group: 'brasicas', crops: ['🌼 Caléndula', '🌶️ Ají jalapeño', '🥬 Repollo morado'],     sensor: 'soil_ch1' },
-    { id: 'cama6',  name: 'Cama 6',  group: 'brasicas', crops: ['🥬 Repollo morado'],                                       sensor: 'soil_ch3' },
-    { id: 'cama7',  name: 'Cama 7',  group: 'hierbas',  crops: ['🌿 Cebolla larga', '🌿 Hierbabuena'],                      sensor: 'soil_ch1' },
-    { id: 'cama8',  name: 'Cama 8',  group: 'hierbas',  crops: ['🌿 Tomillo'],                                              sensor: 'soil_ch3' },
-    { id: 'cama9',  name: 'Cama 9',  group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch3' },
-    { id: 'cama10', name: 'Cama 10', group: 'brasicas', crops: ['🟣 Remolacha', '🥦 Coliflor', '🥬 Repollo morado'],        sensor: 'soil_ch5' },
-    { id: 'cama11', name: 'Cama 11', group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch5' },
-    { id: 'cama12', name: 'Cama 12', group: 'rotacion', crops: ['🟤 Vacía'],                                                sensor: 'soil_ch5' },
+    { id: 'cama1',  name: 'Cama 1',  group: 'hierbas',  crops: ['🥒 Pimentón', '🌿 Albahaca', '🌿 Cebollín', '🧅 Cebolla larga', '🧅 Puerro'], sensor: 'soil_ch2', hasSensor: true },
+    { id: 'cama2',  name: 'Cama 2',  group: 'brasicas', crops: ['🥦 Coliflor', '🥒 Calabacín'],                                                     sensor: 'soil_ch4', hasSensor: true },
+    { id: 'cama3',  name: 'Cama 3',  group: 'brasicas', crops: ['🌿 Cebollín', '🥦 Brócoli', '🥬 Espinaca'],                                 sensor: 'soil_ch5', hasSensor: true },
+    { id: 'cama4',  name: 'Cama 4',  group: 'hojas',    crops: ['🌼 Caléndula', '🥬 Lechuga romana'],                                               sensor: null },
+    { id: 'cama5',  name: 'Cama 5',  group: 'frutos',   crops: ['🥒 Pimentón'],                                                                             sensor: 'soil_ch3', hasSensor: true },
+    { id: 'cama6',  name: 'Cama 6',  group: 'hojas',    crops: ['🥬 Lechuga', '🌼 Caléndula', '🌿 Albahaca morada'],                         sensor: null },
+    { id: 'cama7',  name: 'Cama 7',  group: 'hierbas',  crops: ['🧅 Cebolla larga', '🌿 Menta'],                                                     sensor: null },
+    { id: 'cama8',  name: 'Cama 8',  group: 'brasicas', crops: ['🌿 Perejil crespo', '🥦 Coliflor', '🥒 Pimentón'],                          sensor: null },
+    { id: 'cama9',  name: 'Cama 9',  group: 'frutos',   crops: ['🥒 Calabacín', '🥒 Pimentón'],                                                     sensor: null },
+    { id: 'cama10', name: 'Cama 10', group: 'brasicas', crops: ['🥦 Brócoli', '🌿 Perejil crespo'],                                                  sensor: null },
+    { id: 'cama11', name: 'Cama 11', group: 'hojas',    crops: ['🥬 Mizuna morada', '🌿 Cilantro', '🥬 Rúcula', '🥬 Lechuga orejona', '🌿 Albahaca morada', '🥬 Espinaca'], sensor: null },
+    { id: 'cama12', name: 'Cama 12', group: 'brasicas', crops: ['🔴 Rábano', '🥒 Pimentón', '🌼 Caléndula', '🥬 Col rizada'],        sensor: null },
   ];
 
   /** Group display labels. */
@@ -244,6 +246,7 @@
     hierbas:  'Hierbas',
     brasicas: 'Brásicas',
     rotacion: 'Rotación',
+    frutos:   'Frutos',
   };
 
 /* ──────────────────────────────────────────
